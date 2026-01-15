@@ -665,4 +665,79 @@ body {
     .property-title-row h1 { font-size: 1.8rem; }
     .price-tag { font-size: 1.5rem; }
 }
+/* --- 11. SECTION PROMO (Call to Action) --- */
+
+.promo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive auto : côte à côte sur PC, empilé sur mobile */
+    gap: 30px;
+}
+
+.promo-card {
+    position: relative;
+    height: 350px; /* Hauteur des cartes */
+    border-radius: 8px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center; /* Centre verticalement */
+    justify-content: center; /* Centre horizontalement */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Images de fond (À remplacer par tes images) */
+.card-prestige {
+    /* Image d'un salon luxueux */
+    background-image: url('../img/promo-luxe.jpg'); 
+    background-color: #333; /* Couleur de fond si l'image charge pas */
+}
+
+.card-career {
+    /* Image d'équipe ou bureau pro */
+    background-image: url('../img/promo-team.jpg'); 
+    background-color: #333;
+}
+
+/* La boîte sombre par dessus (L'encadré noir de ta capture) */
+.promo-overlay {
+    background-color: rgba(26, 16, 60, 0.9); /* Ton Bleu Nuit Ortus, mais transparent à 90% */
+    padding: 30px;
+    text-align: center;
+    max-width: 80%; /* La boîte ne touche pas les bords, comme sur ta capture */
+    border-radius: 4px;
+    border: 1px solid var(--accent-blue); /* Fine bordure Cyan pour le style Ortus */
+}
+
+.promo-overlay h3 {
+    color: var(--text-white);
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.promo-overlay p {
+    color: #ddd;
+    margin-bottom: 25px;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+/* Le bouton doré/beige (Style Century 21 adapté) */
+.btn-promo {
+    display: inline-block;
+    background-color: #c5a065; /* Une couleur "Or/Sable" classe */
+    color: var(--primary-dark);
+    padding: 12px 25px;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.btn-promo:hover {
+    background-color: #dcc293; /* Or plus clair au survol */
+    transform: translateY(-2px);
+}
 
