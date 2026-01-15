@@ -1,0 +1,232 @@
+/* --- 1. VARIABLES & RESET --- */
+:root {
+    /* Palette inspirée de l'image Ortus */
+    --primary-dark: #1a103c;   /* Bleu nuit/Violet foncé (Fond galaxie) */
+    --primary-light: #2c2150;  /* Une teinte plus claire pour le survol */
+    --accent-blue: #4aa3df;    /* Le bleu clair du texte "ortus" */
+    --accent-hover: #358ac0;   /* Bleu un peu plus foncé pour hover */
+    --text-white: #ffffff;
+    --text-grey: #e0e0e0;
+    --font-main: 'Montserrat', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Très important pour gérer les largeurs */
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: #f4f4f4; /* Fond gris très clair pour le reste du site */
+    color: #333;
+}
+
+/* Utilitaire pour centrer le contenu */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- 2. NAVBAR --- */
+.navbar {
+    background-color: var(--primary-dark);
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky; /* La barre reste en haut quand on scrolle */
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    color: var(--text-white);
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.logo .dot {
+    color: var(--accent-blue); /* Le point en bleu cyan */
+    font-size: 2.5rem;
+    line-height: 0;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+.nav-link {
+    color: var(--text-grey);
+    text-decoration: none;
+    margin-right: 25px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: var(--accent-blue);
+}
+
+/* Bouton Contact dans le menu */
+.btn-contact {
+    background-color: var(--accent-blue);
+    color: var(--text-white);
+    padding: 10px 20px;
+    border-radius: 4px; /* Coins légèrement arrondis comme Century 21 */
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-contact:hover {
+    background-color: var(--accent-hover);
+}
+
+/* --- 3. HERO SECTION --- */
+.hero {
+    height: 80vh; /* 80% de la hauteur de l'écran */
+    background-image: url('../img/hero-bg.jpg'); /* Mets une image ici ! */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: var(--primary-dark); /* Fallback si pas d'image */
+}
+
+/* Calque sombre par dessus l'image pour que le texte soit lisible */
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(26, 16, 60, 0.7), rgba(26, 16, 60, 0.5));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.hero h1 {
+    color: var(--text-white);
+    font-size: 3rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero p {
+    color: var(--text-grey);
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+}
+
+/* --- 4. BARRE DE RECHERCHE (Style Century 21 mais couleurs Ortus) --- */
+.search-bar {
+    background-color: var(--text-white);
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column; /* Mobile first : éléments les uns sous les autres */
+    gap: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 4px;
+    flex: 1; /* Prend toute la place dispo */
+}
+
+.input-group i {
+    color: var(--primary-dark);
+    margin-right: 10px;
+}
+
+.input-group input, .input-group select {
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+    color: #555;
+}
+
+.btn-search {
+    background-color: var(--primary-dark); /* Fond sombre */
+    color: var(--text-white);
+    border: none;
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s;
+    text-transform: uppercase;
+}
+
+.btn-search:hover {
+    background-color: var(--accent-blue); /* Devient bleu cyan au survol */
+}
+
+/* --- 5. RESPONSIVE (PC / Tablette) --- */
+@media (max-width: 768px) {
+    /* Cache le menu sur mobile (on fera le JS plus tard) */
+    .nav-menu {
+        display: none; 
+    }
+    .menu-toggle {
+        display: block; /* On affichera le burger ici plus tard */
+        color: white;
+        cursor: pointer;
+    }
+    .hero h1 { font-size: 2rem; }
+}
+
+@media (min-width: 769px) {
+    .menu-toggle { display: none; }
+    
+    /* La barre de recherche devient horizontale sur grand écran */
+    .search-bar {
+        flex-direction: row;
+        padding: 5px;
+        gap: 0;
+    }
+    
+    .input-group {
+        background: white;
+        border-radius: 0;
+    }
+    
+    .border-left {
+        border-left: 1px solid #ddd; /* Séparation visuelle */
+    }
+    
+    .btn-search {
+        border-radius: 0 4px 4px 0; /* Arrondi juste à droite */
+        margin-left: -5px; /* Colle le bouton aux inputs */
+    }
+}
