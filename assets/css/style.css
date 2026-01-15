@@ -18,9 +18,22 @@
 
 body {
     font-family: var(--font-main);
-    background-color: #f4f4f4; /* Fond gris très clair pour le reste du site */
-    color: #333;
+    color: #333; /* Couleur de texte par défaut (pour les zones claires) */
+    
+    /* --- NOUVEAU FOND GLOBAL --- */
+    /* 1. On met un filtre dégradé sombre (Bleu Nuit Ortus) par-dessus l'image */
+    background-image: linear-gradient(rgba(26, 16, 60, 0.85), rgba(26, 16, 60, 0.95)), 
+                      url('../img/body-bg.jpg'); /* <-- Ton image ici */
+    
+    /* 2. L'image couvre tout l'écran */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* 3. EFFET PARALLAXE : L'image reste fixe quand on scrolle */
+    background-attachment: fixed; 
 }
+
 
 /* Utilitaire pour centrer le contenu */
 .container {
