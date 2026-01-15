@@ -916,4 +916,54 @@ input, textarea, select {
     color: #ffffff !important; /* Devient blanc au survol */
 }
 
+/* --- CORRECTIF CHIRURGICAL (Zéro risque pour le reste) --- */
+
+/* 1. Page Accueil : Le petit texte sous "NOS DERNIERES OPPORTUNITES" */
+.section-title p {
+    color: #cccccc !important; /* Gris clair */
+}
+
+/* 2. Page Détail : Le gros Titre de la maison et la ville */
+.property-title-row h1, 
+.property-title-row .location {
+    color: #ffffff !important; /* Blanc pur */
+}
+
+/* 3. Page Détail : Le texte "Description" et la liste "Caractéristiques" */
+/* C'est ça qui était illisible sur ta capture */
+.description-block p,
+.features-list li {
+    color: #eeeeee !important; /* Blanc cassé */
+}
+
+/* 4. Page Détail : Le lien "Retour" en haut */
+.back-link {
+    color: #ffffff !important;
+}
+
+/* --- SÉCURITÉ : On protège les zones blanches --- */
+/* On s'assure que le titre dans le formulaire de contact reste bien FONCÉ */
+.contact-card h3,
+.contact-card p {
+    color: #1a103c !important; /* Violet foncé Ortus */
+}
+
+/* --- CORRECTIF ICÔNE TÉLÉPHONE --- */
+
+/* L'icône téléphone devient BLEUE */
+.contact-card i, 
+.fa-phone-alt {
+    color: #4aa3df !important; 
+    margin-right: 8px; /* Un peu d'espace avant le numéro */
+}
+
+/* Le numéro de téléphone devient VIOLET FONCÉ (lisible) */
+.contact-card a {
+    color: #1a103c !important;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+
+
 
