@@ -230,3 +230,152 @@ body {
         margin-left: -5px; /* Colle le bouton aux inputs */
     }
 }
+/* --- 6. SECTION TITRE & PADDING --- */
+.section-padding {
+    padding: 80px 0; /* Espace en haut et en bas de la section */
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    color: var(--primary-dark);
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.section-title p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* --- 7. GRILLE DES BIENS (GRID) --- */
+.properties-grid {
+    display: grid;
+    /* MAGIE : Crée autant de colonnes que possible de minimum 300px */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 30px; /* Espace entre les cartes */
+}
+
+/* --- 8. CARTE PRODUIT --- */
+.property-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden; /* Pour que l'image ne dépasse pas des coins arrondis */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05); /* Ombre légère élégante */
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column; /* Contenu empilé */
+}
+
+.property-card:hover {
+    transform: translateY(-5px); /* La carte monte un peu au survol */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+/* Image */
+.card-img-wrapper {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* L'image remplit la zone sans être déformée */
+    transition: transform 0.5s;
+}
+
+.property-card:hover .card-img {
+    transform: scale(1.1); /* Zoom doux sur l'image au survol */
+}
+
+/* Badges (Vente/Location) */
+.badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 5px 12px;
+    border-radius: 4px;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    z-index: 2;
+}
+
+.badge-sale { background-color: var(--accent-blue); }
+.badge-rent { background-color: var(--primary-dark); }
+
+/* Contenu Texte */
+.card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Remplit l'espace restant */
+}
+
+.card-price {
+    color: var(--accent-blue);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.period {
+    font-size: 0.9rem;
+    color: #888;
+    font-weight: 400;
+}
+
+.card-title {
+    color: var(--primary-dark);
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.card-location {
+    color: #777;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+/* Icônes Lits/Bains/Surface */
+.card-details {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    margin-bottom: 20px;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.card-details i {
+    color: var(--accent-blue);
+    margin-right: 5px;
+}
+
+/* Bouton bas de carte */
+.btn-card {
+    margin-top: auto; /* Pousse le bouton tout en bas */
+    display: block;
+    text-align: center;
+    background-color: transparent;
+    border: 2px solid var(--primary-dark);
+    color: var(--primary-dark);
+    padding: 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-card:hover {
+    background-color: var(--primary-dark);
+    color: white;
+}
