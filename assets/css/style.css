@@ -17,22 +17,19 @@
 }
 
 body {
-    font-family: var(--font-main);
-    color: #333; /* Couleur de texte par défaut (pour les zones claires) */
+    font-family: 'Montserrat', sans-serif; /* Assure-toi que c'est ta bonne police */
+    color: #f0f0f0; /* LE CHANGEMENT CLÉ : Texte blanc cassé par défaut */
     
-    /* --- NOUVEAU FOND GLOBAL --- */
-    /* 1. On met un filtre dégradé sombre (Bleu Nuit Ortus) par-dessus l'image */
-    background-image: linear-gradient(rgba(26, 16, 60, 0.85), rgba(26, 16, 60, 0.95)), 
-                      url('../img/body-bg.jpg'); /* <-- Ton image ici */
+    /* Fond sombre avec image en transparence très forte (95%) pour la lisibilité */
+    background-image: linear-gradient(rgba(26, 16, 60, 0.95), rgba(26, 16, 60, 0.98)), 
+                      url('../img/body-bg.jpg');
     
-    /* 2. L'image couvre tout l'écran */
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    
-    /* 3. EFFET PARALLAXE : L'image reste fixe quand on scrolle */
-    background-attachment: fixed; 
+    background-attachment: fixed; /* Parallaxe */
+    margin: 0;
 }
+
 
 
 /* Utilitaire pour centrer le contenu */
@@ -842,4 +839,32 @@ body {
         width: 100%;
         justify-content: center;
     }
+}
+
+/* --- CORRECTION MODE SOMBRE --- */
+
+/* Tous les titres du site deviennent blancs */
+h1, h2, h3, p {
+    color: #ffffff;
+}
+
+/* Les sous-titres (comme "Découvrez une sélection...") en gris clair */
+.section-title p, .hero p {
+    color: #cccccc;
+}
+
+/* --- EXCEPTION POUR LES CARTES BLANCHES --- */
+/* À l'intérieur des cartes, on remet le texte en NOIR */
+
+.property-card h3, 
+.property-card h4, 
+.property-card .price,
+.property-card p,
+.property-card span {
+    color: #333333 !important; /* Le !important force la couleur sombre */
+}
+
+/* Exception pour le texte de la section Estimation (qui est déjà sur fond sombre) */
+.estimation-content p {
+    color: #b0b0b0; /* Gris clair */
 }
