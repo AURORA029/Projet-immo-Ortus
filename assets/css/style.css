@@ -963,6 +963,20 @@ input, textarea, select {
     font-weight: 700;
     text-decoration: none;
 }
+/* --- CORRECTIF FINAL : LES TITRES INVISIBLES --- */
+
+/* 1. Page Accueil : Le grand titre "NOS DERNIERES OPPORTUNITES" */
+.section-title h2 {
+    color: #ffffff !important; /* Force le BLANC */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Petite ombre pour qu'il ressorte */
+}
+
+/* 2. Page Détail : Les titres "Description du bien" et "Caractéristiques" */
+.description-block h3,
+.features-block h3 {
+    color: #ffffff !important; /* Force le BLANC */
+    border-bottom: 2px solid rgba(255,255,255,0.2) !important; /* Change la ligne de soulignement en clair */
+}
 
 
 
