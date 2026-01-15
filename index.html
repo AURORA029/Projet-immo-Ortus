@@ -7,7 +7,57 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head> 
+</head>            
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">ORTUS<span class="dot">.</span></a>
+
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link">Acheter</a></li>
+                <li><a href="#" class="nav-link">Louer</a></li>
+                <li><a href="#" class="nav-link">Vendre</a></li>
+                <li><a href="#" class="btn-contact">Contactez-nous</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-overlay"></div> <div class="container hero-content">
+            <h1>Créateur d'Opportunités</h1>
+            <p>Trouvez le bien immobilier qui correspond à vos rêves.</p>
+
+            <form class="search-bar">
+                <div class="input-group">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <input type="text" placeholder="Ville, Code postal...">
+                </div>
+                
+                <div class="input-group border-left">
+                    <i class="fas fa-home"></i>
+                    <select>
+                        <option value="">Type de bien</option>
+                        <option value="maison">Maison</option>
+                        <option value="appartement">Appartement</option>
+                        <option value="terrain">Terrain</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-search">
+                    <i class="fas fa-search"></i> Rechercher
+                </button>
+            </form>
+        </div>
+    </header>
+
+    <script src="assets/js/main.js"></script>
         <section class="properties section-padding">
         <div class="container">
             <div class="section-title">
@@ -81,55 +131,5 @@
         </div>
     </section>
 
-<body>
-
-    <nav class="navbar">
-        <div class="container nav-container">
-            <a href="#" class="logo">ORTUS<span class="dot">.</span></a>
-
-            <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-
-            <ul class="nav-menu">
-                <li><a href="#" class="nav-link">Acheter</a></li>
-                <li><a href="#" class="nav-link">Louer</a></li>
-                <li><a href="#" class="nav-link">Vendre</a></li>
-                <li><a href="#" class="btn-contact">Contactez-nous</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <header class="hero">
-        <div class="hero-overlay"></div> <div class="container hero-content">
-            <h1>Créateur d'Opportunités</h1>
-            <p>Trouvez le bien immobilier qui correspond à vos rêves.</p>
-
-            <form class="search-bar">
-                <div class="input-group">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <input type="text" placeholder="Ville, Code postal...">
-                </div>
-                
-                <div class="input-group border-left">
-                    <i class="fas fa-home"></i>
-                    <select>
-                        <option value="">Type de bien</option>
-                        <option value="maison">Maison</option>
-                        <option value="appartement">Appartement</option>
-                        <option value="terrain">Terrain</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn-search">
-                    <i class="fas fa-search"></i> Rechercher
-                </button>
-            </form>
-        </div>
-    </header>
-
-    <script src="assets/js/main.js"></script>
 </body>
 </html>
