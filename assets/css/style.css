@@ -862,26 +862,58 @@ h1, h2, h3, p {
     color: #b0b0b0; /* Gris clair */
 }
 
-/* --- LE CORRECTIF MAGIQUE --- */
+/* --- CORRECTIF FINAL ET CIBLÉ (Version Stable) --- */
 
-/* 1. On dit à TOUT le site : "Écris en blanc !" */
-body, h1, h2, h3, h4, p, span, a {
-    color: white !important;
+/* 1. PAR DÉFAUT : Tout le texte sur le fond "Galaxie" est BLANC */
+body { color: #ffffff; }
+h1, h2, h3, h4, h5, h6, p, li, label { color: #ffffff; }
+.back-link { color: #e0e0e0; } /* Lien "Retour" gris clair */
+
+/* 2. EXCEPTION : Les zones à fond BLANC (Cartes maisons, Formulaire, Sidebar) */
+/* Ici, on remet impérativement le texte en FONCÉ */
+
+.property-card, 
+.contact-card, 
+.info-card,
+.property-card p,
+.property-card span,
+.property-card h3,
+.property-card h4,
+.contact-card h3,
+.info-card span {
+    color: #333333 !important; /* Gris foncé pour être lisible sur le blanc */
 }
 
-/* 2. SAUF à l'intérieur des cartes maisons (sinon le prix disparaît sur le fond blanc) */
-/* Ici, on force le texte à rester GRIS FONCÉ */
-.property-card h3, 
-.property-card h4, 
-.property-card p, 
-.property-card span, 
-.property-card i,
-.property-card div {
-    color: #333333 !important;
+/* 3. RESTAURATION DU STYLE : On remet les couleurs jolies (Prix bleu, etc.) */
+.card-price, .price-tag {
+    color: #4aa3df !important; /* Ton Bleu Cyan */
+}
+.card-location, .period {
+    color: #777777 !important; /* Gris moyen */
+}
+.info-card i, .card-details i {
+    color: #4aa3df !important; /* Icônes en bleu */
 }
 
-/* 3. SAUF quand tu écris dans la barre de recherche (on veut voir ce qu'on écrit) */
-input, select, textarea {
-    color: #333333 !important;
+/* 4. URGENT : Les champs de formulaire (Pour voir ce qu'on écrit !) */
+input, textarea, select {
+    background-color: #ffffff !important; /* Fond blanc */
+    color: #333333 !important;            /* Texte noir */
+    border: 1px solid #ccc;
 }
+
+/* Couleur du texte d'aide "Votre Nom..." */
+::placeholder {
+    color: #999999 !important; 
+}
+
+/* 5. Le bouton "Voir le bien" (contour noir -> texte noir) */
+.btn-card {
+    color: #1a103c !important;
+    border-color: #1a103c !important;
+}
+.btn-card:hover {
+    color: #ffffff !important; /* Devient blanc au survol */
+}
+
 
