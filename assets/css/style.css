@@ -741,3 +741,92 @@ body {
     transform: translateY(-2px);
 }
 
+/* --- 12. SECTION ESTIMATION (Premium Hover) --- */
+
+.estimation-banner {
+    background: linear-gradient(135deg, #201540 0%, #1a103c 100%); /* Dégradé subtil bleu nuit */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Bordure très fine et discrète par défaut */
+    border-radius: 12px;
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease; /* La fluidité du "Premium" */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* L'EFFET HOVER PREMIUM SUR LE BLOC ENTIER */
+.estimation-banner:hover {
+    border-color: #c5a065; /* La bordure devient Or */
+    transform: translateY(-5px); /* Le bloc monte légèrement */
+    box-shadow: 0 15px 40px rgba(197, 160, 101, 0.15); /* Une lueur dorée apparaît derrière */
+}
+
+.estimation-content h2 {
+    color: var(--text-white);
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.estimation-content p {
+    color: #b0b0b0;
+    font-size: 1.1rem;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+/* LE BOUTON D'ACTION SPÉCIAL */
+.btn-estimation {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: transparent;
+    color: #c5a065; /* Texte Or */
+    border: 2px solid #c5a065; /* Bordure Or */
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 50px; /* Bouton arrondi "pilule" */
+    transition: all 0.3s ease;
+}
+
+.btn-estimation i {
+    transition: transform 0.3s ease;
+}
+
+/* Animation du bouton au survol */
+.btn-estimation:hover {
+    background-color: #c5a065;
+    color: var(--primary-dark); /* Le texte devient sombre */
+}
+
+.btn-estimation:hover i {
+    transform: translateX(5px); /* La petite flèche bouge vers la droite */
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .estimation-banner {
+        flex-direction: column; /* Les éléments s'empilent sur mobile */
+        text-align: center;
+        padding: 30px;
+    }
+    
+    .estimation-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .estimation-action {
+        width: 100%;
+    }
+    
+    .btn-estimation {
+        width: 100%;
+        justify-content: center;
+    }
+}
