@@ -9,6 +9,7 @@ const biensImmobiliers = [
         lits: 4,
         bains: 2,
         surface: "25m²",
+        garage: "Parking Plage",
         description: "Un magnifique bungalow les pieds dans l'eau. Idéal pour les vacances ou un investissement locatif rentable. Vue imprenable sur le canal du Mozambique."
     },
     {
@@ -21,6 +22,7 @@ const biensImmobiliers = [
         lits: 2,
         bains: 1,
         surface: "85m²",
+        garage : "Parking tanimbary",
         description: "Authenticité et calme pour cette maison traditionnelle en terres rouges, rénovée avec goût. Proche de toutes commodités locales."
     },
     {
@@ -33,6 +35,7 @@ const biensImmobiliers = [
         lits: 0,
         bains: 0,
         surface: "1200m²",
+        garage: "trottoir",
         description: "Opportunité rare ! Potentiel énorme pour ce bâtiment historique situé dans le quartier noble de la haute ville. Terrain titré et borné."
     }
 ];
