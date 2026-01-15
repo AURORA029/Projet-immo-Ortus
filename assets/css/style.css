@@ -868,3 +868,27 @@ h1, h2, h3, p {
 .estimation-content p {
     color: #b0b0b0; /* Gris clair */
 }
+
+/* --- LE CORRECTIF MAGIQUE --- */
+
+/* 1. On dit à TOUT le site : "Écris en blanc !" */
+body, h1, h2, h3, h4, p, span, a {
+    color: white !important;
+}
+
+/* 2. SAUF à l'intérieur des cartes maisons (sinon le prix disparaît sur le fond blanc) */
+/* Ici, on force le texte à rester GRIS FONCÉ */
+.property-card h3, 
+.property-card h4, 
+.property-card p, 
+.property-card span, 
+.property-card i,
+.property-card div {
+    color: #333333 !important;
+}
+
+/* 3. SAUF quand tu écris dans la barre de recherche (on veut voir ce qu'on écrit) */
+input, select, textarea {
+    color: #333333 !important;
+}
+
