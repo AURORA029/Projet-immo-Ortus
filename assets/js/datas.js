@@ -10,6 +10,7 @@ const biensImmobiliers = [
         bains: 2,
         surface: "25m²",
         description: "Un magnifique bungalow les pieds dans l'eau. Idéal pour les vacances ou un investissement locatif rentable. Vue imprenable sur le canal du Mozambique.",
+        garage : "Parking plage",
         // C'est ici qu'on ajoute les caractéristiques uniques :
         caracteristiques: [
             "Vue Mer Panoramique",
@@ -30,6 +31,7 @@ const biensImmobiliers = [
         bains: 1,
         surface: "85m²",
         description: "Authenticité et calme pour cette maison traditionnelle en terres rouges, rénovée avec goût. Proche de toutes commodités locales.",
+        garage : " Parking tanimbary",
         caracteristiques: [
             "Charme authentique",
             "Jardin potager",
@@ -49,6 +51,7 @@ const biensImmobiliers = [
         bains: 0,
         surface: "1200m²",
         description: "Opportunité rare ! Potentiel énorme pour ce bâtiment historique situé dans le quartier noble de la haute ville. Terrain titré et borné.",
+        garage : " Trottoir",
         caracteristiques: [
             "Terrain Titré & Borné",
             "Zone constructible",
