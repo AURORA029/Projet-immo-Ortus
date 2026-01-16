@@ -1,11 +1,13 @@
 /* --- 1. VARIABLES & RESET --- */
 :root {
-    /* Palette inspirée de l'image Ortus */
-    --primary-dark: #1a103c;   /* Bleu nuit/Violet foncé (Fond galaxie) */
-    --primary-light: #2c2150;  /* Une teinte plus claire pour le survol */
-    --accent-blue: #4aa3df;    /* Le bleu clair du texte "ortus" */
-    --accent-hover: #358ac0;   /* Bleu un peu plus foncé pour hover */
-    --text-white: #ffffff;
+    /* NOUVELLE PALETTE LUXE */
+    --primary-dark: #051024;   /* Bleu Nuit Profond (Presque noir) */
+    --primary-light: #0F1E36;  /* Pour les éléments secondaires */
+    
+    --accent-gold: #D4AF37;    /* L'OR (Remplace le beige) */
+    --accent-blue: #4aa3df;    /* On garde le Cyan pour les prix (touche moderne) */
+    
+    --text-white: #f5f5f7;     /* Blanc cassé élégant */
     --text-grey: #e0e0e0;
     --font-main: 'Montserrat', sans-serif;
 }
@@ -13,22 +15,23 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* Très important pour gérer les largeurs */
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Montserrat', sans-serif; /* Assure-toi que c'est ta bonne police */
-    color: #f0f0f0; /* LE CHANGEMENT CLÉ : Texte blanc cassé par défaut */
+    font-family: var(--font-main);
+    color: var(--text-white);
     
-    /* Fond sombre avec image en transparence très forte (95%) pour la lisibilité */
-    background-image: linear-gradient(rgba(26, 16, 60, 0.95), rgba(26, 16, 60, 0.98)), 
+    /* MODIF : Dégradé Bleu Nuit profond */
+    background-image: linear-gradient(rgba(5, 16, 36, 0.96), rgba(5, 16, 36, 0.98)), 
                       url('../img/body-bg.jpg');
     
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; /* Parallaxe */
+    background-attachment: fixed;
     margin: 0;
 }
+
 
 
 
@@ -41,16 +44,26 @@ body {
 
 /* --- 2. NAVBAR --- */
 .navbar {
-    background-color: var(--primary-dark);
+    /* CORRECTION BUG OPAQUE : On utilise rgba pour la transparence */
+    background-color: rgba(5, 16, 36, 0.90); 
+    
+    /* Effet verre dépoli (Glassmorphism) */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    /* La touche Luxe : Fine ligne dorée en bas */
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2); 
+    
     height: 70px;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: sticky; /* La barre reste en haut quand on scrolle */
+    position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
+
 
 .nav-container {
     display: flex;
@@ -94,18 +107,20 @@ body {
 
 /* Bouton Contact dans le menu */
 .btn-contact {
-    background-color: var(--accent-blue);
-    color: var(--text-white);
+    background-color: var(--accent-gold); /* Devient OR */
+    color: var(--primary-dark); /* Texte foncé pour contraste */
     padding: 10px 20px;
-    border-radius: 4px; /* Coins légèrement arrondis comme Century 21 */
+    border-radius: 4px;
     text-decoration: none;
-    font-weight: 600;
-    transition: background 0.3s;
+    font-weight: 700;
+    transition: all 0.3s;
 }
 
 .btn-contact:hover {
-    background-color: var(--accent-hover);
+    background-color: #f2d06b; /* Or plus clair */
+    transform: translateY(-2px);
 }
+
 
 /* --- 3. HERO SECTION --- */
 .hero {
@@ -148,17 +163,18 @@ body {
     margin-bottom: 40px;
 }
 
-/* --- 4. BARRE DE RECHERCHE (Style Century 21 mais couleurs Ortus) --- */
+/* --- 4. BARRE DE RECHERCHE --- */
 .search-bar {
-    background-color: var(--text-white);
+    background-color: #ffffff; /* Fond blanc pur */
     padding: 10px;
     border-radius: 5px;
     display: flex;
-    flex-direction: column; /* Mobile first : éléments les uns sous les autres */
+    flex-direction: column;
     gap: 10px;
     max-width: 800px;
     margin: 0 auto;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid var(--accent-gold); /* Cadre doré fin */
 }
 
 .input-group {
@@ -167,12 +183,16 @@ body {
     padding: 10px;
     background: #f9f9f9;
     border-radius: 4px;
-    flex: 1; /* Prend toute la place dispo */
+    flex: 1;
+    position: relative; /* Important pour le z-index */
 }
 
+/* CORRECTION BUG ICÔNES */
 .input-group i {
-    color: var(--primary-dark);
-    margin-right: 10px;
+    color: var(--accent-gold) !important; /* Force la couleur OR */
+    margin-right: 15px;
+    font-size: 1.1rem;
+    z-index: 10; /* Passe au premier plan */
 }
 
 .input-group input, .input-group select {
@@ -182,13 +202,13 @@ body {
     font-family: inherit;
     font-size: 1rem;
     outline: none;
-    color: #555;
+    color: #333; /* Texte bien noir */
 }
 
 .btn-search {
-    background-color: var(--primary-dark); /* Fond sombre */
-    color: var(--text-white);
-    border: none;
+    background-color: var(--primary-dark);
+    color: var(--accent-gold); /* Texte doré sur fond bleu */
+    border: 1px solid var(--accent-gold);
     padding: 15px 30px;
     font-size: 1rem;
     font-weight: bold;
@@ -199,8 +219,10 @@ body {
 }
 
 .btn-search:hover {
-    background-color: var(--accent-blue); /* Devient bleu cyan au survol */
+    background-color: var(--accent-gold);
+    color: var(--primary-dark);
 }
+
 
 /* --- RESPONSIVE MOBILE (Nouveau Code) --- */
 @media (max-width: 768px) {
