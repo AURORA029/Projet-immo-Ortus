@@ -32,6 +32,10 @@ body {
     margin: 0;
 }
 
+html, body {
+    max-width: 100%;
+    overflow-x: hidden; /* Coupe tout ce qui dépasse sur les côtés */
+}
 
 
 
@@ -1050,5 +1054,12 @@ input, textarea, select {
     z-index: 10; /* Pour être sûr qu'il passe au-dessus de l'image */
 }
 
+@media (max-width: 768px) {
+    body {
+        /* Sur mobile, on laisse l'image défiler normalement pour éviter les bugs */
+        background-attachment: scroll !important; 
+        background-position: center top;
+    }
+}
 
 
