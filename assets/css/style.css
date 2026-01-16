@@ -978,6 +978,12 @@ input, textarea, select {
     border-bottom: 2px solid rgba(255,255,255,0.2) !important; /* Change la ligne de soulignement en clair */
 }
 
+/* --- CORRECTIF BADGES (Vente / Location) --- */
+/* On force le texte des badges à être BLANC, même à l'intérieur des cartes */
+.property-card .badge {
+    color: #ffffff !important;
+    z-index: 10; /* Pour être sûr qu'il passe au-dessus de l'image */
+}
 
 
 
