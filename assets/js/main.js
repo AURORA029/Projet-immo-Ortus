@@ -24,47 +24,38 @@ document.addEventListener('DOMContentLoaded', () => {
 /* --- GESTION DU TITRE DYNAMIQUE (RECHERCHE) --- */
 document.addEventListener('DOMContentLoaded', function() {
     
-    // 1. On récupère les paramètres de l'URL (ex: ?ville=Mahajanga&type=Maison)
+    // 1. On récupère les infos
     const urlParams = new URLSearchParams(window.location.search);
     const type = urlParams.get('type');
     const ville = urlParams.get('ville');
-    const filtre = urlParams.get('filtre'); // Pour vente/location
+    const filtre = urlParams.get('filtre');
 
-    // 2. On cible le titre de la page (H2 dans section-title)
-    const titleElement = document.querySelector('.section-title h2');
-    const descElement = document.querySelector('.section-title p');
+    // 2. CORRECTION ICI : On cible le bon ID de ton HTML (h1 id="page-title")
+    const titleElement = document.getElementById('page-title');
 
-    // Sécurité : Si on n'est pas sur une page avec un titre, on ne fait rien
+    // Sécurité
     if (!titleElement) return;
 
-    // Fonction pour mettre la 1ère lettre en majuscule (plus joli)
+    // Fonction Majuscule
     const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
 
-    // CAS A : L'utilisateur a fait une RECHERCHE précise
+    // CAS A : Recherche
     if (type || ville) {
         let textResultat = "Résultats pour : ";
 
         if (type && ville) {
-            // Ex: "Maison à Mahajanga"
             textResultat += `${capitalize(type)} à ${capitalize(ville)}`;
         } else if (type) {
-            // Ex: "Terrain"
             textResultat += `${capitalize(type)}`;
         } else if (ville) {
-            // Ex: "Biens à Mahajanga"
             textResultat += `Biens à ${capitalize(ville)}`;
         }
 
-        // On remplace le texte "Tous nos biens" par la recherche
+        // On applique le texte
         titleElement.textContent = textResultat;
-        
-        // On change aussi la petite phrase en dessous
-        if (descElement) {
-            descElement.textContent = "Voici les opportunités correspondant à vos critères.";
-        }
     }
     
-    // CAS B : L'utilisateur a cliqué sur le MENU (Acheter / Louer)
+    // CAS B : Filtre Menu
     else if (filtre) {
         if (filtre === 'vente') {
             titleElement.textContent = "Nos biens à l'Achat";
@@ -73,3 +64,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
