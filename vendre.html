@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendre mon bien - Ortus</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">ORTUS<span class="dot">.</span></a>
+            <a href="index.html" class="nav-link">Retour Accueil</a>
+        </div>
+    </nav>
+
+    <div class="container section-padding">
+        <div class="estimation-banner" style="background: rgba(26, 16, 60, 0.9); margin: 0 auto; max-width: 800px; display:block;">
+            <h1 style="color:#c5a065; text-align:center; margin-bottom:20px;">Mettre mon bien en vente</h1>
+            <p style="color:white; text-align:center; margin-bottom:40px;">
+                Vous souhaitez vendre ? Remplissez ce formulaire et un expert Ortus vous contactera sous 24h pour organiser une visite et prendre les photos.
+            </p>
+
+            <form style="display:flex; flex-direction:column; gap:15px;">
+                <input type="text" placeholder="Votre Nom complet" style="padding:15px; border-radius:4px; border:none;">
+                <input type="tel" placeholder="Votre Téléphone" style="padding:15px; border-radius:4px; border:none;">
+                <input type="text" placeholder="Ville du bien / Quartier" style="padding:15px; border-radius:4px; border:none;">
+                
+                <select style="padding:15px; border-radius:4px; border:none; height:50px;">
+                    <option value="">Type de bien</option>
+                    <option value="maison">Maison / Villa</option>
+                    <option value="appart">Appartement</option>
+                    <option value="terrain">Terrain</option>
+                </select>
+
+                <textarea rows="5" placeholder="Description rapide du bien (Surface, nb de pièces...)" style="padding:15px; border-radius:4px; border:none;"></textarea>
+
+                <button type="button" class="btn-estimation" style="margin-top:20px; text-align:center; cursor:pointer;">
+                    Envoyer ma demande
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
