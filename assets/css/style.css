@@ -458,21 +458,26 @@ body {
     background-color: var(--primary-dark);
     color: white;
 }
-/* --- 9. FOOTER --- */
+/* --- 9. FOOTER (VERSION LUXE) --- */
 .footer {
-    background-color: var(--primary-dark);
-    color: #bbb; /* Gris clair pour le texte, moins agressif que le blanc pur */
+    /* 1. Fond très sombre (presque noir) pour ancrer la page */
+    background-color: #020610; 
+    
+    /* 2. La ligne dorée fine au-dessus */
+    border-top: 1px solid var(--accent-gold);
+    
+    color: #bbb; /* Texte gris clair */
     padding-top: 60px;
-    margin-top: 50px; /* Espace avec la section précédente */
+    margin-top: 50px;
 }
 
 .footer-grid {
     display: grid;
-    /* Responsive automatique : colonnes de min 250px */
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 40px;
     padding-bottom: 40px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    /* Ligne de séparation subtile en bas */
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
 }
 
 .footer-col h3 {
@@ -480,7 +485,11 @@ body {
     font-size: 1.5rem;
     margin-bottom: 20px;
 }
-.footer-col h3 .dot { color: var(--accent-blue); }
+
+/* Le point du logo devient OR */
+.footer-col h3 .dot { 
+    color: var(--accent-gold); 
+}
 
 .footer-col h4 {
     color: var(--text-white);
@@ -496,27 +505,31 @@ body {
     font-size: 0.95rem;
 }
 
-/* Liens sociaux */
+/* --- LIENS SOCIAUX --- */
 .social-links a {
     display: inline-flex;
     justify-content: center;
     align-items: center;
     width: 40px;
     height: 40px;
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255,255,255,0.05);
     color: var(--text-white);
-    border-radius: 50%; /* Rond parfait */
+    border-radius: 50%;
     margin-right: 10px;
     text-decoration: none;
     transition: 0.3s;
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
+/* Au survol : Fond OR et icône FONCÉE */
 .social-links a:hover {
-    background-color: var(--accent-blue);
+    background-color: var(--accent-gold);
+    color: var(--primary-dark);
     transform: translateY(-3px);
+    border-color: var(--accent-gold);
 }
 
-/* Listes liens et contact */
+/* --- LISTES & CONTACT --- */
 .footer-links, .footer-contact {
     list-style: none;
 }
@@ -531,15 +544,17 @@ body {
     transition: 0.3s;
 }
 
+/* Lien qui devient OR au survol */
 .footer-links a:hover {
-    color: var(--accent-blue);
-    padding-left: 5px; /* Petit effet de mouvement vers la droite */
+    color: var(--accent-gold);
+    padding-left: 5px;
 }
 
+/* Les icônes de contact (téléphone, map) en OR */
 .footer-contact i {
-    color: var(--accent-blue);
+    color: var(--accent-gold);
     margin-right: 10px;
-    width: 20px; /* Pour aligner le texte verticalement même si l'icône change */
+    width: 20px;
 }
 
 /* Copyright */
@@ -547,7 +562,9 @@ body {
     padding: 20px 0;
     text-align: center;
     font-size: 0.9rem;
+    color: #666; /* Un peu plus discret */
 }
+
 /* --- 10. PAGE DÉTAIL --- */
 
 /* En-tête du bien */
