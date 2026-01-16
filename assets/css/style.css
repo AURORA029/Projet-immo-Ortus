@@ -77,18 +77,31 @@ body {
     padding: 0 20px;
 }
 
-/* --- 2. NAVBAR --- */
+/* --- NAVIGATION (Header) --- */
 .navbar {
-    background-color: var(--primary-dark);
-    height: 70px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    position: sticky; /* La barre reste en haut quand on scrolle */
+    padding: 1rem 5%;
+    position: fixed; /* Reste collé en haut */
+    width: 100%;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    
+    /* LE CORRECTIF EST ICI : */
+    /* Au lieu d'une couleur unie, on met du Noir/Bleu à 90% d'opacité */
+    background: rgba(2, 6, 16, 0.9); 
+    
+    /* On réactive le flou d'arrière-plan (l'effet verre dépoli) */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Pour Safari/iPhone */
+    
+    /* Petit détail luxe : une ligne dorée très fine en bas */
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    
+    transition: var(--transition);
 }
+
 
 .nav-container {
     display: flex;
