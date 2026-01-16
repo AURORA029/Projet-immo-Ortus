@@ -772,11 +772,16 @@ body {
     line-height: 1.4;
 }
 
-/* Le bouton doré/beige (Style Century 21 adapté) */
+/* --- MODIFICATION DES BOUTONS PROMO --- */
 .btn-promo {
     display: inline-block;
-    background-color: #c5a065; /* Une couleur "Or/Sable" classe */
-    color: var(--primary-dark);
+    
+    /* CHANGEMENT ICI : On utilise la variable OR */
+    background-color: var(--accent-gold); 
+    
+    /* On force le texte en bleu foncé pour le contraste */
+    color: var(--primary-dark) !important; 
+    
     padding: 12px 25px;
     text-decoration: none;
     font-weight: 700;
@@ -786,7 +791,9 @@ body {
 }
 
 .btn-promo:hover {
-    background-color: #dcc293; /* Or plus clair au survol */
+    /* Au survol, on éclaircit un peu l'or, ou on met une couleur fixe si tu préfères */
+    background-color: #f2d06b; /* Un or un peu plus clair */
+    color: var(--primary-dark) !important;
     transform: translateY(-2px);
 }
 
@@ -837,23 +844,36 @@ body {
     margin: 0 auto; /* Centré */
 }
 
-/* LE BOUTON (Action) */
+
+/* --- MODIFICATION DU BOUTON ESTIMATION --- */
 .btn-estimation {
-    background-color: #c5a065; /* Fond Or */
-    color: #1a103c !important; /* Texte Violet Foncé (contraste fort) */
+    /* CHANGEMENT ICI : On utilise la variable OR */
+    background-color: var(--accent-gold);
+    
+    /* Texte foncé */
+    color: var(--primary-dark) !important;
+    
     padding: 15px 35px;
     font-weight: bold;
     border-radius: 50px;
     text-decoration: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: inline-block;
+    display: inline-flex; /* Pour bien aligner l'icône */
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
 }
 
 .btn-estimation:hover {
-    transform: translateY(-3px); /* Le bouton monte un peu */
-    box-shadow: 0 0 15px rgba(197, 160, 101, 0.6); /* Il brille */
-    background-color: #d4af7a; /* Or un peu plus clair */
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.6); /* Ombre dorée */
+    background-color: #f2d06b; /* Or plus clair */
 }
+
+/* On s'assure que l'icône flèche dans le bouton est aussi de la bonne couleur */
+.btn-estimation i {
+    color: var(--primary-dark) !important;
+}
+
 
 /* VERSION PC (Écrans larges) */
 @media (min-width: 768px) {
