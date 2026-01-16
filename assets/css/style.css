@@ -825,15 +825,21 @@ body {
     margin-top: 20px;
 }
 
-/* LE TITRE (La question) */
+/* --- MODIFICATION DU TITRE ESTIMATION --- */
 .estimation-content h2 {
-    color: #c5a065 !important; /* On met le titre en OR pour attirer l'oeil */
+    /* CHANGEMENT ICI : On force l'utilisation de la variable OR */
+    color: var(--accent-gold) !important; 
+    
     font-size: 1.8rem;
     font-weight: 700;
     margin-bottom: 15px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    
+    /* Optionnel : Ajoute une petite ombre dorée pour le faire briller */
+    text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
 }
+
 
 /* LE TEXTE (L'explication) */
 .estimation-content p {
