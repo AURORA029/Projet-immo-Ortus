@@ -1,14 +1,52 @@
-/* --- 1. VARIABLES & RESET --- */
 :root {
-    /* Palette inspirée de l'image Ortus */
-    --primary-dark: #1a103c;   /* Bleu nuit/Violet foncé (Fond galaxie) */
-    --primary-light: #2c2150;  /* Une teinte plus claire pour le survol */
-    --accent-blue: #4aa3df;    /* Le bleu clair du texte "ortus" */
-    --accent-hover: #358ac0;   /* Bleu un peu plus foncé pour hover */
-    --text-white: #ffffff;
-    --text-grey: #e0e0e0;
-    --font-main: 'Montserrat', sans-serif;
+    /* --- NOUVELLE PALETTE LUXE --- */
+    
+    /* Fond principal : Un bleu nuit très profond, sérieux et élégant */
+    --primary-color: #051024; 
+    
+    /* Fond secondaire (cartes) : Un bleu légèrement plus clair pour le contraste */
+    --secondary-color: #0F1E36; 
+    
+    /* L'Accent : L'Or (Gold) au lieu du cyan/violet */
+    --accent-color: #D4AF37; 
+    
+    /* Variante Or plus clair pour les survols */
+    --accent-light: #F2D06B;
+
+    /* Texte : On garde un blanc cassé, plus doux que le blanc pur */
+    --text-light: #F5F5F7;
+    --text-muted: #AAB2BD;
+
+    /* On garde ton bleu cyan pour les actions secondaires ou badges */
+    --blue-action: #4aa3df;
+    
+    /* Configuration générale */
+    --max-width: 1200px;
+    --border-radius: 8px; /* On réduit un peu l'arrondi pour faire plus "carré/serieux" */
+    --transition: all 0.3s ease;
 }
+
+/* --- AJOUT BONUS : EFFET TEXTE DORÉ --- */
+/* Ajoute cette classe n'importe où (h1, h2) pour que le texte brille */
+.text-gold {
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+/* --- PETIT AJUSTEMENT DES BOUTONS --- */
+/* On force les boutons à être dorés maintenant */
+.btn-search, .btn-card, .btn-promo, .btn-estimation, .btn-contact-full {
+    background: var(--accent-color) !important;
+    color: var(--primary-color) !important; /* Texte foncé sur fond or */
+    font-weight: 700;
+}
+
+.btn-search:hover, .btn-card:hover {
+    background: var(--accent-light) !important;
+}
+
 
 * {
     margin: 0;
