@@ -1,37 +1,66 @@
-// 1. On récupère le paramètre "filtre" dans l'URL
+// 1. On récupère TOUS les paramètres de l'URL
 const params = new URLSearchParams(window.location.search);
-const filtre = params.get('filtre'); // peut être "vente", "location" ou "all"
+const filtreMode = params.get('filtre'); // "vente" ou "location" (depuis le menu)
+const rechercheVille = params.get('ville'); // (depuis la barre de recherche)
+const rechercheType = params.get('type');   // (depuis la barre de recherche)
 
 const container = document.getElementById('listing-container');
 const titleElement = document.getElementById('page-title');
 
-// 2. On filtre les données
-let biensAffiche = [];
+// 2. Fonction principale de filtrage
+function filtrerBiens() {
+    // Au début, on prend TOUS les biens
+    let resultats = biensImmobiliers;
 
-if (filtre === 'vente') {
-    titleElement.innerText = "Acheter un bien";
-    // On garde uniquement ceux qui ont le badge "Vente"
-    biensAffiche = biensImmobiliers.filter(b => b.badge === "Vente");
-} 
-else if (filtre === 'location') {
-    titleElement.innerText = "Louer un bien";
-    // On garde uniquement ceux qui ont le badge "Location"
-    biensAffiche = biensImmobiliers.filter(b => b.badge === "Location");
-} 
-else {
-    // Par défaut (ou si filtre=all), on montre tout
-    titleElement.innerText = "Tous nos biens immobiliers";
-    biensAffiche = biensImmobiliers;
+    // --- FILTRE 1 : Vente ou Location (via le Menu) ---
+    if (filtreMode === 'vente') {
+        titleElement.innerText = "Acheter un bien";
+        resultats = resultats.filter(b => b.badge === "Vente");
+    } 
+    else if (filtreMode === 'location') {
+        titleElement.innerText = "Louer un bien";
+        resultats = resultats.filter(b => b.badge === "Location");
+    }
+
+    // --- FILTRE 2 : La Ville (via la Barre de recherche) ---
+    if (rechercheVille) {
+        // On met tout en minuscule pour comparer (ex: "Mahajanga" == "mahajanga")
+        const villeClean = rechercheVille.toLowerCase().trim();
+        if (villeClean !== "") {
+            resultats = resultats.filter(b => b.ville.toLowerCase().includes(villeClean));
+            titleElement.innerText = `Recherche : "${rechercheVille}"`;
+        }
+    }
+
+    // --- FILTRE 3 : Le Type (Maison, Terrain...) ---
+    if (rechercheType) {
+        const typeClean = rechercheType.toLowerCase().trim();
+        if (typeClean !== "") {
+            // On regarde si le TITRE contient le mot (ex: "Maison" dans "Maison traditionnelle")
+            resultats = resultats.filter(b => b.titre.toLowerCase().includes(typeClean));
+        }
+    }
+
+    // 3. Affichage des résultats
+    afficherResultats(resultats);
 }
 
-// 3. On génère le HTML (Même logique que l'accueil)
-container.innerHTML = ''; // On vide le "Chargement..."
+// Fonction pour générer le HTML (Même qu'avant, juste isolée pour être propre)
+function afficherResultats(liste) {
+    container.innerHTML = ''; // On vide
 
-if (biensAffiche.length === 0) {
-    container.innerHTML = '<h3 style="color:white;">Aucun bien ne correspond à cette catégorie pour le moment.</h3>';
-} else {
-    biensAffiche.forEach(bien => {
-        // Choix couleur badge
+    if (liste.length === 0) {
+        container.innerHTML = `
+            <div style="text-align:center; color:white; grid-column: 1/-1;">
+                <h3 style="margin-bottom:10px;">Aucun résultat trouvé.</h3>
+                <p>Essayez une autre recherche ou parcourez tous nos biens.</p>
+                <a href="biens.html" class="btn-search" style="display:inline-block; margin-top:20px; text-decoration:none;">Tout voir</a>
+            </div>
+        `;
+        return;
+    }
+
+    liste.forEach(bien => {
         const badgeClass = bien.badge === "Vente" ? "badge-sale" : "badge-rent";
         
         const carteHTML = `
@@ -58,3 +87,7 @@ if (biensAffiche.length === 0) {
         container.innerHTML += carteHTML;
     });
 }
+
+// On lance le moteur !
+filtrerBiens();
+
