@@ -35,26 +35,28 @@
             <h1>Créateur d'Opportunités</h1>
             <p>Trouvez le bien immobilier qui correspond à vos rêves.</p>
 
-            <form class="search-bar">
-                <div class="input-group">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <input type="text" placeholder="Ville, Code postal...">
-                </div>
-                
-                <div class="input-group border-left">
-                    <i class="fas fa-home"></i>
-                    <select>
-                        <option value="">Type de bien</option>
-                        <option value="maison">Maison</option>
-                        <option value="appartement">Appartement</option>
-                        <option value="terrain">Terrain</option>
-                    </select>
-                </div>
+    <form class="search-bar" action="biens.html" method="GET">
+    
+     <div class="input-group">
+        <i class="fas fa-map-marker-alt"></i>
+        <input type="text" name="ville" placeholder="Ville (ex: Mahajanga)...">
+     </div>
+    
+     <div class="input-group border-left">
+        <i class="fas fa-home"></i>
+        <select name="type">
+            <option value="">Type de bien</option> <option value="maison">Maison / Villa</option>
+            <option value="appartement">Appartement</option>
+            <option value="terrain">Terrain</option>
+            <option value="bungalow">Bungalow</option>
+        </select>
+    </div>
 
-                <button type="submit" class="btn-search">
-                    <i class="fas fa-search"></i> Rechercher
-                </button>
-            </form>
+    <button type="submit" class="btn-search">
+        <i class="fas fa-search"></i> Rechercher
+    </button>
+ </form>
+
         </div>
     </header>
 
