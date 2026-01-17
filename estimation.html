@@ -17,7 +17,84 @@
 
     <div class="container section-padding" style="text-align:center; padding-top: 100px;">
         <h1>Estimation en ligne</h1>
-        <p>Formulaire d'estimation à venir...</p>
+        <section class="section-padding" style="background-color: #f4f4f4; min-height: 80vh;">
+    <div class="container">
+        
+        <div class="section-title">
+            <h2>Estimation Confidentielle</h2>
+            <p>Renseignez les caractéristiques de votre bien. Nos experts analysent le marché de votre quartier pour vous fournir une valeur précise sous 24h.</p>
+        </div>
+
+        <div class="contact-form" style="max-width: 700px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-top: 5px solid #D4AF37;">
+            
+            <form action="https://formspree.io/f/TON_CODE_FORMSPREE_ICI" method="POST">
+                
+                <div class="input-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 10px; color: #020610;">Type de bien</label>
+                    <select name="type_bien" style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background: #fff;">
+                        <option value="maison">Maison / Villa</option>
+                        <option value="appartement">Appartement</option>
+                        <option value="terrain">Terrain</option>
+                        <option value="local">Local Commercial</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 10px; color: #020610;">Ville / Quartier</label>
+                        <input type="text" name="localisation" placeholder="Ex: Mahajanga, Amborovy..." required 
+                               style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                    </div>
+                    <div style="flex: 1; min-width: 250px;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 10px; color: #020610;">Surface (m²)</label>
+                        <input type="number" name="surface" placeholder="Ex: 150" required 
+                               style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 10px; color: #020610;">Nombre de pièces</label>
+                        <input type="number" name="pieces" placeholder="Ex: 4" 
+                               style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                    </div>
+                    <div style="flex: 1; min-width: 250px;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 10px; color: #020610;">État du bien</label>
+                        <select name="etat" style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background: #fff;">
+                            <option value="excellent">Excellent état</option>
+                            <option value="bon">Bon état</option>
+                            <option value="travaux">Travaux à prévoir</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="background: #f9f9f9; padding: 20px; border-radius: 5px; margin-bottom: 25px;">
+                    <h4 style="color: #D4AF37; margin-bottom: 15px;">Vos coordonnées (pour l'envoi du dossier)</h4>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <input type="text" name="nom" placeholder="Votre Nom" required 
+                               style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 10px;">
+                        <input type="tel" name="telephone" placeholder="Votre Téléphone (WhatsApp)" required 
+                               style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%; padding: 18px; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                    <i class="fas fa-calculator"></i> RECEVOIR MON ESTIMATION GRATUITE
+                </button>
+
+                <p style="font-size: 0.8rem; color: #888; text-align: center; margin-top: 15px;">
+                    <i class="fas fa-lock"></i> Vos données restent 100% confidentielles.
+                </p>
+
+            </form>
+        </div>
+    </div>
+</section>
+
     </div>
 <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 
