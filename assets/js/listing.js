@@ -1,25 +1,30 @@
-/* * LISTING.JS - VERSION FINALE (BOUTON VISIBLE 👀)
- * Gère : Accueil, Recherche, Affichage, Images, Formulaires
+/* LISTING.JS - VERSION FINALE (PAGINATION + CONTRASTE GARANTI 👁️)
+ * - Gère la pagination (Page 1, 2, 3...)
+ * - Force le design "Dark Luxe" pour éviter les textes invisibles
  */
 
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8KwzX3W0ONKYZray3wrDi5ReUBfw0-aSgvXSl7NaWNlvdSo9cKr3Y9Vh0k5kd_dHwchsCKfYE8d3/pub?output=csv";
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mvzzklrl"; 
 
-let allProperties = []; 
+// --- RÉGLAGES ---
+const ITEMS_PER_PAGE = 9; // 9 Maisons par page
+let currentPage = 1;
+let currentProperties = []; 
+let allProperties = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchProperties();
 });
 
-// 1. CHARGEMENT
+// 1. CHARGEMENT DES DONNÉES
 async function fetchProperties() {
     const container = document.getElementById('listing-container');
-    
     try {
         const response = await fetch(SHEET_URL);
         const data = await response.text();
         allProperties = csvToJSON(data); 
         
+        // Gestion du filtre venant de l'accueil
         const urlParams = new URLSearchParams(window.location.search);
         let filterFromHome = urlParams.get('filtre');
 
@@ -29,12 +34,14 @@ async function fetchProperties() {
             if(searchInput) searchInput.value = filterFromHome; 
             filterProperties(filterFromHome); 
         } else {
-            displayProperties(allProperties);
+            // Affichage par défaut (Page 1)
+            currentProperties = allProperties;
+            renderPage(1);
         }
 
     } catch (error) {
         console.error('Erreur:', error);
-        container.innerHTML = '<p style="text-align:center; color:red;">Erreur de lecture des données.</p>';
+        container.innerHTML = '<p style="text-align:center; color:white;">Erreur de lecture des données.</p>';
     }
 }
 
@@ -48,130 +55,165 @@ function filterProperties(query = null) {
     inputVal = inputVal.toLowerCase().trim();
     
     if (!inputVal) {
-        displayProperties(allProperties);
-        return;
+        currentProperties = allProperties;
+    } else {
+        currentProperties = allProperties.filter(p => {
+            const ville = p.ville ? p.ville.toLowerCase() : '';
+            const titre = p.titre ? p.titre.toLowerCase() : '';
+            const type = p.type ? p.type.toLowerCase() : '';
+            const desc = p.description ? p.description.toLowerCase() : '';
+            const carac = p.caracteristiques ? p.caracteristiques.toLowerCase() : '';
+            const prix = p.prix ? p.prix.toLowerCase() : '';
+
+            return ville.includes(inputVal) || titre.includes(inputVal) || type.includes(inputVal) || 
+                   desc.includes(inputVal) || carac.includes(inputVal) || prix.includes(inputVal);
+        });
     }
-
-    const filtered = allProperties.filter(p => {
-        const ville = p.ville ? p.ville.toLowerCase() : '';
-        const titre = p.titre ? p.titre.toLowerCase() : '';
-        const type = p.type ? p.type.toLowerCase() : '';
-        const desc = p.description ? p.description.toLowerCase() : '';
-        const carac = p.caracteristiques ? p.caracteristiques.toLowerCase() : '';
-        const prix = p.prix ? p.prix.toLowerCase() : '';
-
-        return ville.includes(inputVal) ||
-               titre.includes(inputVal) ||
-               type.includes(inputVal) ||
-               desc.includes(inputVal) ||
-               carac.includes(inputVal) ||
-               prix.includes(inputVal);
-    });
-    
-    displayProperties(filtered);
+    // Retour page 1 après recherche
+    renderPage(1);
 }
 
-// 3. AFFICHAGE
-function displayProperties(properties) {
+// 3. AFFICHAGE DES PAGES (PAGINATION)
+function renderPage(page) {
+    currentPage = page;
     const container = document.getElementById('listing-container');
+    const paginationContainer = document.getElementById('pagination-container');
+    
     container.innerHTML = '';
+    paginationContainer.innerHTML = '';
 
-    if (properties.length === 0) {
-        container.innerHTML = '<div style="text-align:center; width:100%; padding:50px;"><h3 style="color:white;">Aucun résultat</h3><p style="color:#aaa;">Essayez un autre mot clé.</p><button onclick="displayProperties(allProperties); document.getElementById(\'searchInput\').value=\'\';" style="margin-top:20px; padding:10px 20px; background:#D4AF37; border:none; cursor:pointer;">Voir tout les biens</button></div>';
+    if (currentProperties.length === 0) {
+        container.innerHTML = '<div style="text-align:center; width:100%; padding:50px;"><h3 style="color:white;">Aucun résultat</h3><button onclick="document.getElementById(\'searchInput\').value=\'\'; filterProperties();" style="margin-top:20px; padding:10px 20px; background:#D4AF37; border:none; cursor:pointer;">Voir tout</button></div>';
         return;
     }
 
-    properties.forEach(p => {
+    // Calcul des éléments à afficher
+    const start = (page - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    const paginatedItems = currentProperties.slice(start, end);
+
+    paginatedItems.forEach(p => {
         container.appendChild(createPropertyCard(p));
     });
 
     attachFormHandlers();
+    renderPaginationButtons();
+    
+    // Scroll doux vers le haut
+    window.scrollTo({ top: 300, behavior: 'smooth' });
 }
 
-// 4. DESIGN CARTE (BOUTON CORRIGÉ ICI 👇)
+function renderPaginationButtons() {
+    const paginationContainer = document.getElementById('pagination-container');
+    const totalPages = Math.ceil(currentProperties.length / ITEMS_PER_PAGE);
+
+    if (totalPages <= 1) return;
+
+    // Bouton Précédent
+    if (currentPage > 1) {
+        const btnPrev = document.createElement('button');
+        btnPrev.innerHTML = '<i class="fas fa-chevron-left"></i>';
+        btnPrev.style.cssText = "padding:10px 15px; background:#222; color:white; border:none; cursor:pointer; margin:0 5px; border-radius:4px;";
+        btnPrev.onclick = () => renderPage(currentPage - 1);
+        paginationContainer.appendChild(btnPrev);
+    }
+
+    // Boutons Numéros
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.innerText = i;
+        if (i === currentPage) {
+            btn.style.cssText = "padding:10px 15px; background:#D4AF37; color:black; border:none; font-weight:bold; margin:0 5px; border-radius:4px;";
+        } else {
+            btn.style.cssText = "padding:10px 15px; background:#222; color:white; border:none; cursor:pointer; margin:0 5px; border-radius:4px;";
+            btn.onclick = () => renderPage(i);
+        }
+        paginationContainer.appendChild(btn);
+    }
+
+    // Bouton Suivant
+    if (currentPage < totalPages) {
+        const btnNext = document.createElement('button');
+        btnNext.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        btnNext.style.cssText = "padding:10px 15px; background:#222; color:white; border:none; cursor:pointer; margin:0 5px; border-radius:4px;";
+        btnNext.onclick = () => renderPage(currentPage + 1);
+        paginationContainer.appendChild(btnNext);
+    }
+}
+
+// 4. DESIGN CARTE (LUXE DARK MODE FORCE 🎨)
 function createPropertyCard(p) {
     const div = document.createElement('div');
     div.className = 'property-card';
     
+    // ON FORCE LE FOND NOIR ICI 👇 (Impossible que le texte soit illisible)
+    div.style.cssText = "background-color: #121212; border: 1px solid #333; overflow: hidden; border-radius: 8px; margin-bottom: 20px;";
+    
     let badgesHtml = '';
     if (p.gamme && p.gamme.toLowerCase().includes('prestige')) {
-        badgesHtml += `<span class="badge" style="background:#D4AF37; color:#000;">💎 PRESTIGE</span>`;
+        badgesHtml += `<span class="badge" style="background:#D4AF37; color:#000; position:absolute; top:10px; left:10px; padding:5px 10px; font-weight:bold; z-index:2;">💎 PRESTIGE</span>`;
     }
     if (p.categorie) {
         let top = p.gamme && p.gamme.toLowerCase().includes('prestige') ? '40px' : '10px';
-        badgesHtml += `<span class="badge status" style="top:${top};">${p.categorie}</span>`;
+        badgesHtml += `<span class="badge status" style="background:rgba(0,0,0,0.7); color:white; position:absolute; top:${top}; left:10px; padding:5px 10px; z-index:2;">${p.categorie}</span>`;
     }
 
-    let garageHtml = '';
-    if (p.stationnement && p.stationnement.length > 0) {
-        garageHtml = `<span><i class="fas fa-car" style="color:#D4AF37;"></i> ${p.stationnement}</span>`;
-    }
-
-    let videoBtn = '';
-    let videoLink = p.video ? p.video.trim() : '';
-    if (videoLink && videoLink.startsWith('http')) {
-        videoBtn = `<a href="${videoLink}" target="_blank" class="btn-video" style="display:flex; align-items:center; justify-content:center; gap:10px; margin-top:10px; color:#D4AF37; border:1px solid #D4AF37; padding:8px; border-radius:4px; text-decoration:none;"><i class="fas fa-play-circle"></i> VISITE VIDÉO</a>`;
-    }
-
-        // --- Liste des atouts (CORRIGÉ : TEXTE NOIR) ---
+    // Liste des atouts (Texte CLAIR sur fond FONCÉ)
     let featuresList = '';
     if (p.caracteristiques) {
         let cleanFeat = p.caracteristiques.replace(/\n/g, ',');
         const feats = cleanFeat.split(',').slice(0, 3); 
-        
-        // 👉 On force la couleur en NOIR (#000) pour que ce soit bien visible sur fond blanc
         featuresList = feats.map(f => 
-            `<li style="color: #000000; margin-bottom: 5px; display:flex; align-items:center; font-weight: 500;">
+            `<li style="color: #CCCCCC; margin-bottom: 5px; display:flex; align-items:center; font-size:0.9rem;">
                 <i class="fas fa-check" style="color:#D4AF37; margin-right:8px;"></i> ${f.trim()}
             </li>`
         ).join('');
     }
 
-
     div.innerHTML = `
-        <div class="property-image" style="height:250px; overflow:hidden;">
+        <div class="property-image" style="height:250px; position:relative; overflow:hidden;">
             ${badgesHtml}
             <a href="detail.html?id=${p.id}">
-                <img src="${p.image}" alt="${p.titre}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='assets/images/default.jpg'">
+                <img src="${p.image}" alt="${p.titre}" style="width:100%; height:100%; object-fit:cover; transition:0.3s;" onerror="this.src='assets/images/default.jpg'">
             </a>
         </div>
-        <div class="property-details">
-            <h3 style="margin-bottom:5px;">
-                <a href="detail.html?id=${p.id}" style="text-decoration:none; color:white;">${p.titre}</a>
+        
+        <div class="property-details" style="padding: 20px;">
+            <h3 style="margin-bottom:10px; margin-top:0;">
+                <a href="detail.html?id=${p.id}" style="text-decoration:none; color: #FFFFFF; font-size:1.3rem;">${p.titre}</a>
             </h3>
-            <p class="location" style="color:#888; font-size:0.9rem;"><i class="fas fa-map-marker-alt"></i> ${p.ville}</p>
-            <div class="features">
-                <span><i class="fas fa-door-open"></i> ${p.pieces} p.</span>
-                <span><i class="fas fa-ruler-combined"></i> ${p.surface} m²</span>
-                ${garageHtml}
+            
+            <p class="location" style="color:#AAAAAA; font-size:0.9rem; margin-bottom:15px;">
+                <i class="fas fa-map-marker-alt" style="color:#D4AF37;"></i> ${p.ville}
+            </p>
+            
+            <div class="features" style="display:flex; gap:15px; margin-bottom:15px; color:#DDDDDD;">
+                <span><i class="fas fa-door-open" style="color:#D4AF37;"></i> ${p.pieces} p.</span>
+                <span><i class="fas fa-ruler-combined" style="color:#D4AF37;"></i> ${p.surface} m²</span>
             </div>
-            <div class="price">${p.prix}</div>
-                        <ul class="amenities-list" style="list-style:none; padding:0; font-size:0.9rem; color:#000000; margin:10px 0;">
+            
+            <div class="price" style="color: #D4AF37; font-weight:bold; font-size:1.4rem; margin-bottom:15px;">${p.prix}</div>
+            
+            <ul class="amenities-list" style="list-style:none; padding:0; margin-bottom:20px;">
                 ${featuresList}
             </ul>
-     
-            ${videoBtn}
-
-            <div style="display:flex; gap:10px; margin-top:15px;">
-                 
-                 <a href="detail.html?id=${p.id}" 
-                    style="flex:1; text-align:center; padding:10px; background:#000; border:1px solid #D4AF37; color:#D4AF37; text-decoration:none; border-radius:4px; font-weight:bold; transition:0.3s;">
+            
+            <div style="display:flex; gap:10px;">
+                 <a href="detail.html?id=${p.id}" style="flex:1; text-align:center; padding:10px; background:transparent; border:1px solid #D4AF37; color:white; text-decoration:none; border-radius:4px; font-weight:bold; transition:0.3s;" onmouseover="this.style.background='#D4AF37'; this.style.color='black'" onmouseout="this.style.background='transparent'; this.style.color='white'">
                    Voir détails
                 </a>
-                
                 <button class="btn-contact-card" onclick="toggleForm('form-${p.id}')" style="flex:1; padding:10px; background:#D4AF37; color:black; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">
                     Contact
                 </button>
             </div>
             
-            <div id="form-${p.id}" class="card-form" style="display:none; margin-top:15px; background:#111; padding:15px;">
+            <div id="form-${p.id}" class="card-form" style="display:none; margin-top:15px; background:#222; padding:15px; border-radius:5px;">
                 <form class="ajax-form" action="${FORMSPREE_ENDPOINT}" method="POST">
                     <input type="hidden" name="bien_ref" value="${p.id} - ${p.titre}">
-                    <input type="text" name="nom" placeholder="Votre Nom" required style="width:100%; margin-bottom:10px; padding:8px;">
-                    <input type="tel" name="tel" placeholder="Téléphone" required style="width:100%; margin-bottom:10px; padding:8px;">
-                    <input type="email" name="email" placeholder="Email" required style="width:100%; margin-bottom:10px; padding:8px;">
-                    <button type="submit" style="width:100%; background:#D4AF37; border:none; padding:10px; cursor:pointer;">ENVOYER</button>
-                    <p class="form-status" style="display:none; color:#D4AF37; margin-top:5px;"></p>
+                    <input type="text" name="nom" placeholder="Votre Nom" required style="width:100%; margin-bottom:10px; padding:10px; border:none; border-radius:3px;">
+                    <input type="tel" name="tel" placeholder="Téléphone" required style="width:100%; margin-bottom:10px; padding:10px; border:none; border-radius:3px;">
+                    <button type="submit" style="width:100%; background:#D4AF37; border:none; padding:10px; font-weight:bold; cursor:pointer;">ENVOYER</button>
+                    <p class="form-status" style="display:none; color:#D4AF37; margin-top:5px; text-align:center;"></p>
                 </form>
             </div>
         </div>
@@ -192,9 +234,7 @@ function csvToJSON(csvText) {
     }
     if (newLine) lines.push(newLine);
     if (lines.length < 2) return []; 
-
     const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
-
     return lines.slice(1).map(line => {
         const values = [];
         let currentVal = '';
@@ -211,12 +251,7 @@ function csvToJSON(csvText) {
         return obj;
     });
 }
-
-function toggleForm(id) {
-    const form = document.getElementById(id);
-    form.style.display = (form.style.display === 'none') ? 'block' : 'none';
-}
-
+function toggleForm(id) { const form = document.getElementById(id); form.style.display = (form.style.display === 'none') ? 'block' : 'none'; }
 function attachFormHandlers() {
     const forms = document.querySelectorAll('.ajax-form');
     forms.forEach(form => {
@@ -224,10 +259,10 @@ function attachFormHandlers() {
             e.preventDefault();
             const btn = form.querySelector('button');
             const status = form.querySelector('.form-status');
-            btn.innerText = '...';
+            btn.innerText = 'Envoi...';
             const data = new FormData(form);
             fetch(form.action, { method: form.method, body: data, headers: { 'Accept': 'application/json' } })
-            .then(r => { if (r.ok) window.location.href = 'merci.html'; else { status.innerText = "Erreur."; status.style.display='block'; btn.innerText="ENVOYER"; }})
+            .then(r => { if (r.ok) { btn.innerText = "ENVOYÉ !"; btn.style.background = "green"; } else { status.innerText = "Erreur."; status.style.display='block'; btn.innerText="ENVOYER"; }})
             .catch(e => { status.innerText = "Erreur réseau."; status.style.display='block'; btn.innerText="ENVOYER"; });
         });
     });
