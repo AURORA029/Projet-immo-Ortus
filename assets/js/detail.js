@@ -62,16 +62,59 @@ function displayDetail(p) {
         document.getElementById('detail-features').innerHTML = featsHTML;
     }
 
-    // Formulaire
-    document.getElementById('detail-form-container').innerHTML = `
-        <form action="${FORMSPREE_ENDPOINT}" method="POST" style="display:flex; flex-direction:column; gap:10px;">
+       // Formulaire (VERSION AVEC REDIRECTION MERCI)
+    const formContainer = document.getElementById('detail-form-container');
+    formContainer.innerHTML = `
+        <form id="contact-form" action="${FORMSPREE_ENDPOINT}" method="POST" style="display:flex; flex-direction:column; gap:10px;">
             <input type="hidden" name="sujet" value="Intérêt pour : ${p.titre}">
+            
             <input type="text" name="nom" placeholder="Votre Nom" required style="padding:15px; border:none; border-radius:5px;">
             <input type="tel" name="tel" placeholder="Votre Téléphone" required style="padding:15px; border:none; border-radius:5px;">
             <input type="email" name="email" placeholder="Votre Email" required style="padding:15px; border:none; border-radius:5px;">
-            <button type="submit" style="padding:15px; background:#D4AF37; border:none; cursor:pointer; font-weight:bold; border-radius:5px;">ENVOYER</button>
+            
+            <button type="submit" id="btn-submit" style="padding:15px; background:#D4AF37; border:none; cursor:pointer; font-weight:bold; border-radius:5px;">ENVOYER</button>
+            <p id="form-status" style="display:none; color:white; text-align:center; margin:0;"></p>
         </form>
     `;
+
+    // --- LE SCRIPT QUI FAIT LA REDIRECTION ---
+    const form = document.getElementById('contact-form');
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Stop la page blanche Formspree
+        
+        const btn = document.getElementById('btn-submit');
+        const status = document.getElementById('form-status');
+        const originalText = btn.innerText;
+
+        // Petit effet visuel
+        btn.innerText = "Envoi en cours...";
+        btn.disabled = true;
+
+        const data = new FormData(form);
+
+        try {
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                // ✅ C'EST ICI QUE ÇA SE PASSE
+                window.location.href = "merci.html"; 
+            } else {
+                status.style.display = 'block';
+                status.innerText = "Erreur lors de l'envoi.";
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        } catch (error) {
+            status.style.display = 'block';
+            status.innerText = "Problème de connexion.";
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }
+    });
 }
 
 // LE PARSEUR INTELLIGENT (OBLIGATOIRE)
