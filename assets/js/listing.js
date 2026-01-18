@@ -141,13 +141,13 @@ function renderPaginationButtons() {
     }
 }
 
-// 4. DESIGN CARTE (LUXE DARK MODE FORCE 🎨)
+// 4. DESIGN CARTE (CORRIGÉ : TEXTE NOIR SUR FOND BLANC)
 function createPropertyCard(p) {
     const div = document.createElement('div');
     div.className = 'property-card';
     
-    // ON FORCE LE FOND NOIR ICI 👇 (Impossible que le texte soit illisible)
-    div.style.cssText = "background-color: #121212; border: 1px solid #333; overflow: hidden; border-radius: 8px; margin-bottom: 20px;";
+    // FOND BLANC
+    div.style.cssText = "background-color: #FFFFFF; border: 1px solid #eee; overflow: hidden; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);";
     
     let badgesHtml = '';
     if (p.gamme && p.gamme.toLowerCase().includes('prestige')) {
@@ -158,13 +158,14 @@ function createPropertyCard(p) {
         badgesHtml += `<span class="badge status" style="background:rgba(0,0,0,0.7); color:white; position:absolute; top:${top}; left:10px; padding:5px 10px; z-index:2;">${p.categorie}</span>`;
     }
 
-    // Liste des atouts (Texte CLAIR sur fond FONCÉ)
+    // --- C'EST ICI QUE JE FORCE LE NOIR POUR LES ATOUTS ---
     let featuresList = '';
     if (p.caracteristiques) {
         let cleanFeat = p.caracteristiques.replace(/\n/g, ',');
         const feats = cleanFeat.split(',').slice(0, 3); 
         featuresList = feats.map(f => 
-            `<li style="color: #CCCCCC; margin-bottom: 5px; display:flex; align-items:center; font-size:0.9rem;">
+            // 👉 COLOR: #000000 (NOIR)
+            `<li style="color: #000000; margin-bottom: 5px; display:flex; align-items:center; font-size:0.9rem; font-weight:500;">
                 <i class="fas fa-check" style="color:#D4AF37; margin-right:8px;"></i> ${f.trim()}
             </li>`
         ).join('');
@@ -180,26 +181,26 @@ function createPropertyCard(p) {
         
         <div class="property-details" style="padding: 20px;">
             <h3 style="margin-bottom:10px; margin-top:0;">
-                <a href="detail.html?id=${p.id}" style="text-decoration:none; color: #FFFFFF; font-size:1.3rem;">${p.titre}</a>
+                <a href="detail.html?id=${p.id}" style="text-decoration:none; color: #000000; font-size:1.3rem;">${p.titre}</a>
             </h3>
             
-            <p class="location" style="color:#AAAAAA; font-size:0.9rem; margin-bottom:15px;">
+            <p class="location" style="color:#444444; font-size:0.9rem; margin-bottom:15px;">
                 <i class="fas fa-map-marker-alt" style="color:#D4AF37;"></i> ${p.ville}
             </p>
             
-            <div class="features" style="display:flex; gap:15px; margin-bottom:15px; color:#DDDDDD;">
+            <div class="features" style="display:flex; gap:15px; margin-bottom:15px; color:#333;">
                 <span><i class="fas fa-door-open" style="color:#D4AF37;"></i> ${p.pieces} p.</span>
                 <span><i class="fas fa-ruler-combined" style="color:#D4AF37;"></i> ${p.surface} m²</span>
             </div>
             
             <div class="price" style="color: #D4AF37; font-weight:bold; font-size:1.4rem; margin-bottom:15px;">${p.prix}</div>
             
-            <ul class="amenities-list" style="list-style:none; padding:0; margin-bottom:20px;">
+            <ul class="amenities-list" style="list-style:none; padding:0; margin-bottom:20px; color: #000000;">
                 ${featuresList}
             </ul>
             
             <div style="display:flex; gap:10px;">
-                 <a href="detail.html?id=${p.id}" style="flex:1; text-align:center; padding:10px; background:transparent; border:1px solid #D4AF37; color:white; text-decoration:none; border-radius:4px; font-weight:bold; transition:0.3s;" onmouseover="this.style.background='#D4AF37'; this.style.color='black'" onmouseout="this.style.background='transparent'; this.style.color='white'">
+                 <a href="detail.html?id=${p.id}" style="flex:1; text-align:center; padding:10px; background:transparent; border:1px solid #D4AF37; color:#000; text-decoration:none; border-radius:4px; font-weight:bold; transition:0.3s;" onmouseover="this.style.background='#D4AF37'; this.style.color='white'" onmouseout="this.style.background='transparent'; this.style.color='#000'">
                    Voir détails
                 </a>
                 <button class="btn-contact-card" onclick="toggleForm('form-${p.id}')" style="flex:1; padding:10px; background:#D4AF37; color:black; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">
@@ -207,19 +208,20 @@ function createPropertyCard(p) {
                 </button>
             </div>
             
-            <div id="form-${p.id}" class="card-form" style="display:none; margin-top:15px; background:#222; padding:15px; border-radius:5px;">
+            <div id="form-${p.id}" class="card-form" style="display:none; margin-top:15px; background:#f9f9f9; padding:15px; border-radius:5px;">
                 <form class="ajax-form" action="${FORMSPREE_ENDPOINT}" method="POST">
                     <input type="hidden" name="bien_ref" value="${p.id} - ${p.titre}">
-                    <input type="text" name="nom" placeholder="Votre Nom" required style="width:100%; margin-bottom:10px; padding:10px; border:none; border-radius:3px;">
-                    <input type="tel" name="tel" placeholder="Téléphone" required style="width:100%; margin-bottom:10px; padding:10px; border:none; border-radius:3px;">
+                    <input type="text" name="nom" placeholder="Votre Nom" required style="width:100%; margin-bottom:10px; padding:10px; border:1px solid #ccc; border-radius:3px;">
+                    <input type="tel" name="tel" placeholder="Téléphone" required style="width:100%; margin-bottom:10px; padding:10px; border:1px solid #ccc; border-radius:3px;">
                     <button type="submit" style="width:100%; background:#D4AF37; border:none; padding:10px; font-weight:bold; cursor:pointer;">ENVOYER</button>
-                    <p class="form-status" style="display:none; color:#D4AF37; margin-top:5px; text-align:center;"></p>
+                    <p class="form-status" style="display:none; color:green; margin-top:5px; text-align:center;"></p>
                 </form>
             </div>
         </div>
     `;
     return div;
 }
+
 
 // 5. PARSEUR CSV
 function csvToJSON(csvText) {
