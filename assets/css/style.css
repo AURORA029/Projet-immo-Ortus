@@ -1061,3 +1061,10 @@ input, textarea, select {
         background-position: center top;
     }
 }
+/* OPTIMISATION MOBILE : Tue le lag du scroll */
+@media (max-width: 768px) {
+    * {
+        background-attachment: scroll !important;
+    }
+}
+
