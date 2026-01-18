@@ -136,40 +136,59 @@ function createPropertyCard(p) {
         featuresList = feats.map(f => `<li><i class="fas fa-check" style="color:#D4AF37;"></i> ${f.trim()}</li>`).join('');
     }
 
-    // --- CORRECTION IMAGE DANS LE JS DIRECTEMENT ---
-    // On ajoute un style inline pour forcer la taille si le CSS ne marche pas
+       // --- Construction du HTML de la carte ---
     div.innerHTML = `
         <div class="property-image" style="height:250px; overflow:hidden;">
             ${badgesHtml}
-            <img src="${p.image}" alt="${p.titre}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='assets/images/default.jpg'">
+            <a href="detail.html?id=${p.id}">
+                <img src="${p.image}" alt="${p.titre}" style="width:100%; height:100%; object-fit:cover; transition:0.3s;" onerror="this.src='assets/images/default.jpg'">
+            </a>
         </div>
         <div class="property-details">
-            <h3>${p.titre}</h3>
-            <p class="location"><i class="fas fa-map-marker-alt"></i> ${p.ville}</p>
-            <div class="features">
+            <h3 style="margin-bottom:5px;">
+                <a href="detail.html?id=${p.id}" style="text-decoration:none; color:white;">${p.titre}</a>
+            </h3>
+            <p class="location" style="color:#888; font-size:0.9rem;"><i class="fas fa-map-marker-alt"></i> ${p.ville}</p>
+            
+            <div class="features" style="display:flex; gap:15px; margin:10px 0; color:#ddd;">
                 <span><i class="fas fa-bed"></i> ${p.pieces} p.</span>
                 <span><i class="fas fa-ruler-combined"></i> ${p.surface} m²</span>
                 ${garageHtml}
             </div>
-            <div class="price">${p.prix}</div>
-            <ul class="amenities-list" style="list-style:none; padding:0; font-size:0.9rem; color:#aaa; margin:10px 0;">
+            
+            <div class="price" style="font-size:1.2rem; font-weight:bold; color:#D4AF37; margin:10px 0;">
+                ${p.prix}
+            </div>
+            
+            <ul class="amenities-list" style="list-style:none; padding:0; font-size:0.85rem; color:#aaa; margin-bottom:15px;">
                 ${featuresList}
             </ul>
-            ${videoBtn}
-            <button class="btn-contact-card" onclick="toggleForm('form-${p.id}')" style="width:100%; padding:10px; margin-top:10px; cursor:pointer;">Ce bien m'intéresse</button>
             
+            <div style="display:flex; gap:10px; margin-top:10px;">
+                <a href="detail.html?id=${p.id}" class="btn-detail" 
+                   style="flex:1; text-align:center; padding:10px; background:transparent; border:1px solid #fff; color:white; text-decoration:none; border-radius:4px;">
+                   Voir détails
+                </a>
+                
+                <button class="btn-contact-card" onclick="toggleForm('form-${p.id}')" 
+                        style="flex:1; padding:10px; background:#D4AF37; color:black; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">
+                    Contact
+                </button>
+            </div>
+
             <div id="form-${p.id}" class="card-form" style="display:none; margin-top:15px; background:#111; padding:15px;">
                 <form class="ajax-form" action="${FORMSPREE_ENDPOINT}" method="POST">
                     <input type="hidden" name="bien_ref" value="${p.id} - ${p.titre}">
-                    <input type="text" name="nom" placeholder="Votre Nom" required style="width:100%; margin-bottom:10px;">
-                    <input type="tel" name="tel" placeholder="Téléphone" required style="width:100%; margin-bottom:10px;">
-                    <input type="email" name="email" placeholder="Email" required style="width:100%; margin-bottom:10px;">
-                    <button type="submit" style="width:100%; background:#D4AF37; border:none; padding:10px;">ENVOYER</button>
+                    <input type="text" name="nom" placeholder="Votre Nom" required style="width:100%; margin-bottom:10px; padding:8px;">
+                    <input type="tel" name="tel" placeholder="Téléphone" required style="width:100%; margin-bottom:10px; padding:8px;">
+                    <input type="email" name="email" placeholder="Email" required style="width:100%; margin-bottom:10px; padding:8px;">
+                    <button type="submit" style="width:100%; background:#D4AF37; border:none; padding:10px; cursor:pointer;">ENVOYER</button>
                     <p class="form-status" style="display:none; color:#D4AF37; margin-top:5px;"></p>
                 </form>
             </div>
         </div>
     `;
+
     return div;
 }
 
