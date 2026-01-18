@@ -22,21 +22,28 @@
                 Vous souhaitez vendre ? Remplissez ce formulaire et un expert Ortus vous contactera sous 24h pour organiser une visite et prendre les photos.
             </p>
 
-            <form style="display:flex; flex-direction:column; gap:15px;">
-                <input type="text" placeholder="Votre Nom complet" style="padding:15px; border-radius:4px; border:none;">
-                <input type="tel" placeholder="Votre Téléphone" style="padding:15px; border-radius:4px; border:none;">
-                <input type="text" placeholder="Ville du bien / Quartier" style="padding:15px; border-radius:4px; border:none;">
+            <form action="https://formspree.io/f/mvzzklrl" method="POST" style="display:flex; flex-direction:column; gap:15px;">
                 
-                <select style="padding:15px; border-radius:4px; border:none; height:50px;">
+                <input type="hidden" name="_next" value="https://aurora029.github.io/index.html">
+                
+                <input type="hidden" name="_subject" value="Nouveau MANDAT DE VENTE - Site Ortus">
+
+                <input type="text" name="nom" placeholder="Votre Nom complet" required style="padding:15px; border-radius:4px; border:none;">
+                
+                <input type="tel" name="telephone" placeholder="Votre Téléphone" required style="padding:15px; border-radius:4px; border:none;">
+                
+                <input type="text" name="ville" placeholder="Ville du bien / Quartier" required style="padding:15px; border-radius:4px; border:none;">
+                
+                <select name="type_bien" style="padding:15px; border-radius:4px; border:none; height:50px;">
                     <option value="">Type de bien</option>
                     <option value="maison">Maison / Villa</option>
                     <option value="appart">Appartement</option>
                     <option value="terrain">Terrain</option>
                 </select>
 
-                <textarea rows="5" placeholder="Description rapide du bien (Surface, nb de pièces...)" style="padding:15px; border-radius:4px; border:none;"></textarea>
+                <textarea name="description" rows="5" placeholder="Description rapide du bien (Surface, nb de pièces...)" style="padding:15px; border-radius:4px; border:none;"></textarea>
 
-                <button type="button" class="btn-estimation" style="margin-top:20px; text-align:center; cursor:pointer;">
+                <button type="submit" class="btn-estimation" style="margin-top:20px; text-align:center; cursor:pointer;">
                     Envoyer ma demande
                 </button>
             </form>
