@@ -1,4 +1,6 @@
-/* HOME.JS - Affiche les 3 derniers biens sur l'accueil */
+/* HOME.JS - Version Design Luxe ✨
+ * Affiche les 3 derniers biens avec un style Dark & Gold
+ */
 
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8KwzX3W0ONKYZray3wrDi5ReUBfw0-aSgvXSl7NaWNlvdSo9cKr3Y9Vh0k5kd_dHwchsCKfYE8d3/pub?output=csv";
 
@@ -11,49 +13,67 @@ async function fetchFeatured() {
     try {
         const response = await fetch(SHEET_URL);
         const data = await response.text();
-        const allProperties = csvToJSON(data); // Utilise le convertisseur (voir plus bas)
+        const allProperties = csvToJSON(data); 
 
-        // ON PREND LES 3 DERNIERS BIENS (Les plus récents)
-        // .reverse() inverse la liste, .slice(0, 3) prend les 3 premiers
+        // On prend les 3 derniers (les plus récents)
         const featured = allProperties.reverse().slice(0, 3);
 
-        container.innerHTML = ''; // On vide le "chargement..."
+        container.innerHTML = ''; 
 
         featured.forEach(p => {
-            // On créé une carte simplifiée pour l'accueil
             const card = document.createElement('div');
             card.className = 'property-card';
             
-            // Logique Prestige
+            // STYLE DE LA CARTE : Fond sombre + Bordure discrète
+            card.style.cssText = "background: #0b0f19; border: 1px solid #222; border-radius: 8px; overflow: hidden; transition: transform 0.3s ease;";
+            
+            // Badge Prestige
             let badge = '';
             if (p.gamme && p.gamme.toLowerCase().includes('prestige')) {
-                badge = `<span class="badge" style="background:#D4AF37; color:#000;">💎 PRESTIGE</span>`;
+                badge = `<span style="position:absolute; top:10px; left:10px; background:#D4AF37; color:black; padding:5px 10px; font-weight:bold; font-size:0.8rem; z-index:10;">💎 PRESTIGE</span>`;
             }
 
+            // Génération HTML
             card.innerHTML = `
-                <div class="property-image" style="height:250px; overflow:hidden; position:relative;">
+                <div class="property-image" style="height:250px; position:relative;">
                     ${badge}
                     <a href="detail.html?id=${p.id}">
-                        <img src="${p.image}" alt="${p.titre}" style="width:100%; height:100%; object-fit:cover;">
+                        <img src="${p.image}" alt="${p.titre}" style="width:100%; height:100%; object-fit:cover; transition:0.5s;" onerror="this.src='assets/images/default.jpg'">
                     </a>
                 </div>
-                <div class="property-details">
-                    <h3><a href="detail.html?id=${p.id}" style="text-decoration:none; color:inherit;">${p.titre}</a></h3>
-                    <p style="color:#888;"><i class="fas fa-map-marker-alt"></i> ${p.ville}</p>
-                    <div class="price" style="color:#D4AF37; font-weight:bold; font-size:1.2rem; margin:10px 0;">${p.prix}</div>
-                    <a href="detail.html?id=${p.id}" style="display:block; text-align:center; background:#020610; color:white; padding:10px; text-decoration:none; border-radius:5px;">Voir le bien</a>
+                
+                <div class="property-details" style="padding: 20px;">
+                    <h3 style="margin-top:0; margin-bottom:10px;">
+                        <a href="detail.html?id=${p.id}" style="text-decoration:none; color:white; font-family:'Playfair Display', serif; font-size:1.2rem;">${p.titre}</a>
+                    </h3>
+                    
+                    <p style="color:#888; font-size:0.9rem; margin-bottom:15px;">
+                        <i class="fas fa-map-marker-alt" style="color:#D4AF37;"></i> ${p.ville}
+                    </p>
+                    
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #222; padding-top:15px;">
+                        <div class="price" style="color:#D4AF37; font-weight:bold; font-size:1.1rem;">${p.prix}</div>
+                        <a href="detail.html?id=${p.id}" style="color:white; text-decoration:none; font-size:0.9rem; border:1px solid #444; padding:5px 15px; border-radius:50px; transition:0.3s;" onmouseover="this.style.background='white'; this.style.color='black'" onmouseout="this.style.background='transparent'; this.style.color='white'">
+                            Voir <i class="fas fa-arrow-right" style="font-size:0.8rem; margin-left:5px;"></i>
+                        </a>
+                    </div>
                 </div>
             `;
+            
+            // Petit effet de survol (zoom)
+            card.onmouseenter = function() { this.style.transform = "translateY(-5px)"; this.style.boxShadow = "0 10px 20px rgba(0,0,0,0.5)"; };
+            card.onmouseleave = function() { this.style.transform = "translateY(0)"; this.style.boxShadow = "none"; };
+
             container.appendChild(card);
         });
 
     } catch (error) {
         console.error(error);
-        container.innerHTML = '<p>Impossible de charger les biens.</p>';
+        container.innerHTML = '<p style="color:red; text-align:center;">Impossible de charger les biens.</p>';
     }
 }
 
-// Toujours la même fonction magique pour lire le CSV (Copie-colle là aussi)
+// Convertisseur CSV (Obligatoire)
 function csvToJSON(csvText) {
     const lines = [];
     let newLine = '';
