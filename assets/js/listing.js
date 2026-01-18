@@ -113,12 +113,20 @@ function createPropertyCard(p) {
         videoBtn = `<a href="${videoLink}" target="_blank" class="btn-video" style="display:flex; align-items:center; justify-content:center; gap:10px; margin-top:10px; color:#D4AF37; border:1px solid #D4AF37; padding:8px; border-radius:4px; text-decoration:none;"><i class="fas fa-play-circle"></i> VISITE VIDÉO</a>`;
     }
 
+        // --- Liste des atouts (CORRIGÉ : TEXTE NOIR) ---
     let featuresList = '';
     if (p.caracteristiques) {
         let cleanFeat = p.caracteristiques.replace(/\n/g, ',');
         const feats = cleanFeat.split(',').slice(0, 3); 
-        featuresList = feats.map(f => `<li><i class="fas fa-check" style="color:#D4AF37;"></i> ${f.trim()}</li>`).join('');
+        
+        // 👉 On force la couleur en NOIR (#000) pour que ce soit bien visible sur fond blanc
+        featuresList = feats.map(f => 
+            `<li style="color: #000000; margin-bottom: 5px; display:flex; align-items:center; font-weight: 500;">
+                <i class="fas fa-check" style="color:#D4AF37; margin-right:8px;"></i> ${f.trim()}
+            </li>`
+        ).join('');
     }
+
 
     div.innerHTML = `
         <div class="property-image" style="height:250px; overflow:hidden;">
@@ -138,10 +146,10 @@ function createPropertyCard(p) {
                 ${garageHtml}
             </div>
             <div class="price">${p.prix}</div>
-            <ul class="amenities-list" style="list-style:none; padding:0; font-size:0.9rem; color:#aaa; margin:10px 0;">
+                        <ul class="amenities-list" style="list-style:none; padding:0; font-size:0.9rem; color:#000000; margin:10px 0;">
                 ${featuresList}
             </ul>
-            
+     
             ${videoBtn}
 
             <div style="display:flex; gap:10px; margin-top:15px;">
