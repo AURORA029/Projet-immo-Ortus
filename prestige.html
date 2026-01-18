@@ -3,31 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ortus Prestige - Biens d'exception</title>
+       <title>Collection Prestige - ORTUS</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { background-color: #020610; color: white; }
+        .prestige-header { text-align: center; padding: 100px 20px 50px; }
+        .prestige-title { font-family: 'Playfair Display', serif; font-size: 3rem; color: #D4AF37; margin-bottom: 20px; }
+        .prestige-subtitle { color: #888; font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+    </style>
 </head>
 <body>
-    <nav class="navbar" style="position:relative;">
-        <div class="container nav-container">
-            <a href="index.html" class="logo">ORTUS<span class="dot">.</span></a>
-            <a href="index.html" class="nav-link">Retour accueil</a>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">ORTUS<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="biens.html">Tous nos biens</a></li>
+                <li><a href="prestige.html" style="color: #D4AF37;">Prestige</a></li> <li><a href="contact.html" class="btn-gold">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
-    <header class="hero" style="height: 50vh;">
-        <div class="hero-overlay"></div>
-        <div class="container hero-content">
-            <h1>Collection Prestige</h1>
-            <p>L'excellence immobilière à Madagascar.</p>
-        </div>
+    <header class="prestige-header">
+        <h1 class="prestige-title">Collection Prestige</h1>
+        <p class="prestige-subtitle">Découvrez notre sélection exclusive de propriétés d'exception. Luxe, calme et volupté.</p>
+        <div style="width: 100px; height: 2px; background: #D4AF37; margin: 30px auto;"></div>
     </header>
 
-    <div class="container section-padding">
-        <h2 style="text-align:center;">Nos biens d'exception</h2>
-        <p style="text-align:center;">Cette page est en construction. Bientôt disponible.</p>
-    </div>
+    <section class="section-padding">
+        <div class="container">
+            <div id="prestige-container" class="properties-grid">
+                <p style="text-align:center; color:#666;">Recherche des biens d'exception...</p>
+            </div>
+        </div>
+    </section>
+
+    <footer style="background: black; padding: 30px; text-align: center; color: #555; border-top: 1px solid #222;">
+        <p>&copy; 2026 ORTUS Immobilier - Département Luxe.</p>
+    </footer>
+
+    <script src="assets/js/prestige.js"></script> 
+
+</body>
 <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 
 </body>
