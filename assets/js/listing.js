@@ -141,7 +141,7 @@ function createPropertyCard(p) {
             </h3>
             <p class="location" style="color:#888; font-size:0.9rem;"><i class="fas fa-map-marker-alt"></i> ${p.ville}</p>
             <div class="features">
-                <span><i class="fas fa-bed"></i> ${p.pieces} p.</span>
+                <span><i class="fas fa-door-open"></i> ${p.pieces} p.</span>
                 <span><i class="fas fa-ruler-combined"></i> ${p.surface} m²</span>
                 ${garageHtml}
             </div>
