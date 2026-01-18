@@ -7,31 +7,33 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; cursor: pointer; }
+            .bar { display: block; width: 25px; height: 3px; margin: 5px auto; background-color: white; transition: 0.3s; }
+        }
+    </style>
 </head>
 <body>
 
     <nav class="navbar">
         <div class="container nav-container">
             <a href="index.html" class="logo">ORTUS<span class="dot">.</span></a>
+            
             <div class="menu-toggle" id="mobile-menu">
                 <span class="bar"></span><span class="bar"></span><span class="bar"></span>
             </div>
-               <ul class="nav-menu">
-    <li><a href="index.html" class="nav-link">Accueil</a></li>
-    
-    <li><a href="biens.html?filtre=all" class="nav-link">Nos Biens</a></li>
-    
-    <li><a href="services.html" class="nav-link">Services</a></li>
-    
-    <li><a href="vendre.html" class="nav-link">Propriétaires</a></li>
 
-    <li><a href="prestige.html" class="nav-link">Prestige</a></li>
-    
-    <li><a href="apropos.html" class="nav-link">L'Agence</a></li>
-    
-    <li><a href="#contact" class="btn-contact">Contact</a></li>
-</ul>
-
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Accueil</a></li>
+                <li><a href="biens.html?filtre=all" class="nav-link" style="color: #D4AF37;">Nos Biens</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="vendre.html" class="nav-link">Propriétaires</a></li>
+                <li><a href="prestige.html" class="nav-link">Prestige</a></li>
+                <li><a href="apropos.html" class="nav-link">L'Agence</a></li>
+                <li><a href="#contact" class="btn-contact">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
@@ -44,35 +46,27 @@
 
     <section class="section-padding">
         <div class="container">
+            
             <div class="search-container" style="text-align: center; margin-bottom: 40px; margin-top: -20px;">
-    
-    <div style="display: inline-flex; background: #020610; border: 1px solid #D4AF37; border-radius: 50px; padding: 5px 20px; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
-        
-        <input type="text" id="searchInput" placeholder="Rechercher (Ville, Type...)" 
-               style="background: transparent; border: none; color: white; padding: 10px; width: 250px; outline: none;">
-        
-        <button onclick="filterProperties()" style="background: transparent; border: none; color: #D4AF37; cursor: pointer; font-size: 1.2rem;">
-            <i class="fas fa-search"></i>
-        </button>
-    
-    </div>
-
-</div>
+                <div style="display: inline-flex; background: #020610; border: 1px solid #D4AF37; border-radius: 50px; padding: 5px 20px; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                    <input type="text" id="searchInput" placeholder="Rechercher (Ville, Type...)" 
+                           style="background: transparent; border: none; color: white; padding: 10px; width: 250px; outline: none;">
+                    <button onclick="filterProperties()" style="background: transparent; border: none; color: #D4AF37; cursor: pointer; font-size: 1.2rem;">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
 
             <div class="properties-grid" id="listing-container">
-                <p style="color:white">Chargement des biens...</p>
+                <p style="color:white; text-align:center;">Chargement des biens en cours...</p>
             </div>
-        </div>
-            <div id="listing-container" class="properties-grid">
-        </div>
 
-    <div id="pagination-container" style="display:flex; justify-content:center; gap:10px; margin-top:50px; flex-wrap:wrap;">
-        </div>
+            <div id="pagination-container" style="display:flex; justify-content:center; gap:10px; margin-top:50px; flex-wrap:wrap;">
+                </div>
 
-</div> 
-    </section>
+        </div> </section>
 
-    <footer class="footer" id ="contact">
+    <footer class="footer" id="contact">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
@@ -81,14 +75,13 @@
                 </div>
                 <div class="footer-col">
                     <h4>Navigation</h4>
-                     <ul class="footer-links">
-      <li><a href="index.html">Accueil</a></li>
-      <li><a href="biens.html">Tous nos biens</a></li>
-      <li><a href="services.html">Nos Services</a></li>
-      <li><a href="apropos.html">L'Agence</a></li>
-      <li><a href="vendre.html">Vendre mon bien</a></li>
-      <li><a href="estimation.html">Estimation gratuite</a></li>
-    </ul>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="biens.html">Tous nos biens</a></li>
+                        <li><a href="services.html">Nos Services</a></li>
+                        <li><a href="apropos.html">L'Agence</a></li>
+                        <li><a href="vendre.html">Vendre mon bien</a></li>
+                    </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Contact</h4>
@@ -98,11 +91,25 @@
                         <li><i class="fas fa-envelope"></i> ortusmada@gmail.com</li>
                     </ul>
                 </div>
-                </div>
             </div>
         </div>
     </footer>
-<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 
-    <script src="assets/js/datas.js"></script> <script src="assets/js/listing.js"></script> <script src="assets/js/main.js"></script>   </body>
+    <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+
+    <script src="assets/js/listing.js"></script> 
+    <script src="assets/js/main.js"></script>
+    
+    <script>
+        const menuToggle = document.getElementById('mobile-menu');
+        const navMenu = document.querySelector('.nav-menu');
+        if(menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        }
+    </script>
+
+</body>
 </html>
