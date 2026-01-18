@@ -4,7 +4,7 @@ const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8KwzX3W0ON
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mvzzklrl"; 
 
 // --- RÉGLAGES ---
-const ITEMS_PER_PAGE = 1; 
+const ITEMS_PER_PAGE = 9; 
 let currentPage = 1;
 let currentProperties = []; 
 let allProperties = [];
