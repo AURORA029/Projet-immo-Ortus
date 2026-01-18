@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <title>Collection Prestige - ORTUS</title>
+    <title>Collection Prestige - ORTUS</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -13,6 +13,12 @@
         .prestige-header { text-align: center; padding: 100px 20px 50px; }
         .prestige-title { font-family: 'Playfair Display', serif; font-size: 3rem; color: #D4AF37; margin-bottom: 20px; }
         .prestige-subtitle { color: #888; font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+        
+        /* Petit fix pour être sûr que le burger soit visible sur mobile */
+        @media (max-width: 768px) {
+            .hamburger { display: block; cursor: pointer; }
+            .hamburger .bar { display: block; width: 25px; height: 3px; margin: 5px auto; background-color: white; transition: 0.3s; }
+        }
     </style>
 </head>
 <body>
@@ -20,21 +26,22 @@
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo">ORTUS<span>.</span></a>
-               <ul class="nav-menu">
-    <li><a href="index.html" class="nav-link">Accueil</a></li>
-    
-    <li><a href="biens.html?filtre=all" class="nav-link">Nos Biens</a></li>
-    
-    <li><a href="services.html" class="nav-link">Services</a></li>
-    
-    <li><a href="vendre.html" class="nav-link">Propriétaires</a></li>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Accueil</a></li>
+                <li><a href="biens.html?filtre=all" class="nav-link">Nos Biens</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="vendre.html" class="nav-link">Propriétaires</a></li>
+                <li><a href="prestige.html" class="nav-link" style="color:#D4AF37;">Prestige</a></li>
+                <li><a href="apropos.html" class="nav-link">L'Agence</a></li>
+                <li><a href="#contact" class="btn-contact">Contact</a></li>
+            </ul>
 
-    <li><a href="prestige.html" class="nav-link">Prestige</a></li>
-    
-    <li><a href="apropos.html" class="nav-link">L'Agence</a></li>
-    
-    <li><a href="#contact" class="btn-contact">Contact</a></li>
-</ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
         </div>
     </nav>
 
@@ -57,9 +64,19 @@
     </footer>
 
     <script src="assets/js/prestige.js"></script> 
+    
+    <script>
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+        if(hamburger) {
+            hamburger.addEventListener("click", () => {
+                hamburger.classList.toggle("active");
+                navMenu.classList.toggle("active");
+            });
+        }
+    </script>
 
-</body>
-<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+    <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 
 </body>
 </html>
