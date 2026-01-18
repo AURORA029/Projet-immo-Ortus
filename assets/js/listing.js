@@ -149,14 +149,21 @@ function createPropertyCard(p) {
     // FOND BLANC
     div.style.cssText = "background-color: #FFFFFF; border: 1px solid #eee; overflow: hidden; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);";
     
+        // --- GESTION DES BADGES (CORRIGÉE : GAUCHE & DROITE) ---
     let badgesHtml = '';
+
+    // 1. Badge PRESTIGE -> En haut à GAUCHE (Left)
     if (p.gamme && p.gamme.toLowerCase().includes('prestige')) {
-        badgesHtml += `<span class="badge" style="background:#D4AF37; color:#000; position:absolute; top:10px; left:10px; padding:5px 10px; font-weight:bold; z-index:2;">💎 PRESTIGE</span>`;
+        badgesHtml += `<span class="badge" style="background:#D4AF37; color:#000; position:absolute; top:10px; left:10px; padding:5px 10px; font-weight:bold; z-index:2; border-radius:4px; font-size:0.8rem; box-shadow: 0 2px 5px rgba(0,0,0,0.5);">💎 PRESTIGE</span>`;
     }
+
+    // 2. Badge VENTE/LOCATION -> En haut à DROITE (Right)
     if (p.categorie) {
-        let top = p.gamme && p.gamme.toLowerCase().includes('prestige') ? '40px' : '10px';
-        badgesHtml += `<span class="badge status" style="background:rgba(0,0,0,0.7); color:white; position:absolute; top:${top}; left:10px; padding:5px 10px; z-index:2;">${p.categorie}</span>`;
+        // J'ai mis right:10px au lieu de calculer une position à gauche
+        // Et j'ai ajouté un petit style noir et or pour faire classe
+        badgesHtml += `<span class="badge status" style="background:#000; color:white; border:1px solid #D4AF37; position:absolute; top:10px; right:10px; padding:5px 10px; z-index:2; font-weight:bold; text-transform:uppercase; font-size:0.8rem; border-radius:4px;">${p.categorie}</span>`;
     }
+
 
     // --- C'EST ICI QUE JE FORCE LE NOIR POUR LES ATOUTS ---
     let featuresList = '';
