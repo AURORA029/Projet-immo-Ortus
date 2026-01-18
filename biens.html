@@ -14,6 +14,23 @@
             .bar { display: block; width: 25px; height: 3px; margin: 5px auto; background-color: white; transition: 0.3s; }
         }
     </style>
+    <style>
+    /* FORCE LE BADGE À DROITE ET EN BLANC */
+    .badge.status {
+        left: auto !important;       /* On annule la gauche */
+        right: 10px !important;      /* On force la droite */
+        background-color: #000 !important; /* Fond Noir */
+        color: #FFFFFF !important;   /* Texte Blanc */
+        border: 1px solid #D4AF37 !important;
+        z-index: 100 !important;
+    }
+    
+    /* FORCE LE TEXTE DES ATOUTS EN NOIR */
+    .amenities-list li {
+        color: #000000 !important;
+    }
+</style>
+
 </head>
 <body>
 
@@ -98,7 +115,7 @@
 
     <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 
-    <script src="assets/js/listing.js?v=2"></script>
+    <script src="assets/js/listing.js?v=9992"></script>
 
     <script src="assets/js/main.js"></script>
     
