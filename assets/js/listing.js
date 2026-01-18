@@ -1,5 +1,5 @@
-/* * LISTING.JS - VERSION FINALE (CORRECTIF ACCUEIL + IMAGES)
- * Ce script gère tout : l'accueil, la recherche, l'affichage et les formulaires.
+/* * LISTING.JS - VERSION FINALE (BOUTON VISIBLE 👀)
+ * Gère : Accueil, Recherche, Affichage, Images, Formulaires
  */
 
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8KwzX3W0ONKYZray3wrDi5ReUBfw0-aSgvXSl7NaWNlvdSo9cKr3Y9Vh0k5kd_dHwchsCKfYE8d3/pub?output=csv";
@@ -11,33 +11,24 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchProperties();
 });
 
-// 1. CHARGEMENT ET RÉCEPTION DE LA RECHERCHE ACCUEIL
+// 1. CHARGEMENT
 async function fetchProperties() {
     const container = document.getElementById('listing-container');
     
     try {
         const response = await fetch(SHEET_URL);
         const data = await response.text();
-        
-        // On transforme le CSV en données utilisables
         allProperties = csvToJSON(data); 
         
-        // --- C'EST ICI QUE SE JOUE LA CONNEXION AVEC L'ACCUEIL ---
         const urlParams = new URLSearchParams(window.location.search);
         let filterFromHome = urlParams.get('filtre');
 
         if (filterFromHome && filterFromHome !== 'all') {
-            // On décode les caractères spéciaux (ex: "Mahajanga%20" devient "Mahajanga")
             filterFromHome = decodeURIComponent(filterFromHome).trim();
-            
-            // On remplit la barre de recherche visuellement pour que l'utilisateur comprenne
             const searchInput = document.getElementById('searchInput');
             if(searchInput) searchInput.value = filterFromHome; 
-            
-            // On lance le filtre immédiatement avec le mot venant de l'accueil
             filterProperties(filterFromHome); 
         } else {
-            // Sinon, on affiche tout normalement
             displayProperties(allProperties);
         }
 
@@ -47,27 +38,21 @@ async function fetchProperties() {
     }
 }
 
-// 2. MOTEUR DE RECHERCHE (Cherche PARTOUT : Titre, Ville, Desc...)
+// 2. MOTEUR DE RECHERCHE
 function filterProperties(query = null) {
-    // Si 'query' est fourni (venant de l'accueil), on l'utilise. 
-    // Sinon, on regarde ce qu'il y a dans la barre de recherche de la page.
     let inputVal = query;
     if (inputVal === null) {
         const inputEl = document.getElementById('searchInput');
         inputVal = inputEl ? inputEl.value : '';
     }
-    
-    // On met tout en minuscule et on nettoie
     inputVal = inputVal.toLowerCase().trim();
     
-    // Si vide, on montre tout
     if (!inputVal) {
         displayProperties(allProperties);
         return;
     }
 
     const filtered = allProperties.filter(p => {
-        // On sécurise les variables (au cas où une case est vide dans Excel)
         const ville = p.ville ? p.ville.toLowerCase() : '';
         const titre = p.titre ? p.titre.toLowerCase() : '';
         const type = p.type ? p.type.toLowerCase() : '';
@@ -75,7 +60,6 @@ function filterProperties(query = null) {
         const carac = p.caracteristiques ? p.caracteristiques.toLowerCase() : '';
         const prix = p.prix ? p.prix.toLowerCase() : '';
 
-        // La recherche magique : est-ce que le mot est caché ici ?
         return ville.includes(inputVal) ||
                titre.includes(inputVal) ||
                type.includes(inputVal) ||
@@ -87,13 +71,13 @@ function filterProperties(query = null) {
     displayProperties(filtered);
 }
 
-// 3. AFFICHAGE DES CARTES
+// 3. AFFICHAGE
 function displayProperties(properties) {
     const container = document.getElementById('listing-container');
     container.innerHTML = '';
 
     if (properties.length === 0) {
-        container.innerHTML = '<div style="text-align:center; width:100%; padding:50px;"><h3 style="color:white;">Aucun résultat</h3><p style="color:#aaa;">Essayez un autre mot clé (ex: Villa, Piscine, Ivandry...)</p><button onclick="displayProperties(allProperties); document.getElementById(\'searchInput\').value=\'\';" style="margin-top:20px; padding:10px 20px; background:#D4AF37; border:none; cursor:pointer;">Voir tout les biens</button></div>';
+        container.innerHTML = '<div style="text-align:center; width:100%; padding:50px;"><h3 style="color:white;">Aucun résultat</h3><p style="color:#aaa;">Essayez un autre mot clé.</p><button onclick="displayProperties(allProperties); document.getElementById(\'searchInput\').value=\'\';" style="margin-top:20px; padding:10px 20px; background:#D4AF37; border:none; cursor:pointer;">Voir tout les biens</button></div>';
         return;
     }
 
@@ -104,7 +88,7 @@ function displayProperties(properties) {
     attachFormHandlers();
 }
 
-// 4. CRÉATION DU DESIGN DE LA CARTE
+// 4. DESIGN CARTE (BOUTON CORRIGÉ ICI 👇)
 function createPropertyCard(p) {
     const div = document.createElement('div');
     div.className = 'property-card';
@@ -136,12 +120,11 @@ function createPropertyCard(p) {
         featuresList = feats.map(f => `<li><i class="fas fa-check" style="color:#D4AF37;"></i> ${f.trim()}</li>`).join('');
     }
 
-       // --- Construction du HTML de la carte ---
     div.innerHTML = `
         <div class="property-image" style="height:250px; overflow:hidden;">
             ${badgesHtml}
             <a href="detail.html?id=${p.id}">
-                <img src="${p.image}" alt="${p.titre}" style="width:100%; height:100%; object-fit:cover; transition:0.3s;" onerror="this.src='assets/images/default.jpg'">
+                <img src="${p.image}" alt="${p.titre}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='assets/images/default.jpg'">
             </a>
         </div>
         <div class="property-details">
@@ -149,33 +132,30 @@ function createPropertyCard(p) {
                 <a href="detail.html?id=${p.id}" style="text-decoration:none; color:white;">${p.titre}</a>
             </h3>
             <p class="location" style="color:#888; font-size:0.9rem;"><i class="fas fa-map-marker-alt"></i> ${p.ville}</p>
-            
-            <div class="features" style="display:flex; gap:15px; margin:10px 0; color:#ddd;">
+            <div class="features">
                 <span><i class="fas fa-bed"></i> ${p.pieces} p.</span>
                 <span><i class="fas fa-ruler-combined"></i> ${p.surface} m²</span>
                 ${garageHtml}
             </div>
-            
-            <div class="price" style="font-size:1.2rem; font-weight:bold; color:#D4AF37; margin:10px 0;">
-                ${p.prix}
-            </div>
-            
-            <ul class="amenities-list" style="list-style:none; padding:0; font-size:0.85rem; color:#aaa; margin-bottom:15px;">
+            <div class="price">${p.prix}</div>
+            <ul class="amenities-list" style="list-style:none; padding:0; font-size:0.9rem; color:#aaa; margin:10px 0;">
                 ${featuresList}
             </ul>
             
-            <div style="display:flex; gap:10px; margin-top:10px;">
-                <a href="detail.html?id=${p.id}" class="btn-detail" 
-                   style="flex:1; text-align:center; padding:10px; background:transparent; border:1px solid #fff; color:white; text-decoration:none; border-radius:4px;">
+            ${videoBtn}
+
+            <div style="display:flex; gap:10px; margin-top:15px;">
+                 
+                 <a href="detail.html?id=${p.id}" 
+                    style="flex:1; text-align:center; padding:10px; background:#000; border:1px solid #D4AF37; color:#D4AF37; text-decoration:none; border-radius:4px; font-weight:bold; transition:0.3s;">
                    Voir détails
                 </a>
                 
-                <button class="btn-contact-card" onclick="toggleForm('form-${p.id}')" 
-                        style="flex:1; padding:10px; background:#D4AF37; color:black; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">
+                <button class="btn-contact-card" onclick="toggleForm('form-${p.id}')" style="flex:1; padding:10px; background:#D4AF37; color:black; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">
                     Contact
                 </button>
             </div>
-
+            
             <div id="form-${p.id}" class="card-form" style="display:none; margin-top:15px; background:#111; padding:15px;">
                 <form class="ajax-form" action="${FORMSPREE_ENDPOINT}" method="POST">
                     <input type="hidden" name="bien_ref" value="${p.id} - ${p.titre}">
@@ -188,11 +168,10 @@ function createPropertyCard(p) {
             </div>
         </div>
     `;
-
     return div;
 }
 
-// 5. PARSEUR CSV INTELLIGENT (Gère virgules et guillemets)
+// 5. PARSEUR CSV
 function csvToJSON(csvText) {
     const lines = [];
     let newLine = '';
