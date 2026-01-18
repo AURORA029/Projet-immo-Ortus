@@ -99,15 +99,16 @@ function renderPaginationButtons() {
     }
 }
 
-// DESIGN CARTE SPÉCIAL PRESTIGE (FOND NOIR / TEXTE OR & BLANC)
+// DESIGN CARTE SPÉCIAL PRESTIGE (FOND NOIR / TEXTE OR & BLANC) - VERSION BRUTE 🛡️
 function createPrestigeCard(p) {
     const div = document.createElement('div');
     div.className = 'property-card';
     
     // FOND NOIR LUXE IMPOSÉ
-    div.style.cssText = "background-color: #121212; border: 1px solid #333; border-radius: 8px; overflow: hidden; position: relative; margin-bottom: 20px;";
+    // J'ajoute !important sur le fond aussi, au cas où.
+    div.style.cssText = "background-color: #121212 !important; border: 1px solid #333; border-radius: 8px; overflow: hidden; position: relative; margin-bottom: 20px;";
 
-    // Badge Exclusivité
+    // Badge Exclusivité ( inchangé )
     const badgeHtml = `<span style="position:absolute; top:15px; left:15px; background:#D4AF37; color:black; padding:5px 15px; font-weight:bold; letter-spacing:1px; font-size:0.8rem; z-index:10; border-radius:2px;">💎 EXCLUSIVITÉ</span>`;
 
     div.innerHTML = `
@@ -120,15 +121,15 @@ function createPrestigeCard(p) {
         
         <div class="property-details" style="padding: 25px;">
             <h3 style="margin-top:0; margin-bottom:10px;">
-                <a href="detail.html?id=${p.id}" style="text-decoration:none; color: #FFFFFF; font-family:'Playfair Display', serif; font-size:1.4rem;">${p.titre}</a>
+                <a href="detail.html?id=${p.id}" style="text-decoration:none; color: #FFFFFF !important; font-family:'Playfair Display', serif; font-size:1.4rem;">${p.titre}</a>
             </h3>
             
-            <p style="color: #E0E0E0; font-size:0.9rem; margin-bottom:20px;">
-                <i class="fas fa-map-marker-alt" style="color:#D4AF37;"></i> ${p.ville}
+            <p style="color: #E0E0E0 !important; font-size:0.9rem; margin-bottom:20px;">
+                <i class="fas fa-map-marker-alt" style="color:#D4AF37 !important;"></i> ${p.ville}
             </p>
             
             <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #333; padding-top:20px;">
-                <div class="price" style="color: #D4AF37; font-weight:bold; font-size:1.3rem;">${p.prix}</div>
+                <div class="price" style="color: #D4AF37 !important; font-weight:bold; font-size:1.3rem;">${p.prix}</div>
                 
                 <a href="detail.html?id=${p.id}" style="color: white; text-decoration:none; border:1px solid #D4AF37; padding:10px 20px; border-radius:0; transition:0.3s;" onmouseover="this.style.background='#D4AF37'; this.style.color='black'" onmouseout="this.style.background='transparent'; this.style.color='white'">
                     DÉCOUVRIR
@@ -138,6 +139,7 @@ function createPrestigeCard(p) {
     `;
     return div;
 }
+
 
 // Convertisseur CSV standard
 function csvToJSON(csvText) {
