@@ -1068,3 +1068,9 @@ input, textarea, select {
     }
 }
 
+/* FIX NAVBAR LARGEUR DESKTOP */
+.navbar .container {
+    max-width: 100%;
+    width: 100%;
+    padding: 0 40px;
+}
