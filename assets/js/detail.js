@@ -1,4 +1,4 @@
-/* DETAIL.JS - Affiche un seul bien */
+/* DETAIL.JS - Affiche un seul bien + Galerie */
 
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8KwzX3W0ONKYZray3wrDi5ReUBfw0-aSgvXSl7NaWNlvdSo9cKr3Y9Vh0k5kd_dHwchsCKfYE8d3/pub?output=csv";
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mvzzklrl"; 
@@ -16,7 +16,7 @@ async function fetchPropertyDetail() {
     try {
         const response = await fetch(SHEET_URL);
         const data = await response.text();
-        const properties = csvToJSON(data); // Utilise le convertisseur intelligent
+        const properties = csvToJSON(data);
         
         const property = properties.find(p => p.id === id);
 
@@ -35,7 +35,7 @@ function displayDetail(p) {
     document.getElementById('detail-price').innerText = p.prix;
     document.getElementById('detail-desc').innerText = p.description;
 
-    // Image
+    // Image Principale
     document.getElementById('detail-image').innerHTML = `<img src="${p.image}" style="width:100%; height:100%; object-fit:cover;">`;
 
     // Vidéo
@@ -54,7 +54,7 @@ function displayDetail(p) {
         <div class="tech-spec"><i class="fas fa-home" style="color:#D4AF37;"></i> ${p.type}</div>
     `;
 
-    // Atouts (Nettoyage + Affichage)
+    // Atouts
     if (p.caracteristiques) {
         let cleanFeats = p.caracteristiques.replace(/\n/g, ',');
         const feats = cleanFeats.split(',');
@@ -62,31 +62,68 @@ function displayDetail(p) {
         document.getElementById('detail-features').innerHTML = featsHTML;
     }
 
-       // Formulaire (VERSION AVEC REDIRECTION MERCI)
+    // --- 📸 GESTION DE LA GALERIE (NOUVEAU) ---
+    const gallerySection = document.getElementById('gallery-section');
+    const galleryGrid = document.getElementById('gallery-grid');
+
+    // On vérifie si la colonne "galerie" existe et n'est pas vide
+    if (p.galerie && p.galerie.trim() !== "") {
+        gallerySection.style.display = 'block'; // On affiche la section
+        galleryGrid.innerHTML = ''; // On vide au cas où
+
+        // On découpe les liens (séparateur = virgule)
+        const images = p.galerie.split(',');
+
+        images.forEach(imgUrl => {
+            const cleanUrl = imgUrl.trim();
+            if(cleanUrl.length > 5) { // Petite sécurité
+                const img = document.createElement('img');
+                img.src = cleanUrl;
+                // Style CSS direct pour l'image
+                img.style.cssText = "width: 100%; height: 200px; object-fit: cover; border-radius: 8px; cursor: pointer; transition: transform 0.3s; border: 1px solid #333;";
+                
+                // Effet Zoom au survol
+                img.onmouseover = function() { this.style.transform = 'scale(1.03)'; };
+                img.onmouseout = function() { this.style.transform = 'scale(1)'; };
+
+                // Clic pour ouvrir la Lightbox
+                img.onclick = function() {
+                    const lightbox = document.getElementById('lightbox');
+                    const lightboxImg = document.getElementById('lightbox-img');
+                    lightboxImg.src = cleanUrl;
+                    lightbox.style.display = 'flex'; // Affiche la lightbox
+                };
+
+                galleryGrid.appendChild(img);
+            }
+        });
+    } else {
+        // Si pas de photos, on cache la section pour ne pas laisser un vide
+        if(gallerySection) gallerySection.style.display = 'none';
+    }
+    // --- FIN GALERIE ---
+
+    // Formulaire Contact
     const formContainer = document.getElementById('detail-form-container');
     formContainer.innerHTML = `
         <form id="contact-form" action="${FORMSPREE_ENDPOINT}" method="POST" style="display:flex; flex-direction:column; gap:10px;">
             <input type="hidden" name="sujet" value="Intérêt pour : ${p.titre}">
-            
             <input type="text" name="nom" placeholder="Votre Nom" required style="padding:15px; border:none; border-radius:5px;">
             <input type="tel" name="tel" placeholder="Votre Téléphone" required style="padding:15px; border:none; border-radius:5px;">
             <input type="email" name="email" placeholder="Votre Email" required style="padding:15px; border:none; border-radius:5px;">
-            
             <button type="submit" id="btn-submit" style="padding:15px; background:#D4AF37; border:none; cursor:pointer; font-weight:bold; border-radius:5px;">ENVOYER</button>
             <p id="form-status" style="display:none; color:white; text-align:center; margin:0;"></p>
         </form>
     `;
 
-    // --- LE SCRIPT QUI FAIT LA REDIRECTION ---
+    // Gestion Envoi Formulaire
     const form = document.getElementById('contact-form');
     form.addEventListener('submit', async function(event) {
-        event.preventDefault(); // Stop la page blanche Formspree
-        
+        event.preventDefault();
         const btn = document.getElementById('btn-submit');
         const status = document.getElementById('form-status');
         const originalText = btn.innerText;
 
-        // Petit effet visuel
         btn.innerText = "Envoi en cours...";
         btn.disabled = true;
 
@@ -100,7 +137,6 @@ function displayDetail(p) {
             });
 
             if (response.ok) {
-                // ✅ C'EST ICI QUE ÇA SE PASSE
                 window.location.href = "merci.html"; 
             } else {
                 status.style.display = 'block';
@@ -117,7 +153,7 @@ function displayDetail(p) {
     });
 }
 
-// LE PARSEUR INTELLIGENT (OBLIGATOIRE)
+// PARSEUR CSV
 function csvToJSON(csvText) {
     const lines = [];
     let newLine = '';
