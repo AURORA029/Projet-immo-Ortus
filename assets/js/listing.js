@@ -68,7 +68,7 @@ async function fetchProperties() {
     }
 }
 
-// 2. MOTEUR DE RECHERCHE ULTIME (Texte + Budget + Type + Tri) 💎
+// 2. MOTEUR DE RECHERCHE ULTIME (Smart Search + Budget + Type + Tri) 💎
 function filterProperties() {
     // A. Récupération des Inputs
     const inputEl = document.getElementById('searchInput');
@@ -77,9 +77,8 @@ function filterProperties() {
     const rangeEl = document.getElementById('budgetRange');
     const maxBudget = rangeEl ? parseInt(rangeEl.value) : 5000000000;
 
-    // NOUVEAU : Récupération du type (Vente/Location)
     const categoryEl = document.getElementById('categorySelect');
-    const categoryVal = categoryEl ? categoryEl.value : 'all'; // 'all', 'vente', ou 'location'
+    const categoryVal = categoryEl ? categoryEl.value : 'all'; 
     
     // Mise à jour visuelle budget
     const displayEl = document.getElementById('budgetDisplay');
@@ -90,18 +89,27 @@ function filterProperties() {
 
     // B. Le Filtrage
     currentProperties = allProperties.filter(p => {
-        // 1. Filtre TEXTE
-        const ville = p.ville ? p.ville.toLowerCase() : '';
-        const titre = p.titre ? p.titre.toLowerCase() : '';
-        const type = p.type ? p.type.toLowerCase() : '';
-        const matchText = !textVal || ville.includes(textVal) || titre.includes(textVal) || type.includes(textVal);
+        // --- MODIFICATION ICI (Smart Search) 👇 ---
+        
+        // 1. Filtre TEXTE (Multi-mots : "Bungalow Mahajanga")
+        // On découpe ce que le client a tapé en mots séparés
+        const searchTerms = textVal.split(' ');
+
+        // On rassemble toutes les infos de la maison en une seule phrase pour chercher dedans
+        // (J'ajoute p.description et p.caracteristiques pour être sûr de tout trouver)
+        const content = (p.ville + " " + p.titre + " " + p.type + " " + (p.description || "") + " " + (p.caracteristiques || "")).toLowerCase();
+
+        // On vérifie que CHAQUE mot tapé par le client existe quelque part dans la fiche maison
+        const matchText = searchTerms.every(term => content.includes(term));
+
+        // --- FIN MODIFICATION 👆 ---
+
 
         // 2. Filtre PRIX
         const rawPrice = p.prix_calcul ? parseInt(p.prix_calcul.replace(/\s/g, '')) : 0;
         const matchPrice = (maxBudget >= 5000000000) || (rawPrice <= maxBudget);
 
-        // 3. Filtre CATEGORIE (Vente/Location) - NOUVEAU !
-        // On regarde si la colonne "categorie" du CSV contient le mot choisi
+        // 3. Filtre CATEGORIE (Vente/Location)
         const cat = p.categorie ? p.categorie.toLowerCase() : '';
         const matchCategory = (categoryVal === 'all') || cat.includes(categoryVal);
 
@@ -130,6 +138,7 @@ function filterProperties() {
     // Retour page 1
     renderPage(1);
 }
+
 
 
 
