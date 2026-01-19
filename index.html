@@ -139,20 +139,39 @@
         <div class="hero-overlay"></div> <div class="container hero-content">
             <h1>Créateur d'Opportunités</h1>
             <p>Trouvez le bien immobilier qui correspond à vos rêves.</p>
-
-    <form action="biens.html" method="GET" style="background: white; padding: 20px; border-radius: 10px; display: flex; flex-direction: column; gap: 15px; max-width: 400px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+<form action="biens.html" method="GET" style="background: white; padding: 20px; border-radius: 10px; display: flex; flex-direction: column; gap: 15px; max-width: 400px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
     
-       <div style="display: flex; align-items: center; background: #f5f5f5; padding: 10px; border-radius: 5px;">
+    <div style="display: flex; align-items: center; background: #f5f5f5; padding: 10px; border-radius: 5px;">
         <i class="fas fa-map-marker-alt" style="color: #D4AF37; margin-right: 10px;"></i>
-        <input type="text" name="filtre" placeholder="Ville, Quartier, Type..." required 
+        <input type="text" name="filtre" placeholder="Ville, Quartier, Type..." 
                style="border: none; background: transparent; width: 100%; font-family: 'Montserrat', sans-serif; outline: none;">
-       </div>
+    </div>
 
-      <button type="submit" style="background: #020610; color: white; border: none; padding: 15px; border-radius: 5px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px;">
+    <div style="padding: 0 5px;">
+        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #666; margin-bottom: 5px;">
+            <span>Budget Max :</span>
+            <span id="home-budget-display" style="color: #D4AF37; font-weight: bold;">Tout afficher</span>
+        </div>
+        
+        <input type="range" name="budget" 
+               min="0" max="5000000000" step="100000000" value="5000000000"
+               oninput="updateHomeBudget(this.value)"
+               style="width: 100%; accent-color: #D4AF37; cursor: pointer;">
+    </div>
+
+    <button type="submit" style="background: #020610; color: white; border: none; padding: 15px; border-radius: 5px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px;">
         <i class="fas fa-search"></i> RECHERCHER
-      </button>
-
+    </button>
 </form>
+
+<script>
+function updateHomeBudget(val) {
+    const display = document.getElementById('home-budget-display');
+    if(val >= 5000000000) display.innerText = "Tout afficher";
+    else display.innerText = new Intl.NumberFormat('fr-FR').format(val) + " Ar";
+}
+</script>
+
 
 
         </div>
