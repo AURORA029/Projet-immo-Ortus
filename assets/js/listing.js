@@ -68,51 +68,58 @@ async function fetchProperties() {
     }
 }
 
-// 2. MOTEUR DE RECHERCHE + TRI (TEXTE + PRIX + ORDRE) 🧠
+// 2. MOTEUR DE RECHERCHE ULTIME (Texte + Budget + Type + Tri) 💎
 function filterProperties() {
-    // A. Récupération du Texte
+    // A. Récupération des Inputs
     const inputEl = document.getElementById('searchInput');
     const textVal = inputEl ? inputEl.value.toLowerCase().trim() : '';
 
-    // B. Récupération du Budget
     const rangeEl = document.getElementById('budgetRange');
-    const maxBudget = rangeEl ? parseInt(rangeEl.value) : 5000000000; // 5 Mds par défaut
+    const maxBudget = rangeEl ? parseInt(rangeEl.value) : 5000000000;
+
+    // NOUVEAU : Récupération du type (Vente/Location)
+    const categoryEl = document.getElementById('categorySelect');
+    const categoryVal = categoryEl ? categoryEl.value : 'all'; // 'all', 'vente', ou 'location'
     
-    // Mise à jour visuelle du texte "Budget Max"
+    // Mise à jour visuelle budget
     const displayEl = document.getElementById('budgetDisplay');
     if(displayEl) {
         if(maxBudget >= 5000000000) displayEl.innerText = "Tout afficher";
         else displayEl.innerText = new Intl.NumberFormat('fr-FR').format(maxBudget) + " Ar";
     }
 
-    // C. Le Filtrage (On garde ou on jette ?)
+    // B. Le Filtrage
     currentProperties = allProperties.filter(p => {
-        // 1. Vérification du TEXTE
+        // 1. Filtre TEXTE
         const ville = p.ville ? p.ville.toLowerCase() : '';
         const titre = p.titre ? p.titre.toLowerCase() : '';
-        const type = p.type ? p.type.toLowerCase() : ''; 
+        const type = p.type ? p.type.toLowerCase() : '';
         const matchText = !textVal || ville.includes(textVal) || titre.includes(textVal) || type.includes(textVal);
 
-        // 2. Vérification du PRIX MAX
+        // 2. Filtre PRIX
         const rawPrice = p.prix_calcul ? parseInt(p.prix_calcul.replace(/\s/g, '')) : 0;
         const matchPrice = (maxBudget >= 5000000000) || (rawPrice <= maxBudget);
 
-        return matchText && matchPrice;
+        // 3. Filtre CATEGORIE (Vente/Location) - NOUVEAU !
+        // On regarde si la colonne "categorie" du CSV contient le mot choisi
+        const cat = p.categorie ? p.categorie.toLowerCase() : '';
+        const matchCategory = (categoryVal === 'all') || cat.includes(categoryVal);
+
+        // Il faut que les 3 conditions soient OK
+        return matchText && matchPrice && matchCategory;
     });
 
-    // D. LE TRI (On mélange l'ordre !) - NOUVEAU ICI 👇
+    // C. Le TRI
     const sortSelect = document.getElementById('sortSelect');
     const sortValue = sortSelect ? sortSelect.value : 'default';
 
     if (sortValue === 'asc') {
-        // Tri Croissant (Petit -> Grand)
         currentProperties.sort((a, b) => {
             const priceA = a.prix_calcul ? parseInt(a.prix_calcul.replace(/\s/g, '')) : 0;
             const priceB = b.prix_calcul ? parseInt(b.prix_calcul.replace(/\s/g, '')) : 0;
             return priceA - priceB;
         });
     } else if (sortValue === 'desc') {
-        // Tri Décroissant (Grand -> Petit)
         currentProperties.sort((a, b) => {
             const priceA = a.prix_calcul ? parseInt(a.prix_calcul.replace(/\s/g, '')) : 0;
             const priceB = b.prix_calcul ? parseInt(b.prix_calcul.replace(/\s/g, '')) : 0;
@@ -120,9 +127,10 @@ function filterProperties() {
         });
     }
 
-    // Retour à la page 1 après filtrage/tri
+    // Retour page 1
     renderPage(1);
 }
+
 
 
 // 3. PAGINATION (Identique à ton code)
