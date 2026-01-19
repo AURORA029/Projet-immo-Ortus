@@ -68,7 +68,7 @@ async function fetchProperties() {
     }
 }
 
-// 2. MOTEUR DE RECHERCHE (TEXTE + PRIX) 🧠
+// 2. MOTEUR DE RECHERCHE + TRI (TEXTE + PRIX + ORDRE) 🧠
 function filterProperties() {
     // A. Récupération du Texte
     const inputEl = document.getElementById('searchInput');
@@ -76,7 +76,7 @@ function filterProperties() {
 
     // B. Récupération du Budget
     const rangeEl = document.getElementById('budgetRange');
-    const maxBudget = rangeEl ? parseInt(rangeEl.value) : 5000000000;
+    const maxBudget = rangeEl ? parseInt(rangeEl.value) : 5000000000; // 5 Mds par défaut
     
     // Mise à jour visuelle du texte "Budget Max"
     const displayEl = document.getElementById('budgetDisplay');
@@ -85,29 +85,45 @@ function filterProperties() {
         else displayEl.innerText = new Intl.NumberFormat('fr-FR').format(maxBudget) + " Ar";
     }
 
-    // C. Le Filtrage
+    // C. Le Filtrage (On garde ou on jette ?)
     currentProperties = allProperties.filter(p => {
         // 1. Vérification du TEXTE
         const ville = p.ville ? p.ville.toLowerCase() : '';
         const titre = p.titre ? p.titre.toLowerCase() : '';
-        const type = p.type ? p.type.toLowerCase() : ''; // Si tu as une colonne type
+        const type = p.type ? p.type.toLowerCase() : ''; 
         const matchText = !textVal || ville.includes(textVal) || titre.includes(textVal) || type.includes(textVal);
 
-        // 2. Vérification du PRIX
-        // ⚠️ IMPORTANT : On lit la colonne 'prix_calcul' du CSV
-        // On enlève les espaces au cas où le CSV en contiendrait
+        // 2. Vérification du PRIX MAX
         const rawPrice = p.prix_calcul ? parseInt(p.prix_calcul.replace(/\s/g, '')) : 0;
-        
-        // Si le slider est à fond (5 Mds), on ignore le prix, sinon on filtre
         const matchPrice = (maxBudget >= 5000000000) || (rawPrice <= maxBudget);
 
-        // Il faut que les DEUX conditions soient vraies
         return matchText && matchPrice;
     });
 
-    // Retour à la page 1 après une recherche
+    // D. LE TRI (On mélange l'ordre !) - NOUVEAU ICI 👇
+    const sortSelect = document.getElementById('sortSelect');
+    const sortValue = sortSelect ? sortSelect.value : 'default';
+
+    if (sortValue === 'asc') {
+        // Tri Croissant (Petit -> Grand)
+        currentProperties.sort((a, b) => {
+            const priceA = a.prix_calcul ? parseInt(a.prix_calcul.replace(/\s/g, '')) : 0;
+            const priceB = b.prix_calcul ? parseInt(b.prix_calcul.replace(/\s/g, '')) : 0;
+            return priceA - priceB;
+        });
+    } else if (sortValue === 'desc') {
+        // Tri Décroissant (Grand -> Petit)
+        currentProperties.sort((a, b) => {
+            const priceA = a.prix_calcul ? parseInt(a.prix_calcul.replace(/\s/g, '')) : 0;
+            const priceB = b.prix_calcul ? parseInt(b.prix_calcul.replace(/\s/g, '')) : 0;
+            return priceB - priceA;
+        });
+    }
+
+    // Retour à la page 1 après filtrage/tri
     renderPage(1);
 }
+
 
 // 3. PAGINATION (Identique à ton code)
 function renderPage(page) {
