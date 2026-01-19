@@ -5,117 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ortus Immobilier - Créateur d'Opportunités</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<style>
-    /* 1. L'ÉCRAN NOIR */
-    #intro-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #020610; /* Ton noir profond */
-        z-index: 2147483647 !important; /* Au-dessus de tout */
-        display: flex;
-        flex-direction: column; /* NOUVEAU : Empile verticalement */
-        justify-content: center;
-        align-items: center;
-        gap: 30px; /* Espace entre le logo et la citation */
-        /* Transition pour la disparition */
-        transition: opacity 1.5s ease-in-out, visibility 1.5s;
-    }
-
-    /* 2. LE LOGO PRINCIPAL */
-    .intro-logo-container {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 4rem;
-        font-weight: 700;
-        letter-spacing: 8px;
-        opacity: 0;
-        /* L'animation du logo commence tout de suite */
-        animation: logoReveal 3s ease-in-out forwards;
-    }
-
-    /* 3. EFFET OR MÉTALLIQUE (Inchangé) */
-    .intro-text {
-        background: linear-gradient(
-            to right, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%
-        );
-        background-size: 200% auto;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        animation: shine 3s linear infinite;
-        filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.3)) 
-                drop-shadow(0px 0px 5px rgba(212, 175, 55, 0.5));
-    }
-    .intro-dot { color: #fff; }
-
-    /* --- NOUVEAU : LA PARTIE CITATION & ICÔNE --- */
+    <style> /* --- PARTIE MISE À JOUR : CITATION & ICÔNE --- */
     .intro-sub-content {
         text-align: center;
-        color: #e0e0e0; /* Blanc cassé élégant */
-        opacity: 0; /* Invisible au départ */
-        /* Apparaît doucement APRÈS 1.2 secondes */
+        color: #e0e0e0;
+        opacity: 0;
+        /* J'ai ajouté margin-top pour descendre le bloc plus bas sous le logo */
+        margin-top: 60px; 
         animation: subReveal 1.5s ease-out forwards 1.2s;
     }
 
     .intro-icon svg {
-        width: 40px; /* Taille discrète */
+        width: 50px; /* Un peu plus grand pour voir les détails du palais */
         height: auto;
-        margin-bottom: 15px;
-        opacity: 0.7; /* Légèrement transparent pour la finesse */
+        margin-bottom: 20px;
+        opacity: 0.8;
     }
     
-    /* Le style "Plume" */
+    /* Nouvelle police : Cormorant Garamond */
     .intro-quote {
-        font-family: 'Pinyon Script', cursive;
-        font-size: 1.8rem; /* Assez grand pour être lu vite */
-        line-height: 1.3;
+        font-family: 'Cormorant Garamond', serif; /* Police Serif élégante */
+        font-style: italic; /* L'italique donne le côté "citation" */
+        font-weight: 300; /* Fin et délicat */
+        font-size: 1.3rem; /* Beaucoup plus petit et discret */
+        letter-spacing: 1px; /* Espacement pour la lisibilité */
+        line-height: 1.5;
         margin: 0;
+        padding: 0 20px; /* Marge sur mobile pour pas toucher les bords */
         text-shadow: 0 1px 3px rgba(0,0,0,0.5);
     }
-    /* ------------------------------------------- */
-
-
-    /* 4. LES ANIMATIONS */
     
-    /* Apparition Logo (Inchangé) */
-    @keyframes logoReveal {
-        0% { opacity: 0; transform: scale(0.9); }
-        40% { opacity: 1; transform: scale(1); }
-        80% { opacity: 1; transform: scale(1.05); }
-        100% { opacity: 1; transform: scale(1.05); }
-    }
-
-    /* Brillance Or (Inchangé) */
-    @keyframes shine {
-        from { background-position: 0% center; }
-        to { background-position: -200% center; }
-    }
-
-    /* NOUVEAU : Apparition douce de la citation */
-    @keyframes subReveal {
-        0% { opacity: 0; transform: translateY(20px); /* Vient un peu du bas */ }
-        100% { opacity: 1; transform: translateY(0); }
-    }
-
-    /* CLASSE POUR CACHER L'INTRO (Inchangé) */
-    .intro-hidden {
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-    }
-
-    /* Responsive mobile */
+    /* Responsive : encore un peu plus petit sur mobile */
     @media (max-width: 768px) {
-        .intro-logo-container { font-size: 2.5rem; letter-spacing: 4px; }
-        .intro-quote { font-size: 1.4rem; padding: 0 20px; } /* Un peu plus petit sur mobile */
+        .intro-quote { font-size: 1.1rem; margin-top: 10px; }
+        .intro-sub-content { margin-top: 40px; }
     }
-</style>
 
+</style>
 
 </head>            
 <body>
@@ -123,16 +52,23 @@
     <div class="intro-logo-container">
         <span class="intro-text">ORTUS</span><span class="intro-dot">.</span>
     </div>
-
-    <div class="intro-sub-content">
+ <div class="intro-sub-content">
+        
         <div class="intro-icon">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 9.5L12 3L21 9.5V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9.5Z" stroke="#e0e0e0" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M9 22V12H15V22" stroke="#e0e0e0" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 2L2 9H22L12 2Z" stroke="#e0e0e0" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 22H20V9H4V22ZM7 22V9M12 22V9M17 22V9" stroke="#e0e0e0" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 22H22" stroke="#e0e0e0" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </div>
-        <p class="intro-quote">"Le véritable luxe ne réside pas seulement dans la pierre,<br>mais dans l'art de vivre qu'elle abrite."</p>
+
+        <p class="intro-quote">
+            "Le véritable luxe ne réside pas seulement dans la pierre,<br>
+            mais dans l'art de vivre qu'elle abrite."
+        </p>
+
     </div>
+
 </div>
 
 
