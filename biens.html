@@ -109,14 +109,24 @@
             <span style="font-size: 0.7rem; color: #888;">5Md+</span>
         </div>
     </div>
-<div style="margin-top: 15px;">
+<div style="margin-top: 15px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+    
+    <select id="categorySelect" onchange="filterProperties()" 
+            style="background: #020610; color: white; border: 1px solid #D4AF37; padding: 10px 15px; border-radius: 5px; font-family: 'Montserrat', sans-serif; cursor: pointer; outline: none;">
+        <option value="all">Tout type</option>
+        <option value="vente">Acheter</option>
+        <option value="location">Louer</option>
+    </select>
+
     <select id="sortSelect" onchange="filterProperties()" 
             style="background: #020610; color: #D4AF37; border: 1px solid #D4AF37; padding: 10px 15px; border-radius: 5px; font-family: 'Montserrat', sans-serif; cursor: pointer; outline: none;">
         <option value="default">Trier par...</option>
-        <option value="asc">Prix Croissant (Moins cher d'abord)</option>
-        <option value="desc">Prix Décroissant (Plus cher d'abord)</option>
+        <option value="asc">Prix Croissant</option>
+        <option value="desc">Prix Décroissant</option>
     </select>
+
 </div>
+
 
 </div>
 
