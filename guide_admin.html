@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide Administration - ORTUS</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 40px; background-color: #fff; }
+        
+        /* HEADER */
+        .header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #000; padding-bottom: 20px; }
+        .logo-text { font-size: 2.5rem; font-weight: bold; letter-spacing: 2px; color: #000; margin: 0; }
+        .logo-dot { color: #D4AF37; }
+        .subtitle { font-size: 1.2rem; color: #666; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* AUTEUR */
+        .author-box { background-color: #f4f4f4; padding: 10px 15px; border-left: 5px solid #D4AF37; margin-bottom: 40px; font-size: 0.9rem; }
+        
+        /* TITRES */
+        h1 { color: #000; font-size: 1.8rem; }
+        h2 { color: #D4AF37; margin-top: 40px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        h3 { color: #000; margin-top: 25px; font-size: 1.1rem; font-weight: bold; }
+
+        /* ALERTES */
+        .danger-box { background-color: #ffebee; border: 1px solid #ef9a9a; color: #c62828; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        .tip-box { background-color: #e8f5e9; border: 1px solid #a5d6a7; color: #2e7d32; padding: 15px; border-radius: 5px; margin: 20px 0; }
+
+        /* SIMULATION EXCEL (VISUEL) */
+        .excel-row { display: flex; font-family: monospace; font-size: 0.85rem; border: 1px solid #ccc; margin-bottom: 20px; overflow: hidden; }
+        .excel-cell { padding: 10px; border-right: 1px solid #ccc; background: #fff; }
+        .excel-header { background: #f3f3f3; font-weight: bold; color: #555; text-align: center; }
+        .col-id { width: 40px; }
+        .col-titre { width: 150px; }
+        .col-prix { width: 80px; }
+        .col-cat { width: 80px; background-color: #fff3cd; } /* Highlight Catégorie */
+
+        /* FOOTER */
+        .footer { margin-top: 60px; font-size: 0.7rem; text-align: center; color: #999; border-top: 1px solid #eee; padding-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1 class="logo-text">ORTUS<span class="logo-dot">.</span></h1>
+        <p class="subtitle">Manuel d'Administration du Site</p>
+    </div>
+
+    <div class="author-box">
+        <strong>Document technique réalisé par :</strong> RAFIDISON Ny Avo Andrianina Allan<br>
+        <em>Ce guide explique comment gérer les biens immobiliers du site via Google Sheets.</em>
+    </div>
+
+    <div class="danger-box">
+        <strong>⚠️ RÈGLE D'OR - À LIRE AVANT TOUT</strong><br>
+        Ne jamais modifier, supprimer ou renommer la <strong>LIGNE 1</strong> (L'en-tête bleu/gris) du fichier Google Sheets.<br>
+        C'est elle qui fait le lien avec le site. Si vous changez un mot (ex: "prix" en "montant"), le site plantera.
+    </div>
+
+    <h2>1. ACCÉDER À L'INTERFACE DE GESTION</h2>
+    <p>La gestion du site se fait entièrement via l'application <strong>Google Sheets</strong> (sur PC ou Mobile).</p>
+    <ul>
+        <li>Ouvrez le fichier nommé : <strong>ORTUS_DB</strong> (Base de données).</li>
+        <li>Chaque ligne correspond à une maison affichée sur le site.</li>
+    </ul>
+
+    <h2>2. AJOUTER UNE NOUVELLE MAISON</h2>
+    <p>Pour ajouter un bien, remplissez simplement une nouvelle ligne en bas du tableau.</p>
+
+    <div style="margin-bottom: 5px; font-weight: bold; font-size: 0.8rem; color:#666;">Exemple de remplissage :</div>
+    <div class="excel-row">
+        <div class="excel-cell col-id excel-header">id</div>
+        <div class="excel-cell col-titre excel-header">titre</div>
+        <div class="excel-cell col-prix excel-header">prix</div>
+        <div class="excel-cell col-cat excel-header">categorie</div>
+    </div>
+    <div class="excel-row" style="margin-top:-21px;">
+        <div class="excel-cell col-id">12</div>
+        <div class="excel-cell col-titre">Villa Dorée Ivandry</div>
+        <div class="excel-cell col-prix">400.000€</div>
+        <div class="excel-cell col-cat">prestige</div>
+    </div>
+
+    <h3>Détail des colonnes importantes :</h3>
+    <ul>
+        <li><strong>id :</strong> Un chiffre unique (1, 2, 3...). Incrémentez à chaque fois.</li>
+        <li><strong>titre :</strong> Le nom qui s'affiche en grand (ex: "Villa Panoramique").</li>
+        <li><strong>image :</strong> Le <u>lien URL</u> de la photo (pas l'image elle-même).</li>
+        <li><strong>prix :</strong> Le prix avec la devise (ex: "2.5 Mds Ar" ou "500.000 €").</li>
+        <li><strong>ville :</strong> La localisation (ex: "Ivato", "Ambatobe").</li>
+    </ul>
+
+    <h2>3. GÉRER LE "PRESTIGE" (IMPORTANT)</h2>
+    <p>Le site possède deux sections : <strong>Biens Classiques</strong> et <strong>Collection Prestige</strong> (Fond noir/or).</p>
+    
+    <div class="tip-box">
+        <strong>Comment classer un bien ?</strong><br>
+        Dans la colonne <strong>categorie</strong> :
+        <ul>
+            <li>Écrivez <code>prestige</code> (en minuscules) -> Le bien ira dans la page "Prestige".</li>
+            <li>Écrivez <code>vente</code> ou <code>location</code> -> Le bien ira dans la page "Biens" classique.</li>
+        </ul>
+    </div>
+
+    <h2>4. GÉRER LES IMAGES</h2>
+    <p>Le fichier Excel ne peut pas stocker les images directement. Il faut utiliser un lien.</p>
+    <ol>
+        <li>Hébergez la photo (sur notre Drive public ou un site comme Imgur/Postimages).</li>
+        <li>Copiez le <strong>Lien Direct</strong> de l'image (il doit finir par .jpg ou .png).</li>
+        <li>Collez ce lien dans la colonne <strong>image</strong> du fichier Excel.</li>
+    </ol>
+
+    <h2>5. SUPPRIMER OU VENDRE UN BIEN</h2>
+    
+    <h3>Option A : Marquer comme "Vendu"</h3>
+    <p>Ne supprimez pas la ligne ! Cela montre notre succès.</p>
+    <ul>
+        <li>Ajoutez simplement le mot <strong>(VENDU)</strong> à la fin du Titre.</li>
+        <li>Le site affichera toujours le bien, mais les clients sauront qu'il est parti.</li>
+    </ul>
+
+    <h3>Option B : Retirer du site</h3>
+    <p>Effacez simplement toute la ligne correspondante dans le Google Sheet. Le bien disparaîtra du site instantanément (après rechargement).</p>
+
+    <div class="footer">
+        Guide interne - ORTUS Immobilier<br>
+        Créé par RAFIDISON Ny Avo Andrianina Allan - 2026
+    </div>
+
+</body>
+</html>
