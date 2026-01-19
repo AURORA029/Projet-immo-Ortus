@@ -1,4 +1,4 @@
-/* LISTING.JS - VERSION ULTIME (Badges Séparés + Lisibilité) 🛡️ */
+/* LISTING.JS - VERSION FUSION (Design Actuel + Slider Budget) */
 
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8KwzX3W0ONKYZray3wrDi5ReUBfw0-aSgvXSl7NaWNlvdSo9cKr3Y9Vh0k5kd_dHwchsCKfYE8d3/pub?output=csv";
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mvzzklrl"; 
@@ -11,9 +11,29 @@ let allProperties = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchProperties();
+    
+    // Écouteur pour le slider de budget (Mise à jour en temps réel)
+    const budgetRange = document.getElementById('budgetRange');
+    if(budgetRange) {
+        budgetRange.addEventListener('input', () => filterProperties());
+    }
+    
+    // Écouteur pour le bouton de recherche texte
+    const searchBtn = document.getElementById('searchBtn');
+    if(searchBtn) {
+        searchBtn.addEventListener('click', () => filterProperties());
+    }
+    
+    // Écouteur pour la touche "Entrée" dans la barre de texte
+    const searchInput = document.getElementById('searchInput');
+    if(searchInput) {
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') filterProperties();
+        });
+    }
 });
 
-// 1. CHARGEMENT
+// 1. CHARGEMENT & GESTION URL
 async function fetchProperties() {
     const container = document.getElementById('listing-container');
     try {
@@ -21,63 +41,87 @@ async function fetchProperties() {
         const data = await response.text();
         allProperties = csvToJSON(data); 
         
+        // --- GESTION DES PARAMÈTRES VENANT DE L'ACCUEIL ---
         const urlParams = new URLSearchParams(window.location.search);
-        let filterFromHome = urlParams.get('filtre');
+        const filterTexte = urlParams.get('filtre');
+        const filterBudget = urlParams.get('budget');
 
-        if (filterFromHome && filterFromHome !== 'all') {
-            filterFromHome = decodeURIComponent(filterFromHome).trim();
+        // Si texte dans l'URL, on le met dans la barre
+        if (filterTexte && filterTexte !== 'all') {
+            const decodedTexte = decodeURIComponent(filterTexte).trim();
             const searchInput = document.getElementById('searchInput');
-            if(searchInput) searchInput.value = filterFromHome; 
-            filterProperties(filterFromHome); 
-        } else {
-            currentProperties = allProperties;
-            renderPage(1);
+            if(searchInput) searchInput.value = decodedTexte;
         }
+
+        // Si budget dans l'URL, on règle le slider
+        if (filterBudget) {
+            const budgetRange = document.getElementById('budgetRange');
+            if(budgetRange) budgetRange.value = filterBudget;
+        }
+
+        // On lance le filtre immédiatement avec les valeurs récupérées
+        filterProperties();
 
     } catch (error) {
         console.error('Erreur:', error);
-        container.innerHTML = '<p style="text-align:center; color:white;">Erreur de lecture des données.</p>';
+        if(container) container.innerHTML = '<p style="text-align:center; color:white;">Erreur de lecture des données.</p>';
     }
 }
 
-// 2. RECHERCHE
-function filterProperties(query = null) {
-    let inputVal = query;
-    if (inputVal === null) {
-        const inputEl = document.getElementById('searchInput');
-        inputVal = inputEl ? inputEl.value : '';
-    }
-    inputVal = inputVal.toLowerCase().trim();
-    
-    if (!inputVal) {
-        currentProperties = allProperties;
-    } else {
-        currentProperties = allProperties.filter(p => {
-            const ville = p.ville ? p.ville.toLowerCase() : '';
-            const titre = p.titre ? p.titre.toLowerCase() : '';
-            const type = p.type ? p.type.toLowerCase() : '';
-            const desc = p.description ? p.description.toLowerCase() : '';
-            const carac = p.caracteristiques ? p.caracteristiques.toLowerCase() : '';
-            const prix = p.prix ? p.prix.toLowerCase() : '';
+// 2. MOTEUR DE RECHERCHE (TEXTE + PRIX) 🧠
+function filterProperties() {
+    // A. Récupération du Texte
+    const inputEl = document.getElementById('searchInput');
+    const textVal = inputEl ? inputEl.value.toLowerCase().trim() : '';
 
-            return ville.includes(inputVal) || titre.includes(inputVal) || type.includes(inputVal) || 
-                   desc.includes(inputVal) || carac.includes(inputVal) || prix.includes(inputVal);
-        });
+    // B. Récupération du Budget
+    const rangeEl = document.getElementById('budgetRange');
+    const maxBudget = rangeEl ? parseInt(rangeEl.value) : 5000000000;
+    
+    // Mise à jour visuelle du texte "Budget Max"
+    const displayEl = document.getElementById('budgetDisplay');
+    if(displayEl) {
+        if(maxBudget >= 5000000000) displayEl.innerText = "Tout afficher";
+        else displayEl.innerText = new Intl.NumberFormat('fr-FR').format(maxBudget) + " Ar";
     }
+
+    // C. Le Filtrage
+    currentProperties = allProperties.filter(p => {
+        // 1. Vérification du TEXTE
+        const ville = p.ville ? p.ville.toLowerCase() : '';
+        const titre = p.titre ? p.titre.toLowerCase() : '';
+        const type = p.type ? p.type.toLowerCase() : ''; // Si tu as une colonne type
+        const matchText = !textVal || ville.includes(textVal) || titre.includes(textVal) || type.includes(textVal);
+
+        // 2. Vérification du PRIX
+        // ⚠️ IMPORTANT : On lit la colonne 'prix_calcul' du CSV
+        // On enlève les espaces au cas où le CSV en contiendrait
+        const rawPrice = p.prix_calcul ? parseInt(p.prix_calcul.replace(/\s/g, '')) : 0;
+        
+        // Si le slider est à fond (5 Mds), on ignore le prix, sinon on filtre
+        const matchPrice = (maxBudget >= 5000000000) || (rawPrice <= maxBudget);
+
+        // Il faut que les DEUX conditions soient vraies
+        return matchText && matchPrice;
+    });
+
+    // Retour à la page 1 après une recherche
     renderPage(1);
 }
 
-// 3. PAGINATION
+// 3. PAGINATION (Identique à ton code)
 function renderPage(page) {
     currentPage = page;
     const container = document.getElementById('listing-container');
     const paginationContainer = document.getElementById('pagination-container');
     
+    if(!container) return; // Sécurité
+
     container.innerHTML = '';
     paginationContainer.innerHTML = '';
 
     if (currentProperties.length === 0) {
-        container.innerHTML = '<div style="text-align:center; width:100%; padding:50px;"><h3 style="color:white;">Aucun résultat</h3><button onclick="document.getElementById(\'searchInput\').value=\'\'; filterProperties();" style="margin-top:20px; padding:10px 20px; background:#D4AF37; border:none; cursor:pointer;">Voir tout</button></div>';
+        container.innerHTML = '<div style="text-align:center; width:100%; padding:50px;"><h3 style="color:white;">Aucun résultat pour ces critères.</h3><button onclick="document.getElementById(\'searchInput\').value=\'\'; document.getElementById(\'budgetRange\').value=5000000000; filterProperties();" style="margin-top:20px; padding:10px 20px; background:#D4AF37; border:none; cursor:pointer;">Réinitialiser la recherche</button></div>';
         return;
     }
 
@@ -91,6 +135,7 @@ function renderPage(page) {
 
     attachFormHandlers();
     renderPaginationButtons();
+    // Scroll doux vers le haut de la liste
     window.scrollTo({ top: 300, behavior: 'smooth' });
 }
 
@@ -129,30 +174,20 @@ function renderPaginationButtons() {
     }
 }
 
-// 4. DESIGN CARTE (PROPRE & LISIBLE) ✨
+// 4. DESIGN CARTE (TON DESIGN PRÉSERVÉ) ✨
 function createPropertyCard(p) {
     const div = document.createElement('div');
     div.className = 'property-card';
-    
-    // STYLE DE LA CARTE : FOND BLANC
     div.style.cssText = "background-color: #FFFFFF; border: 1px solid #ddd; overflow: hidden; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: transform 0.3s ease;";
 
-    // --- BADGES SÉPARÉS ---
     let badgesHtml = '';
-
-    // GAUCHE : PRESTIGE (Diamant)
     if (p.gamme && p.gamme.toLowerCase().includes('prestige')) {
         badgesHtml += `<span style="position:absolute; top:15px; left:15px; background:#D4AF37; color:black; padding:6px 12px; font-weight:800; font-size:0.75rem; border-radius:4px; z-index:10; box-shadow: 0 2px 5px rgba(0,0,0,0.3); letter-spacing:1px;">💎 PRESTIGE</span>`;
     }
-
-       // 2. Badge VENTE/LOCATION -> En haut à DROITE
-    // 👉 CORRECTION : J'ai ajouté !important sur la couleur blanche (#FFF)
     if (p.categorie) {
         badgesHtml += `<span class="badge status" style="background:#000 !important; color:#FFFFFF !important; border:1px solid #D4AF37; position:absolute; top:10px; right:10px; padding:5px 10px; z-index:2; font-weight:bold; text-transform:uppercase; font-size:0.8rem; border-radius:4px;">${p.categorie}</span>`;
     }
 
-
-    // --- ATOUTS (NOIR) ---
     let featuresList = '';
     if (p.caracteristiques) {
         let cleanFeat = p.caracteristiques.replace(/\n/g, ',');
@@ -171,36 +206,23 @@ function createPropertyCard(p) {
                 <img src="${p.image}" alt="${p.titre}" style="width:100%; height:100%; object-fit:cover; transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onerror="this.src='assets/images/default.jpg'">
             </a>
         </div>
-        
         <div class="property-details" style="padding: 25px;">
             <h3 style="margin:0 0 10px 0;">
                 <a href="detail.html?id=${p.id}" style="text-decoration:none; color: #111; font-family:'Playfair Display', serif; font-size:1.4rem;">${p.titre}</a>
             </h3>
-            
             <p style="color:#666; font-size:0.95rem; margin-bottom:20px; display:flex; align-items:center;">
                 <i class="fas fa-map-marker-alt" style="color:#D4AF37; margin-right:8px;"></i> ${p.ville}
             </p>
-            
             <div style="display:flex; gap:20px; margin-bottom:20px; padding-bottom:15px; border-bottom:1px solid #eee; color:#444;">
                 <span title="Pièces"><i class="fas fa-door-open" style="color:#D4AF37;"></i> ${p.pieces} p.</span>
                 <span title="Surface"><i class="fas fa-ruler-combined" style="color:#D4AF37;"></i> ${p.surface} m²</span>
             </div>
-            
             <div style="color: #D4AF37; font-weight:800; font-size:1.5rem; margin-bottom:20px;">${p.prix}</div>
-            
-            <ul style="list-style:none; padding:0; margin-bottom:25px;">
-                ${featuresList}
-            </ul>
-            
+            <ul style="list-style:none; padding:0; margin-bottom:25px;">${featuresList}</ul>
             <div style="display:flex; gap:12px;">
-                 <a href="detail.html?id=${p.id}" style="flex:1; text-align:center; padding:12px; background:white; border:1px solid #111; color:#111; text-decoration:none; font-weight:bold; font-size:0.9rem; transition:0.3s;" onmouseover="this.style.background='#111'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='#111'">
-                   Voir détails
-                </a>
-                <button onclick="toggleForm('form-${p.id}')" style="flex:1; padding:12px; background:#D4AF37; color:black; border:none; font-weight:bold; cursor:pointer; font-size:0.9rem;">
-                    Contact
-                </button>
+                 <a href="detail.html?id=${p.id}" style="flex:1; text-align:center; padding:12px; background:white; border:1px solid #111; color:#111; text-decoration:none; font-weight:bold; font-size:0.9rem; transition:0.3s;" onmouseover="this.style.background='#111'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='#111'">Voir détails</a>
+                <button onclick="toggleForm('form-${p.id}')" style="flex:1; padding:12px; background:#D4AF37; color:black; border:none; font-weight:bold; cursor:pointer; font-size:0.9rem;">Contact</button>
             </div>
-            
             <div id="form-${p.id}" style="display:none; margin-top:20px; background:#f9f9f9; padding:20px; border-radius:8px;">
                 <form class="ajax-form" action="${FORMSPREE_ENDPOINT}" method="POST">
                     <input type="hidden" name="bien_ref" value="${p.id} - ${p.titre}">
@@ -215,7 +237,7 @@ function createPropertyCard(p) {
     return div;
 }
 
-// 5. PARSEUR CSV
+// 5. PARSEUR CSV (Identique)
 function csvToJSON(csvText) {
     const lines = [];
     let newLine = '';
