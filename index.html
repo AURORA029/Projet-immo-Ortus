@@ -8,43 +8,111 @@
    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style> /* --- PARTIE MISE À JOUR : CITATION & ICÔNE --- */
+<style>
+    /* 1. L'ÉCRAN NOIR (Le fond de l'intro) */
+    #intro-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #020610; /* Noir profond */
+        z-index: 2147483647 !important; /* Au-dessus de tout */
+        display: flex;
+        flex-direction: column; /* IMPORTANT : Empile le logo et le texte verticalement */
+        justify-content: center;
+        align-items: center;
+        gap: 0px; /* Pas d'espace forcé, on gère avec margin-top */
+        transition: opacity 1.5s ease-in-out, visibility 1.5s;
+    }
+
+    /* 2. LE LOGO PRINCIPAL (ORTUS.) */
+    .intro-logo-container {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 4rem;
+        font-weight: 700;
+        letter-spacing: 8px;
+        opacity: 0;
+        animation: logoReveal 3s ease-in-out forwards; /* Animation d'apparition */
+    }
+
+    /* 3. EFFET OR MÉTALLIQUE SUR LE LOGO */
+    .intro-text {
+        background: linear-gradient(
+            to right, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%
+        );
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: shine 3s linear infinite; /* Animation de brillance */
+        filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.3)) 
+                drop-shadow(0px 0px 5px rgba(212, 175, 55, 0.5));
+    }
+    .intro-dot { color: #fff; }
+
+    /* 4. LE BLOC CITATION & PALAIS (Nouveau) */
     .intro-sub-content {
         text-align: center;
         color: #e0e0e0;
         opacity: 0;
-        /* J'ai ajouté margin-top pour descendre le bloc plus bas sous le logo */
-        margin-top: 60px; 
-        animation: subReveal 1.5s ease-out forwards 1.2s;
+        margin-top: 40px; /* Espace sous le logo */
+        animation: subReveal 1.5s ease-out forwards 1.2s; /* Apparaît après 1.2s */
     }
 
     .intro-icon svg {
-        width: 50px; /* Un peu plus grand pour voir les détails du palais */
+        width: 50px; 
         height: auto;
         margin-bottom: 20px;
         opacity: 0.8;
     }
     
-    /* Nouvelle police : Cormorant Garamond */
+    /* La nouvelle police Luxe Lisible */
     .intro-quote {
-        font-family: 'Cormorant Garamond', serif; /* Police Serif élégante */
-        font-style: italic; /* L'italique donne le côté "citation" */
-        font-weight: 300; /* Fin et délicat */
-        font-size: 1.3rem; /* Beaucoup plus petit et discret */
-        letter-spacing: 1px; /* Espacement pour la lisibilité */
+        font-family: 'Cormorant Garamond', serif; 
+        font-style: italic; 
+        font-weight: 300; 
+        font-size: 1.3rem; 
+        letter-spacing: 1px; 
         line-height: 1.5;
         margin: 0;
-        padding: 0 20px; /* Marge sur mobile pour pas toucher les bords */
+        padding: 0 20px;
         text-shadow: 0 1px 3px rgba(0,0,0,0.5);
     }
-    
-    /* Responsive : encore un peu plus petit sur mobile */
-    @media (max-width: 768px) {
-        .intro-quote { font-size: 1.1rem; margin-top: 10px; }
-        .intro-sub-content { margin-top: 40px; }
+
+    /* 5. LES ANIMATIONS (Keyframes) */
+    @keyframes logoReveal {
+        0% { opacity: 0; transform: scale(0.9); }
+        40% { opacity: 1; transform: scale(1); }
+        80% { opacity: 1; transform: scale(1.05); }
+        100% { opacity: 1; transform: scale(1.05); }
     }
 
+    @keyframes shine {
+        from { background-position: 0% center; }
+        to { background-position: -200% center; }
+    }
+
+    @keyframes subReveal {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CLASSE POUR CACHER L'INTRO */
+    .intro-hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .intro-logo-container { font-size: 2.5rem; letter-spacing: 4px; }
+        .intro-quote { font-size: 1.1rem; margin-top: 10px; }
+        .intro-sub-content { margin-top: 30px; }
+    }
 </style>
+
 
 </head>            
 <body>
