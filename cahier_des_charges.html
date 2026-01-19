@@ -2,128 +2,119 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Guide Administration - ORTUS (V2)</title>
+    <title>Cahier des Charges - ORTUS DIGITAL</title>
     <style>
         body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 40px; background-color: #fff; }
         
-        /* HEADER */
+        /* HEADER PRO */
         .header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #000; padding-bottom: 20px; }
         .logo-text { font-size: 2.5rem; font-weight: bold; letter-spacing: 2px; color: #000; margin: 0; }
         .logo-dot { color: #D4AF37; }
         .subtitle { font-size: 1.2rem; color: #666; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
 
         /* AUTEUR */
-        .author-box { background-color: #f4f4f4; padding: 10px 15px; border-left: 5px solid #D4AF37; margin-bottom: 40px; font-size: 0.9rem; }
-        
+        .author-box { background-color: #f4f4f4; padding: 15px; border-left: 5px solid #D4AF37; margin-bottom: 40px; }
+        .author-label { font-size: 0.8rem; text-transform: uppercase; color: #666; font-weight: bold; }
+        .author-name { font-size: 1.2rem; font-weight: bold; color: #000; margin: 5px 0 0 0; }
+
         /* TITRES */
-        h1 { color: #000; font-size: 1.8rem; }
-        h2 { color: #D4AF37; margin-top: 40px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        h3 { color: #000; margin-top: 25px; font-size: 1.1rem; font-weight: bold; }
-
-        /* ALERTES */
-        .danger-box { background-color: #ffebee; border: 1px solid #ef9a9a; color: #c62828; padding: 15px; border-radius: 5px; margin: 20px 0; }
-        .tip-box { background-color: #e8f5e9; border: 1px solid #a5d6a7; color: #2e7d32; padding: 15px; border-radius: 5px; margin: 20px 0; }
-        .video-box { background-color: #e3f2fd; border: 1px solid #90caf9; color: #1565c0; padding: 15px; border-radius: 5px; margin: 20px 0; }
-
-        /* SIMULATION EXCEL (VISUEL) */
-        .excel-row { display: flex; font-family: monospace; font-size: 0.85rem; border: 1px solid #ccc; margin-bottom: 20px; overflow-x: auto; }
-        .excel-cell { padding: 10px; border-right: 1px solid #ccc; background: #fff; white-space: nowrap; }
-        .excel-header { background: #f3f3f3; font-weight: bold; color: #555; text-align: center; }
+        h1 { font-size: 1.8rem; color: #000; margin-top: 0; }
+        h2 { color: #D4AF37; margin-top: 30px; font-size: 1.4rem; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         
-        /* Largeurs colonnes */
-        .col-id { width: 30px; }
-        .col-titre { width: 140px; }
-        .col-cat { width: 70px; background-color: #fff3cd; } 
-        .col-vid { width: 100px; background-color: #e3f2fd; } /* Highlight Vidéo */
+        /* LISTES */
+        ul { margin-top: 10px; }
+        li { margin-bottom: 8px; }
+        strong { color: #000; }
+        
+        /* TABLEAU COMPARATIF */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #020610; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
 
-        /* FOOTER */
-        .footer { margin-top: 60px; font-size: 0.7rem; text-align: center; color: #999; border-top: 1px solid #eee; padding-top: 20px; }
+        /* FOOTER DU DOC */
+        .footer { margin-top: 50px; font-size: 0.8rem; text-align: center; color: #999; border-top: 1px solid #eee; padding-top: 20px; }
     </style>
 </head>
 <body>
 
     <div class="header">
         <h1 class="logo-text">ORTUS<span class="logo-dot">.</span></h1>
-        <p class="subtitle">Manuel d'Administration du Site</p>
+        <p class="subtitle">Cahier des Charges Technique & Fonctionnel</p>
     </div>
 
     <div class="author-box">
-        <strong>Document technique réalisé par :</strong> RAFIDISON Ny Avo Andrianina Allan<br>
-        <em>Ce guide explique comment gérer les biens et les vidéos via Google Sheets.</em>
+        <div class="author-label">Projet dirigé et conçu par :</div>
+        <p class="author-name">RAFIDISON Ny Avo Andrianina Allan</p>
     </div>
 
-    <div class="danger-box">
-        <strong>⚠️ RÈGLE D'OR - À LIRE AVANT TOUT</strong><br>
-        Ne jamais modifier, supprimer ou renommer la <strong>LIGNE 1</strong> (L'en-tête) du fichier Google Sheets.<br>
-        C'est elle qui fait le lien technique avec le site.
-    </div>
+    <p><strong>Version :</strong> 1.0 (MVP)<br>
+    <strong>Date :</strong> Janvier 2026<br>
+    <strong>Statut :</strong> PRÊT AU DÉPLOIEMENT</p>
 
-    <h2>1. ACCÈS BASE DE DONNÉES</h2>
-    <p>La gestion se fait via l'application <strong>Google Sheets</strong> sur le fichier : <strong>ORTUS_DB</strong>.</p>
-
-    <h2>2. AJOUTER UNE NOUVELLE MAISON</h2>
-    <p>Ajoutez une ligne à la fin du tableau en suivant ce modèle :</p>
-
-    <div style="margin-bottom: 5px; font-weight: bold; font-size: 0.8rem; color:#666;">Exemple de la structure :</div>
-    <div class="excel-row">
-        <div class="excel-cell col-id excel-header">id</div>
-        <div class="excel-cell col-titre excel-header">titre</div>
-        <div class="excel-cell col-cat excel-header">categorie</div>
-        <div class="excel-cell col-vid excel-header">video</div>
-    </div>
-    <div class="excel-row" style="margin-top:-21px;">
-        <div class="excel-cell col-id">12</div>
-        <div class="excel-cell col-titre">Villa Ivandry</div>
-        <div class="excel-cell col-cat">prestige</div>
-        <div class="excel-cell col-vid">youtube.com/...</div>
-    </div>
-
-    <h3>Colonnes principales :</h3>
+    <h2>1. OBJECTIFS STRATÉGIQUES</h2>
+    <p>Créer une vitrine digitale d'exception pour l'agence <strong>ORTUS IMMOBILIER</strong>, capable de rivaliser avec les standards internationaux du luxe tout en s'adaptant aux contraintes locales (connexion, marché).</p>
     <ul>
-        <li><strong>id :</strong> Chiffre unique (incrémenter +1).</li>
-        <li><strong>titre :</strong> Nom du bien.</li>
-        <li><strong>categorie :</strong> <code>prestige</code> ou <code>vente</code>.</li>
-        <li><strong>image :</strong> Lien URL de la photo principale.</li>
+        <li><strong>Positionnement :</strong> "Quiet Luxury" (Luxe discret et moderne).</li>
+        <li><strong>Performance :</strong> Temps de chargement inférieur à 2 secondes.</li>
+        <li><strong>Autonomie :</strong> Gestion 100% autonome sans développeur.</li>
     </ul>
 
-    <h2>3. GÉRER LES IMAGES</h2>
-    <ol>
-        <li>Hébergez la photo (Imgur, Drive Public, etc.).</li>
-        <li>Copiez le <strong>Lien Direct</strong> (finissant par .jpg ou .png).</li>
-        <li>Collez dans la colonne <strong>image</strong>.</li>
-    </ol>
-
-    <h2>4. AJOUTER UNE VIDÉO (Youtube)</h2>
-    <p>Pour afficher une visite virtuelle ou une vidéo drone sur la fiche du bien.</p>
-    
-    <div class="video-box">
-        <strong>La procédure exacte :</strong>
-        <ol>
-            <li>Mettez la vidéo sur la chaîne <strong>YouTube ORTUS</strong> (en mode "Non répertoriée" si besoin).</li>
-            <li>Copiez le lien de la vidéo (ex: <code>https://youtu.be/xYz123...</code>).</li>
-            <li>Collez ce lien dans la colonne <strong>video</strong> du Google Sheet.</li>
-        </ol>
-    </div>
-    
-    <div class="tip-box">
-        <strong>💡 Astuce :</strong> Si la case est vide, le site n'affichera simplement pas de lecteur vidéo pour ce bien. C'est optionnel.
-    </div>
-
-    <h2>5. CATÉGORIE "PRESTIGE"</h2>
-    <p>Pour activer le design <strong>Noir & Or</strong> spécifique aux biens de luxe :</p>
+    <h2>2. IDENTITÉ VISUELLE & UX</h2>
+    <p>Une expérience utilisateur immersive basée sur les codes du luxe.</p>
     <ul>
-        <li>Dans la colonne <strong>categorie</strong>, écrivez impérativement : <code>prestige</code> (en minuscules).</li>
+        <li><strong>Charte Graphique :</strong> Noir Profond (#020610) & Or Métallique (#D4AF37).</li>
+        <li><strong>Expérience Mobile :</strong> "Mobile First", intro animée (Splash Screen) et navigation fluide.</li>
+        <li><strong>Typographie :</strong> Playfair Display (Titres) & Montserrat (Lecture).</li>
     </ul>
 
-    <h2>6. SUPPRIMER UN BIEN</h2>
+    <h2>3. FONCTIONNALITÉS CLÉS</h2>
     <ul>
-        <li><strong>Pour vendre :</strong> Ajoutez "(VENDU)" dans le titre.</li>
-        <li><strong>Pour supprimer :</strong> Effacez toute la ligne du tableau.</li>
+        <li><strong>Catalogue Dynamique :</strong> Synchronisation automatique avec Google Sheets.</li>
+        <li><strong>Filtrage Intelligent :</strong> Catégorisation automatique "Prestige" vs "Classique".</li>
+        <li><strong>Conversion :</strong> Formulaires contextuels avec redirection vers page de remerciement.</li>
+        <li><strong>Acquisition Vendeurs :</strong> Page dédiée avec argumentaire commercial fort.</li>
     </ul>
+
+    <h2>4. ARCHITECTURE TECHNIQUE (STACK MODERN)</h2>
+    <p>Architecture "Serverless" garantissant sécurité et coût zéro.</p>
+    <ul>
+        <li><strong>Base de données :</strong> Google Sheets API (No-Code).</li>
+        <li><strong>Frontend :</strong> HTML5 / CSS3 / Vanilla JS (Aucun framework lourd).</li>
+        <li><strong>Hébergement :</strong> GitHub Pages (SSL Inclus).</li>
+        <li><strong>Messagerie :</strong> Formspree (Gestion des leads par API).</li>
+    </ul>
+
+    <h2>5. AVANTAGES CONCURRENTIELS</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Caractéristique</th>
+                <th>Site Wordpress Classique</th>
+                <th>Site ORTUS (Solution Custom)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Coût Mensuel</strong></td>
+                <td>50€ - 150€</td>
+                <td><strong>0 €</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Vitesse</strong></td>
+                <td>Moyenne (Plugins)</td>
+                <td><strong>Instantanée (Code pur)</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Sécurité</strong></td>
+                <td>Faible (Piratages fréquents)</td>
+                <td><strong>Maximale (Statique)</strong></td>
+            </tr>
+        </tbody>
+    </table>
 
     <div class="footer">
-        Guide interne - ORTUS Immobilier<br>
-        Créé par RAFIDISON Ny Avo Andrianina Allan - 2026
+        Document confidentiel - Propriété de RAFIDISON Ny Avo Andrianina Allan - 2026
     </div>
 
 </body>
