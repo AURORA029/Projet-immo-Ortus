@@ -7,8 +7,84 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+    /* 1. L'ÉCRAN NOIR */
+    #intro-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #020610; /* Ton noir profond */
+        z-index: 9999; /* Au-dessus de tout le reste */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* Transition pour la disparition (le rideau qui s'ouvre) */
+        transition: opacity 1.5s ease-in-out, visibility 1.5s;
+    }
+
+    /* 2. LE LOGO */
+    .intro-logo-container {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 4rem; /* Gros mais pas énorme */
+        font-weight: 700;
+        letter-spacing: 8px; /* Espacement des lettres = Luxe */
+        opacity: 0; /* Invisible au début */
+        animation: logoReveal 3s ease-in-out forwards; /* L'animation */
+    }
+
+    /* 3. EFFET OR MÉTALLIQUE */
+    .intro-text {
+        color: #D4AF37; /* Base or */
+        /* Petit dégradé subtil pour faire "métal" */
+        background: linear-gradient(to right, #b88a44 0%, #ffeec2 50%, #b88a44 100%);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent; 
+        animation: shine 3s linear infinite; /* La lumière qui bouge */
+    }
+
+    .intro-dot {
+        color: #fff; /* Le point blanc pour le contraste */
+    }
+
+    /* 4. LES ANIMATIONS */
+    
+    /* Apparition douce + léger zoom */
+    @keyframes logoReveal {
+        0% { opacity: 0; transform: scale(0.9); }
+        40% { opacity: 1; transform: scale(1); }
+        80% { opacity: 1; transform: scale(1.05); }
+        100% { opacity: 1; transform: scale(1.05); }
+    }
+
+    /* Lumière qui traverse le texte */
+    @keyframes shine {
+        to { background-position: 200% center; }
+    }
+
+    /* CLASSE POUR CACHER L'INTRO */
+    .intro-hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    /* Responsive mobile : on réduit un peu la taille */
+    @media (max-width: 768px) {
+        .intro-logo-container { font-size: 2.5rem; letter-spacing: 4px; }
+    }
+</style>
+
 </head>            
 <body>
+    <div id="intro-overlay">
+    <div class="intro-logo-container">
+        <span class="intro-text">ORTUS</span><span class="intro-dot">.</span>
+    </div>
+</div>
+
 
     <nav class="navbar">
         <div class="container nav-container">
@@ -280,6 +356,17 @@
             d.getElementsByTagName("head")[0].appendChild(s);
         })();
         // --- FIN DU CODE OFFICIEL ---
+    });
+</script>
+<script>
+    // On attend que la page soit chargée à 100%
+    window.addEventListener('load', function() {
+        
+        // On laisse le logo briller un peu (minimum 2.5 secondes)
+        setTimeout(function() {
+            const overlay = document.getElementById('intro-overlay');
+            overlay.classList.add('intro-hidden'); // On active la disparition
+        }, 2500); // Tu peux changer 2500 (2.5s) si tu trouves ça trop long/court
     });
 </script>
 
