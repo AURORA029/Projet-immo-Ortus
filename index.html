@@ -492,20 +492,31 @@ function updateHomeBudget(val) {
             </div>
         </div>
     </footer>
-    <div id="ios-install-prompt">
+ <div id="ios-install-prompt">
     <h4>Installez l'Application ORTUS</h4>
-    <p>Pour une expérience fluide et un accès rapide à nos biens de prestige.</p>
+    <p>Pour une expérience fluide, ajoutez-nous à votre écran d'accueil.</p>
     
     <div class="ios-instructions">
-        <span>1. Appuyez sur</span>
-        <i class="fas fa-share-square ios-icon"></i> </div>
+        <span>1. Appuyez sur le bouton "Partager"</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 10px;">
+            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+            <polyline points="16 6 12 2 8 6"></polyline>
+            <line x1="12" y1="2" x2="12" y2="15"></line>
+        </svg>
+    </div>
+    
     <div class="ios-instructions">
-        <span>2. Puis "Sur l'écran d'accueil"</span>
-        <i class="fas fa-plus-square" style="color: #fff;"></i>
+        <span>2. Cherchez "Sur l'écran d'accueil"</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 10px;">
+            <rect x="3" y="3" width="18" height="18" rx="4" ry="4"></rect>
+            <line x1="12" y1="8" x2="12" y2="16"></line>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+        </svg>
     </div>
 
     <button class="btn-close-ios" onclick="closeIosPrompt()">Fermer</button>
 </div>
+
 
 <script type="text/javascript">
     window.addEventListener('load', function() {
