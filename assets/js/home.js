@@ -1,5 +1,5 @@
-/* HOME.JS - VERSION FORCE BRUTE ☢️
- * On oblige les couleurs à s'appliquer avec !important
+/* HOME.JS - VERSION FINALE (Cible la colonne 'categorie') 🎯
+ * Génère les cartes de l'accueil avec les badges VENTE / LOCATION
  */
 
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8KwzX3W0ONKYZray3wrDi5ReUBfw0-aSgvXSl7NaWNlvdSo9cKr3Y9Vh0k5kd_dHwchsCKfYE8d3/pub?output=csv";
@@ -22,18 +22,34 @@ async function fetchFeatured() {
             const card = document.createElement('div');
             card.className = 'property-card';
             
-            // ON FORCE LE FOND DE LA CARTE EN NOIR
-            card.style.cssText = "background-color: #121212 !important; border: 1px solid #333 !important; border-radius: 8px; overflow: hidden; margin-bottom: 20px;";
+            // STYLE "FORCE BRUTE" (Fond Noir + Bordures)
+            card.style.cssText = "background-color: #121212 !important; border: 1px solid #333 !important; border-radius: 8px; overflow: hidden; margin-bottom: 20px; position: relative;";
             
-            let badge = '';
+            // 1. BADGE PRESTIGE (En haut à GAUCHE)
+            let badgePrestige = '';
+            // On vérifie si la gamme contient 'prestige'
             if (p.gamme && p.gamme.toLowerCase().includes('prestige')) {
-                badge = `<span style="position:absolute; top:10px; left:10px; background:#D4AF37; color:black; padding:5px 10px; font-weight:bold; font-size:0.8rem; z-index:10; border-radius:2px;">💎 PRESTIGE</span>`;
+                badgePrestige = `<span style="position:absolute; top:10px; left:10px; background:#D4AF37; color:black; padding:5px 10px; font-weight:bold; font-size:0.8rem; z-index:10; border-radius:2px; box-shadow: 0 2px 5px rgba(0,0,0,0.5);">💎 PRESTIGE</span>`;
             }
 
+            // 2. BADGE VENTE / LOCATION (En haut à DROITE)
+            // CIBLAGE PRÉCIS : On regarde la colonne 'categorie'
+            let typeAction = "VENTE"; // Valeur par défaut
+            const categorieBien = (p.categorie || "").toLowerCase(); // On met en minuscule pour être sûr
+            
+            // Si le mot "loc" est dans la catégorie (ex: "Location", "Loc", "A louer")...
+            if (categorieBien.includes('loc')) {
+                typeAction = "LOCATION";
+            }
+
+            // Création du badge HTML
+            const badgeStatus = `<span class="badge-status" style="position: absolute; top: 15px; right: 15px; background-color: #020610; color: #FFFFFF; border: 1px solid #D4AF37; padding: 5px 15px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; border-radius: 4px; z-index: 10; letter-spacing: 1px;">${typeAction}</span>`;
+
+            // CONSTRUCTION DE LA CARTE HTML
             card.innerHTML = `
                 <div class="property-image" style="height:250px; position:relative;">
-                    ${badge}
-                    <a href="detail.html?id=${p.id}">
+                    ${badgePrestige}
+                    ${badgeStatus} <a href="detail.html?id=${p.id}">
                         <img src="${p.image}" alt="${p.titre}" style="width:100%; height:100%; object-fit:cover; transition:0.5s;" onerror="this.src='assets/images/default.jpg'">
                     </a>
                 </div>
@@ -66,6 +82,7 @@ async function fetchFeatured() {
     }
 }
 
+// Fonction utilitaire pour transformer le CSV en JSON
 function csvToJSON(csvText) {
     const lines = [];
     let newLine = '';
