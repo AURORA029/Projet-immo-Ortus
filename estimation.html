@@ -22,7 +22,7 @@
         
         <div class="section-title">
             <h2 style="color: #ffffff;">Estimation Confidentielle</h2>
-            <p style="color: #e0e0e0;">Renseignez les caractéristiques de votre bien. Nos experts analysent le marché pour vous fournir une valeur précise sous 24h.</p>
+            <p style="color: #e0e0e0;">Renseignez les caractéristiques de votre bien. Nos experts analysent le marché pour vous fournir une valeur précise (Vente ou Location) sous 24h.</p>
         </div>
 
         <div class="contact-form" style="
@@ -36,11 +36,18 @@
             border-top: 3px solid #D4AF37;">
             
             <form id="my-form" action="https://formspree.io/f/mvzzklrl" method="POST">
-
                 
                 <input type="hidden" name="_next" value="https://aurora029.github.io/Projet-immo-Ortus/merci.html">
                 
-                <input type="hidden" name="_subject" value="Nouvelle DEMANDE D'ESTIMATION - Site Ortus">
+                <input type="hidden" name="_subject" value="Nouvelle DEMANDE D'ESTIMATION (Vente/Loc) - Site Ortus">
+
+                <div class="input-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 10px; color: #D4AF37;">Votre projet</label>
+                    <select name="type_projet" style="width: 100%; padding: 15px; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 5px; background: #020610; color: #fff;">
+                        <option value="vente">Je veux connaître le PRIX DE VENTE</option>
+                        <option value="location">Je veux connaître le LOYER (Location)</option>
+                    </select>
+                </div>
 
                 <div class="input-group" style="margin-bottom: 20px;">
                     <label style="display: block; font-weight: bold; margin-bottom: 10px; color: #D4AF37;">Type de bien</label>
@@ -109,36 +116,32 @@
     </div>
 </section>
 
-
     </div>
-<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
-<script>
-    var form = document.getElementById("my-form");
-    
-    async function handleSubmit(event) {
-      event.preventDefault(); // Empêche la page blanche Formspree d'arriver
-      var status = document.getElementById("my-form-status");
-      var data = new FormData(event.target);
-      
-      fetch(event.target.action, {
-        method: form.method,
-        body: data,
-        headers: {
-            'Accept': 'application/json'
+    <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+    <script>
+        var form = document.getElementById("my-form");
+        
+        async function handleSubmit(event) {
+          event.preventDefault(); 
+          var status = document.getElementById("my-form-status");
+          var data = new FormData(event.target);
+          
+          fetch(event.target.action, {
+            method: form.method,
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          }).then(response => {
+            if (response.ok) {
+              window.location.href = "merci.html"; 
+            } else {
+              alert("Oups ! Il y a eu un problème lors de l'envoi.");
+            }
+          }).catch(error => {
+            alert("Oups ! Il y a eu un problème lors de l'envoi.");
+          });
         }
-      }).then(response => {
-        if (response.ok) {
-          // C'EST ICI QUE LA MAGIE OPÈRE : REDIRECTION IMMÉDIATE
-          window.location.href = "merci.html"; 
-        } else {
-          alert("Oups ! Il y a eu un problème lors de l'envoi.");
-        }
-      }).catch(error => {
-        alert("Oups ! Il y a eu un problème lors de l'envoi.");
-      });
-    }
-    form.addEventListener("submit", handleSubmit);
-</script>
+        form.addEventListener("submit", handleSubmit);
+    </script>
 
 </body>
 </html>
