@@ -9,42 +9,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- CORRECTIFS DESIGN (Badges & Lisibilité) --- */
-        
-        /* 1. Force le badge VENTE/LOCATION à DROITE et BLANC */
+        /* --- CORRECTIFS DESIGN --- */
         .badge.status {
-            left: auto !important;
-            right: 10px !important;
-            background-color: #000 !important;
-            color: #FFFFFF !important;
-            border: 1px solid #D4AF37 !important;
-            z-index: 100 !important;
+            left: auto !important; right: 10px !important;
+            background-color: #000 !important; color: #FFFFFF !important;
+            border: 1px solid #D4AF37 !important; z-index: 100 !important;
         }
-
-        /* 2. Force le texte des atouts en NOIR */
-        .amenities-list li {
-            color: #000000 !important;
-        }
-
-        /* --- STYLE MENU BURGER MOBILE --- */
+        .amenities-list li { color: #000000 !important; }
+        
+        /* Menu Mobile */
         @media (max-width: 768px) {
-            .menu-toggle { 
-                display: block; 
-                cursor: pointer;
-                position: absolute;
-                right: 20px;
-                top: 25px;
-                z-index: 1001;
-            }
-            .bar { 
-                display: block; 
-                width: 25px; 
-                height: 3px; 
-                margin: 5px auto; 
-                background-color: white; /* Barres blanches */
-                transition: 0.3s; 
-            }
-            /* Animation Burger quand actif */
+            .menu-toggle { display: block; cursor: pointer; position: absolute; right: 20px; top: 25px; z-index: 1001; }
+            .bar { display: block; width: 25px; height: 3px; margin: 5px auto; background-color: white; transition: 0.3s; }
             .menu-toggle.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
             .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
             .menu-toggle.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
@@ -56,13 +32,9 @@
     <nav class="navbar">
         <div class="container nav-container">
             <a href="index.html" class="logo">ORTUS<span class="dot">.</span></a>
-            
             <div class="menu-toggle" id="mobile-menu-btn">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
             </div>
-
             <ul class="nav-menu" id="nav-menu-list">
                 <li><a href="index.html" class="nav-link">Accueil</a></li>
                 <li><a href="biens.html?filtre=all" class="nav-link" style="color: #D4AF37;">Nos Biens</a></li>
@@ -85,58 +57,52 @@
     <section class="section-padding">
         <div class="container">
             
-<div class="search-container" style="text-align: center; margin-bottom: 40px; margin-top: -20px;">
-    
-    <div style="display: inline-flex; background: #020610; border: 1px solid #D4AF37; border-radius: 50px; padding: 5px 20px; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
-        <input type="text" id="searchInput" placeholder="Rechercher (Ville, Type ex: Villa...)" 
-               style="background: transparent; border: none; color: white; padding: 10px; width: 250px; outline: none; font-family: 'Montserrat', sans-serif;">
-        <button id="searchBtn" style="background: transparent; border: none; color: #D4AF37; cursor: pointer; font-size: 1.2rem;">
-            <i class="fas fa-search"></i>
-        </button>
-    </div>
+            <div class="search-container" style="text-align: center; margin-bottom: 40px; margin-top: -20px;">
+                
+                <div style="display: inline-flex; background: #020610; border: 1px solid #D4AF37; border-radius: 50px; padding: 5px 20px; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                    <input type="text" id="searchInput" placeholder="Rechercher (Ville, Type...)" oninput="filterProperties()"
+                           style="background: transparent; border: none; color: white; padding: 10px; width: 250px; outline: none; font-family: 'Montserrat', sans-serif;">
+                    <button id="searchBtn" onclick="filterProperties()" style="background: transparent; border: none; color: #D4AF37; cursor: pointer; font-size: 1.2rem;">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
 
-    <div style="max-width: 400px; margin: 20px auto 0 auto; color: white;">
-        <label style="font-size: 0.9rem; font-family: 'Montserrat', sans-serif;">
-            Budget Max : <span id="budgetDisplay" style="color: #D4AF37; font-weight: bold;">Tout afficher</span>
-        </label>
-        <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px;">
-            <span style="font-size: 0.7rem; color: #888;">0</span>
-            
-            <input type="range" id="budgetRange" 
-                   min="0" max="5000000000" step="25000000" value="5000000000"
-                   style="width: 100%; accent-color: #D4AF37; cursor: pointer;">
-            
-            <span style="font-size: 0.7rem; color: #888;">5Md+</span>
-        </div>
-    </div>
-<div style="margin-top: 15px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-    
-    <select id="categorySelect" onchange="filterProperties()" 
-            style="background: #020610; color: white; border: 1px solid #D4AF37; padding: 10px 15px; border-radius: 5px; font-family: 'Montserrat', sans-serif; cursor: pointer; outline: none;">
-        <option value="all">Tout type</option>
-        <option value="vente">Acheter</option>
-        <option value="location">Louer</option>
-    </select>
+                <div style="max-width: 400px; margin: 20px auto 0 auto; color: white;">
+                    <label style="font-size: 0.9rem; font-family: 'Montserrat', sans-serif;">
+                        Budget Max : <span id="budgetDisplay" style="color: #D4AF37; font-weight: bold;">Tout afficher</span>
+                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px;">
+                        <span style="font-size: 0.7rem; color: #888;">0</span>
+                        <input type="range" id="budgetRange" 
+                               min="0" max="5000000000" step="25000000" value="5000000000"
+                               oninput="updateBudgetLabel();" onchange="filterProperties()"
+                               style="width: 100%; accent-color: #D4AF37; cursor: pointer;">
+                        <span id="maxBudgetLabel" style="font-size: 0.7rem; color: #888;">5Md+</span>
+                    </div>
+                </div>
 
-    <select id="sortSelect" onchange="filterProperties()" 
-            style="background: #020610; color: #D4AF37; border: 1px solid #D4AF37; padding: 10px 15px; border-radius: 5px; font-family: 'Montserrat', sans-serif; cursor: pointer; outline: none;">
-        <option value="default">Trier par...</option>
-        <option value="asc">Prix Croissant</option>
-        <option value="desc">Prix Décroissant</option>
-    </select>
+                <div style="margin-top: 15px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    
+                    <select id="categorySelect" onchange="updateSliderScale(); filterProperties();" 
+                            style="background: #020610; color: white; border: 1px solid #D4AF37; padding: 10px 15px; border-radius: 5px; font-family: 'Montserrat', sans-serif; cursor: pointer; outline: none;">
+                        <option value="all">Tout type</option>
+                        <option value="vente">Acheter</option>
+                        <option value="location">Louer</option>
+                    </select>
 
-</div>
-
-
-</div>
-
+                    <select id="sortSelect" onchange="filterProperties()" 
+                            style="background: #020610; color: #D4AF37; border: 1px solid #D4AF37; padding: 10px 15px; border-radius: 5px; font-family: 'Montserrat', sans-serif; cursor: pointer; outline: none;">
+                        <option value="default">Trier par...</option>
+                        <option value="asc">Prix Croissant</option>
+                        <option value="desc">Prix Décroissant</option>
+                    </select>
+                </div>
+            </div>
 
             <div class="properties-grid" id="listing-container">
                 <p style="color:white; text-align:center;">Chargement des biens en cours...</p>
             </div>
-
             <div id="pagination-container" style="display:flex; justify-content:center; gap:10px; margin-top:50px; flex-wrap:wrap;"></div>
-
         </div> 
     </section>
 
@@ -150,13 +116,13 @@
                 <div class="footer-col">
                     <h4>Navigation</h4>
                     <ul class="footer-links">
-      <li><a href="index.html">Accueil</a></li>
-      <li><a href="biens.html">Tous nos biens</a></li>
-      <li><a href="services.html">Nos Services</a></li>
-      <li><a href="apropos.html">L'Agence</a></li>
-      <li><a href="vendre.html">Vendre mon bien</a></li>
-      <li><a href="estimation.html">Estimation gratuite</a></li>
-    </ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="biens.html">Tous nos biens</a></li>
+                        <li><a href="services.html">Nos Services</a></li>
+                        <li><a href="apropos.html">L'Agence</a></li>
+                        <li><a href="vendre.html">Vendre mon bien</a></li>
+                        <li><a href="estimation.html">Estimation gratuite</a></li>
+                    </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Contact</h4>
@@ -173,17 +139,14 @@
     <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 
     <script src="assets/js/listing.js?v=9999"></script> 
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const btn = document.getElementById('mobile-menu-btn');
             const menu = document.getElementById('nav-menu-list');
-
             if(btn && menu) {
-                // On supprime les anciens écouteurs pour éviter les conflits
                 const newBtn = btn.cloneNode(true);
                 btn.parentNode.replaceChild(newBtn, btn);
-
                 newBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     this.classList.toggle('active');
@@ -193,6 +156,85 @@
         });
     </script>
 
+    <script>
+        // Configuration des montants
+        const MAX_VENTE = 5000000000; // 5 Milliards
+        const MAX_LOC = 20000000;     // 20 Millions
+
+        // 1. Au chargement de la page : On lit l'URL
+        window.addEventListener('load', function() {
+            // On attend un tout petit peu que listing.js ait chargé les biens
+            setTimeout(() => {
+                const params = new URLSearchParams(window.location.search);
+                const modeRecu = params.get('mode');   // 'vente' ou 'location'
+                const budgetRecu = params.get('budget');
+                const filtreRecu = params.get('filtre');
+
+                // A. Appliquer le mode (Vente ou Location)
+                if (modeRecu) {
+                    const select = document.getElementById('categorySelect');
+                    if(select) {
+                        select.value = modeRecu; // Change le selecteur
+                        updateSliderScale();     // Change l'échelle du slider
+                    }
+                }
+
+                // B. Appliquer le budget
+                if (budgetRecu) {
+                    const slider = document.getElementById('budgetRange');
+                    if(slider) {
+                        slider.value = budgetRecu;
+                        updateBudgetLabel();
+                    }
+                }
+
+                // C. Appliquer le texte de recherche
+                if (filtreRecu && filtreRecu !== 'all') {
+                    const input = document.getElementById('searchInput');
+                    if(input) input.value = filtreRecu;
+                }
+
+                // D. On lance le filtrage
+                if(typeof filterProperties === 'function') {
+                    filterProperties();
+                }
+            }, 500); // Délai de sécurité de 0.5s
+        });
+
+        // 2. Fonction qui met à jour l'étiquette du budget
+        function updateBudgetLabel() {
+            const slider = document.getElementById('budgetRange');
+            const display = document.getElementById('budgetDisplay');
+            
+            if(parseInt(slider.value) >= parseInt(slider.max)) {
+                display.innerText = "Tout afficher";
+            } else {
+                display.innerText = new Intl.NumberFormat('fr-FR').format(slider.value) + " Ar";
+            }
+        }
+
+        // 3. Fonction qui adapte l'échelle du slider (Achat vs Location)
+        function updateSliderScale() {
+            const select = document.getElementById('categorySelect');
+            const slider = document.getElementById('budgetRange');
+            const maxLabel = document.getElementById('maxBudgetLabel');
+            
+            if(select.value === 'location') {
+                // Mode LOCATION
+                slider.max = MAX_LOC;
+                slider.step = 100000;
+                slider.value = MAX_LOC; // Reset à fond
+                maxLabel.innerText = "20M+";
+            } else {
+                // Mode VENTE ou TOUT
+                slider.max = MAX_VENTE;
+                slider.step = 25000000;
+                slider.value = MAX_VENTE; // Reset à fond
+                maxLabel.innerText = "5Md+";
+            }
+            updateBudgetLabel();
+        }
+    </script>
+
 </body>
 </html>
-
