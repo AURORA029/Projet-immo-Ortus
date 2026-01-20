@@ -112,6 +112,9 @@
         .intro-sub-content { margin-top: 30px; }
     }
 </style>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#020610">
+<link rel="apple-touch-icon" href="assets/images/icon.png">
 
 
 </head>            
@@ -442,6 +445,15 @@ function updateHomeBudget(val) {
             overlay.classList.add('intro-hidden'); 
         }, 3800); // <-- J'ai mis 3800 (3.8 secondes). Teste entre 3500 et 4500.
     });
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('App Ortus installable ✅', reg))
+        .catch(err => console.log('Erreur PWA ❌', err));
+    });
+  }
 </script>
 
 </body>
