@@ -76,20 +76,45 @@ html, body {
     width: 100%;
 }
 
-.logo {
+/* --- NOUVEAU LOGO (ORTUS + IMMOBILIER) --- */
+.logo-container {
+    display: flex;
+    flex-direction: column; /* Empile les textes */
+    align-items: flex-start; /* Aligne à gauche */
+    text-decoration: none;
+    line-height: 1; /* Resserre l'espace vertical */
+}
+
+.logo-main {
     color: var(--text-white);
     font-size: 1.8rem;
     font-weight: 700;
-    text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-family: var(--font-main);
 }
 
-.logo .dot {
-    color: var(--accent-blue); /* Le point en bleu cyan */
-    font-size: 2.5rem;
-    line-height: 0;
+.logo-main .dot {
+    color: var(--accent-blue); /* Le point reste Cyan */
 }
+
+.logo-sub {
+    color: var(--accent-gold); /* IMMOBILIER en Or */
+    font-size: 0.65rem; /* Petit et discret */
+    text-transform: uppercase;
+    letter-spacing: 3.5px; /* Très espacé (Code Luxe) */
+    font-weight: 600;
+    margin-left: 2px; /* Petit alignement optique */
+    font-family: var(--font-main);
+    opacity: 0.9;
+}
+
+/* Ajustement Mobile pour le logo */
+@media (max-width: 768px) {
+    .logo-main { font-size: 1.5rem; }
+    .logo-sub { font-size: 0.55rem; letter-spacing: 2px; }
+}
+
 
 .nav-menu {
     display: flex;
