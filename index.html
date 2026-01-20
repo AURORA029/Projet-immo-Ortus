@@ -111,6 +111,78 @@
         .intro-quote { font-size: 1.1rem; margin-top: 10px; }
         .intro-sub-content { margin-top: 30px; }
     }
+        /* --- NOTIFICATION INSTALLATION IPHONE (PWA) --- */
+    #ios-install-prompt {
+        display: none; /* Caché par défaut */
+        position: fixed;
+        bottom: 30px; /* Juste au-dessus de la barre du bas */
+        left: 5%;
+        width: 90%;
+        background-color: rgba(2, 6, 16, 0.98); /* Noir profond presque opaque */
+        border: 1px solid #D4AF37; /* Bordure Or */
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+        z-index: 99999; /* Au-dessus de tout le site */
+        font-family: 'Montserrat', sans-serif;
+        color: white;
+        text-align: center;
+        animation: slideUp 0.8s ease-out;
+    }
+
+    #ios-install-prompt h4 {
+        color: #D4AF37;
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    #ios-install-prompt p {
+        font-size: 0.9rem;
+        color: #ccc;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+
+    .ios-instructions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 0.85rem;
+        color: #fff;
+        background: #111;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #333;
+    }
+
+    .ios-icon {
+        color: #3b82f6; /* Bleu Apple pour l'icône partage */
+        font-size: 1.2rem;
+    }
+
+    .btn-close-ios {
+        background: transparent;
+        border: 1px solid #555;
+        color: #888;
+        padding: 8px 25px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: 0.3s;
+    }
+    .btn-close-ios:hover { border-color: #fff; color: #fff; }
+
+    @keyframes slideUp {
+        from { transform: translateY(100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
 </style>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#020610">
@@ -420,6 +492,21 @@ function updateHomeBudget(val) {
             </div>
         </div>
     </footer>
+    <div id="ios-install-prompt">
+    <h4>Installez l'Application ORTUS</h4>
+    <p>Pour une expérience fluide et un accès rapide à nos biens de prestige.</p>
+    
+    <div class="ios-instructions">
+        <span>1. Appuyez sur</span>
+        <i class="fas fa-share-square ios-icon"></i> </div>
+    <div class="ios-instructions">
+        <span>2. Puis "Sur l'écran d'accueil"</span>
+        <i class="fas fa-plus-square" style="color: #fff;"></i>
+    </div>
+
+    <button class="btn-close-ios" onclick="closeIosPrompt()">Fermer</button>
+</div>
+
 <script type="text/javascript">
     window.addEventListener('load', function() {
         // --- DÉBUT DU CODE OFFICIEL ---
@@ -455,6 +542,52 @@ function updateHomeBudget(val) {
     });
   }
 </script>
+<script>
+    // --- 1. CONFIGURATION GENERALE ---
+    window.addEventListener('load', function() {
+        
+        // A. GESTION DE L'INTRO (5.5 secondes)
+        setTimeout(function() {
+            const overlay = document.getElementById('intro-overlay');
+            if(overlay) overlay.classList.add('intro-hidden');
+        }, 5500); 
+
+        // B. ACTIVATION DE LA PWA (Service Worker)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('App Ortus prête ✅'))
+                .catch(err => console.log('Erreur PWA ❌', err));
+        }
+
+        // --- 2. GESTION IPHONE & CRISP ---
+        
+        // Détections
+        const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+        const isStandalone = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+
+        // Si c'est un iPhone ET que l'app n'est pas installée
+        if (isIos() && !isStandalone()) {
+            
+            // On attend 6 secondes (Intro + 0.5s)
+            setTimeout(() => {
+                // On affiche la pop-up iPhone
+                const iosPrompt = document.getElementById('ios-install-prompt');
+                if(iosPrompt) iosPrompt.style.display = 'block';
+                
+                // On cache le chat Crisp
+                if (window.$crisp) $crisp.push(['do', 'chat:hide']);
+            }, 6000); 
+        }
+    });
+
+    // C. FONCTION POUR FERMER LA POP-UP IPHONE
+    function closeIosPrompt() {
+        document.getElementById('ios-install-prompt').style.display = 'none';
+        // On réaffiche le chat Crisp
+        if (window.$crisp) $crisp.push(['do', 'chat:show']);
+    }
+</script>
+
 
 </body>
 </html>
