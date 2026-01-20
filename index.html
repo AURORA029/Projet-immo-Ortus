@@ -5,10 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ortus Immobilier - Créateur d'Opportunités</title>
     <link rel="stylesheet" href="assets/css/style.css">
-   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
+    /* --- AJOUT DU STYLE POUR LES BADGES (Vente/Location) --- */
+    .badge-status {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: #020610; /* Fond Noir */
+        color: #FFFFFF; /* Texte Blanc */
+        border: 1px solid #D4AF37; /* Bordure Or */
+        padding: 5px 15px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-radius: 4px;
+        z-index: 10;
+        letter-spacing: 1px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
     /* 1. L'ÉCRAN NOIR (Le fond de l'intro) */
     #intro-overlay {
         position: fixed;
@@ -16,13 +34,13 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: #020610; /* Noir profond */
-        z-index: 2147483647 !important; /* Au-dessus de tout */
+        background-color: #020610; 
+        z-index: 2147483647 !important; 
         display: flex;
-        flex-direction: column; /* IMPORTANT : Empile le logo et le texte verticalement */
+        flex-direction: column; 
         justify-content: center;
         align-items: center;
-        gap: 0px; /* Pas d'espace forcé, on gère avec margin-top */
+        gap: 0px; 
         transition: opacity 1.5s ease-in-out, visibility 1.5s;
     }
 
@@ -33,7 +51,7 @@
         font-weight: 700;
         letter-spacing: 8px;
         opacity: 0;
-        animation: logoReveal 3s ease-in-out forwards; /* Animation d'apparition */
+        animation: logoReveal 3s ease-in-out forwards; 
     }
 
     /* 3. EFFET OR MÉTALLIQUE SUR LE LOGO */
@@ -45,19 +63,19 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        animation: shine 3s linear infinite; /* Animation de brillance */
+        animation: shine 3s linear infinite; 
         filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.3)) 
                 drop-shadow(0px 0px 5px rgba(212, 175, 55, 0.5));
     }
     .intro-dot { color: #fff; }
 
-    /* 4. LE BLOC CITATION & PALAIS (Nouveau) */
+    /* 4. LE BLOC CITATION & PALAIS */
     .intro-sub-content {
         text-align: center;
         color: #e0e0e0;
         opacity: 0;
-        margin-top: 40px; /* Espace sous le logo */
-        animation: subReveal 1.5s ease-out forwards 1.2s; /* Apparaît après 1.2s */
+        margin-top: 40px; 
+        animation: subReveal 1.5s ease-out forwards 1.2s; 
     }
 
     .intro-icon svg {
@@ -67,7 +85,6 @@
         opacity: 0.8;
     }
     
-    /* La nouvelle police Luxe Lisible */
     .intro-quote {
         font-family: 'Cormorant Garamond', serif; 
         font-style: italic; 
@@ -80,7 +97,7 @@
         text-shadow: 0 1px 3px rgba(0,0,0,0.5);
     }
 
-    /* 5. LES ANIMATIONS (Keyframes) */
+    /* 5. LES ANIMATIONS */
     @keyframes logoReveal {
         0% { opacity: 0; transform: scale(0.9); }
         40% { opacity: 1; transform: scale(1); }
@@ -98,32 +115,31 @@
         100% { opacity: 1; transform: translateY(0); }
     }
 
-    /* CLASSE POUR CACHER L'INTRO */
     .intro-hidden {
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
         .intro-logo-container { font-size: 2.5rem; letter-spacing: 4px; }
         .intro-quote { font-size: 1.1rem; margin-top: 10px; }
         .intro-sub-content { margin-top: 30px; }
     }
-        /* --- NOTIFICATION INSTALLATION IPHONE (PWA) --- */
+    
+    /* --- NOTIFICATION INSTALLATION IPHONE (PWA) --- */
     #ios-install-prompt {
-        display: none; /* Caché par défaut */
+        display: none; 
         position: fixed;
-        bottom: 30px; /* Juste au-dessus de la barre du bas */
+        bottom: 30px; 
         left: 5%;
         width: 90%;
-        background-color: rgba(2, 6, 16, 0.98); /* Noir profond presque opaque */
-        border: 1px solid #D4AF37; /* Bordure Or */
+        background-color: rgba(2, 6, 16, 0.98); 
+        border: 1px solid #D4AF37; 
         border-radius: 12px;
         padding: 20px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.9);
-        z-index: 99999; /* Au-dessus de tout le site */
+        z-index: 99999; 
         font-family: 'Montserrat', sans-serif;
         color: white;
         text-align: center;
@@ -160,11 +176,6 @@
         border: 1px solid #333;
     }
 
-    .ios-icon {
-        color: #3b82f6; /* Bleu Apple pour l'icône partage */
-        font-size: 1.2rem;
-    }
-
     .btn-close-ios {
         background: transparent;
         border: 1px solid #555;
@@ -187,16 +198,15 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#020610">
 <link rel="apple-touch-icon" href="assets/images/icon.png">
-
-
 </head>            
+
 <body>
+
 <div id="intro-overlay">
     <div class="intro-logo-container">
         <span class="intro-text">ORTUS</span><span class="intro-dot">.</span>
     </div>
- <div class="intro-sub-content">
-        
+    <div class="intro-sub-content">
         <div class="intro-icon">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L2 9H22L12 2Z" stroke="#e0e0e0" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -204,162 +214,108 @@
                 <path d="M2 22H22" stroke="#e0e0e0" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </div>
-
         <p class="intro-quote">
             "Le véritable luxe ne réside pas seulement dans la pierre,<br>
             mais dans l'art de vivre qu'elle abrite."
         </p>
-
     </div>
-
 </div>
 
+<nav class="navbar">
+    <div class="container nav-container">
+        <a href="#" class="logo">ORTUS<span class="dot">.</span></a>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="index.html" class="nav-link">Accueil</a></li>
+            <li><a href="biens.html?filtre=all" class="nav-link">Nos Biens</a></li>
+            <li><a href="services.html" class="nav-link">Services</a></li>
+            <li><a href="vendre.html" class="nav-link">Propriétaires</a></li>
+            <li><a href="prestige.html" class="nav-link">Prestige</a></li>
+            <li><a href="apropos.html" class="nav-link">L'Agence</a></li>
+            <li><a href="#contact" class="btn-contact">Contact</a></li>
+        </ul>
+    </div>
+</nav>
 
+<header class="hero">
+    <div class="hero-overlay"></div> 
+    <div class="container hero-content">
+        <h1>Créateur d'Opportunités</h1>
+        <p>Trouvez le bien immobilier qui correspond à vos rêves.</p>
 
-    <nav class="navbar">
-        <div class="container nav-container">
-            <a href="#" class="logo">ORTUS<span class="dot">.</span></a>
-
-            <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+        <form action="biens.html" method="GET" style="background: white; padding: 25px; border-radius: 10px; display: flex; flex-direction: column; gap: 20px; max-width: 400px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+            <input type="hidden" name="mode" id="search-mode" value="vente">
+            <div style="display: flex; gap: 10px;">
+                <button type="button" onclick="setSearchMode('vente')" id="btn-vente" 
+                    style="flex: 1; padding: 10px; border: 1px solid #D4AF37; background: #D4AF37; color: #020610; font-family: 'Montserrat', sans-serif; font-weight: 700; border-radius: 5px; cursor: pointer; transition: 0.3s;">
+                    ACHETER
+                </button>
+                <button type="button" onclick="setSearchMode('location')" id="btn-location" 
+                    style="flex: 1; padding: 10px; border: 1px solid #ccc; background: transparent; color: #888; font-family: 'Montserrat', sans-serif; font-weight: 600; border-radius: 5px; cursor: pointer; transition: 0.3s;">
+                    LOUER
+                </button>
             </div>
+            <div style="display: flex; align-items: center; background: #f5f5f5; padding: 10px; border-radius: 5px;">
+                <i class="fas fa-map-marker-alt" style="color: #D4AF37; margin-right: 10px;"></i>
+                <input type="text" name="filtre" placeholder="Ville, Quartier, Type (ex : Villa..." 
+                       style="border: none; background: transparent; width: 100%; font-family: 'Montserrat', sans-serif; outline: none;">
+            </div>
+            <div style="padding: 0 5px;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #666; margin-bottom: 5px;">
+                    <span>Budget Max :</span>
+                    <span id="home-budget-display" style="color: #D4AF37; font-weight: bold;">Tout afficher</span>
+                </div>
+                <input type="range" name="budget" id="budget-slider"
+                       min="0" max="5000000000" step="25000000" value="5000000000"
+                       oninput="updateHomeBudget(this.value)"
+                       style="width: 100%; accent-color: #D4AF37; cursor: pointer;">
+            </div>
+            <button type="submit" style="background: #020610; color: white; border: none; padding: 15px; border-radius: 5px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                <i class="fas fa-search"></i> RECHERCHER
+            </button>
+        </form>
 
-            <ul class="nav-menu">
-    <li><a href="index.html" class="nav-link">Accueil</a></li>
-    
-    <li><a href="biens.html?filtre=all" class="nav-link">Nos Biens</a></li>
-    
-    <li><a href="services.html" class="nav-link">Services</a></li>
-    
-    <li><a href="vendre.html" class="nav-link">Propriétaires</a></li>
+        <script>
+            // JS Formulaire Recherche
+            const MAX_VENTE = 5000000000; 
+            const MAX_LOC = 20000000;     
 
-    <li><a href="prestige.html" class="nav-link">Prestige</a></li>
-    
-    <li><a href="apropos.html" class="nav-link">L'Agence</a></li>
-    
-    <li><a href="#contact" class="btn-contact">Contact</a></li>
-</ul>
+            function updateHomeBudget(val) {
+                const display = document.getElementById('home-budget-display');
+                const slider = document.getElementById('budget-slider');
+                if(parseInt(val) >= parseInt(slider.max)) {
+                    display.innerText = "Tout afficher";
+                } else {
+                    display.innerText = new Intl.NumberFormat('fr-FR').format(val) + " Ar";
+                }
+            }
 
+            function setSearchMode(mode) {
+                document.getElementById('search-mode').value = mode;
+                const btnVente = document.getElementById('btn-vente');
+                const btnLoc = document.getElementById('btn-location');
+                const slider = document.getElementById('budget-slider');
 
-        </div>
-    </nav>
-
-    <header class="hero">
-        <div class="hero-overlay"></div> <div class="container hero-content">
-            <h1>Créateur d'Opportunités</h1>
-            <p>Trouvez le bien immobilier qui correspond à vos rêves.</p>
-<form action="biens.html" method="GET" style="background: white; padding: 25px; border-radius: 10px; display: flex; flex-direction: column; gap: 20px; max-width: 400px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-    
-    <input type="hidden" name="mode" id="search-mode" value="vente">
-    
-    <div style="display: flex; gap: 10px;">
-        <button type="button" onclick="setSearchMode('vente')" id="btn-vente" 
-            style="flex: 1; padding: 10px; border: 1px solid #D4AF37; background: #D4AF37; color: #020610; font-family: 'Montserrat', sans-serif; font-weight: 700; border-radius: 5px; cursor: pointer; transition: 0.3s;">
-            ACHETER
-        </button>
-        
-        <button type="button" onclick="setSearchMode('location')" id="btn-location" 
-            style="flex: 1; padding: 10px; border: 1px solid #ccc; background: transparent; color: #888; font-family: 'Montserrat', sans-serif; font-weight: 600; border-radius: 5px; cursor: pointer; transition: 0.3s;">
-            LOUER
-        </button>
+                if (mode === 'vente') {
+                    btnVente.style.background = '#D4AF37'; btnVente.style.color = '#020610'; btnVente.style.borderColor = '#D4AF37';
+                    btnLoc.style.background = 'transparent'; btnLoc.style.color = '#888'; btnLoc.style.borderColor = '#ccc';
+                    slider.max = MAX_VENTE; slider.step = 25000000; slider.value = MAX_VENTE;
+                    updateHomeBudget(MAX_VENTE);
+                } else {
+                    btnLoc.style.background = '#D4AF37'; btnLoc.style.color = '#020610'; btnLoc.style.borderColor = '#D4AF37';
+                    btnVente.style.background = 'transparent'; btnVente.style.color = '#888'; btnVente.style.borderColor = '#ccc';
+                    slider.max = MAX_LOC; slider.step = 100000; slider.value = MAX_LOC;
+                    updateHomeBudget(MAX_LOC);
+                }
+            }
+        </script>
     </div>
+</header>
 
-    <div style="display: flex; align-items: center; background: #f5f5f5; padding: 10px; border-radius: 5px;">
-        <i class="fas fa-map-marker-alt" style="color: #D4AF37; margin-right: 10px;"></i>
-        <input type="text" name="filtre" placeholder="Ville, Quartier, Type (ex : Villa..." 
-               style="border: none; background: transparent; width: 100%; font-family: 'Montserrat', sans-serif; outline: none;">
-    </div>
+<script src="assets/js/main.js"></script>
 
-    <div style="padding: 0 5px;">
-        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #666; margin-bottom: 5px;">
-            <span>Budget Max :</span>
-            <span id="home-budget-display" style="color: #D4AF37; font-weight: bold;">Tout afficher</span>
-        </div>
-        
-        <input type="range" name="budget" id="budget-slider"
-               min="0" max="5000000000" step="25000000" value="5000000000"
-               oninput="updateHomeBudget(this.value)"
-               style="width: 100%; accent-color: #D4AF37; cursor: pointer;">
-    </div>
-
-    <button type="submit" style="background: #020610; color: white; border: none; padding: 15px; border-radius: 5px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px;">
-        <i class="fas fa-search"></i> RECHERCHER
-    </button>
-</form>
-
-<script>
-    // Configuration des montants Max (Vente vs Location)
-    const MAX_VENTE = 5000000000; // 5 Milliards Ar
-    const MAX_LOC = 20000000;     // 20 Millions Ar / mois
-
-    // 1. Fonction qui met à jour l'affichage du prix
-    function updateHomeBudget(val) {
-        const display = document.getElementById('home-budget-display');
-        const slider = document.getElementById('budget-slider');
-        
-        // Si la barre est au max, on affiche "Tout afficher"
-        if(parseInt(val) >= parseInt(slider.max)) {
-            display.innerText = "Tout afficher";
-        } else {
-            display.innerText = new Intl.NumberFormat('fr-FR').format(val) + " Ar";
-        }
-    }
-
-    // 2. Fonction qui change le mode (Clic sur les boutons)
-    function setSearchMode(mode) {
-        // On enregistre le mode choisi
-        document.getElementById('search-mode').value = mode;
-        
-        const btnVente = document.getElementById('btn-vente');
-        const btnLoc = document.getElementById('btn-location');
-        const slider = document.getElementById('budget-slider');
-
-        if (mode === 'vente') {
-            // --- MODE VENTE ---
-            // Bouton Vente en OR
-            btnVente.style.background = '#D4AF37';
-            btnVente.style.color = '#020610';
-            btnVente.style.borderColor = '#D4AF37';
-            // Bouton Loc en Gris
-            btnLoc.style.background = 'transparent';
-            btnLoc.style.color = '#888';
-            btnLoc.style.borderColor = '#ccc';
-
-            // Slider : On remet les gros montants
-            slider.max = MAX_VENTE;
-            slider.step = 25000000;
-            slider.value = MAX_VENTE;
-            updateHomeBudget(MAX_VENTE);
-            
-        } else {
-            // --- MODE LOCATION ---
-            // Bouton Loc en OR
-            btnLoc.style.background = '#D4AF37';
-            btnLoc.style.color = '#020610';
-            btnLoc.style.borderColor = '#D4AF37';
-            // Bouton Vente en Gris
-            btnVente.style.background = 'transparent';
-            btnVente.style.color = '#888';
-            btnVente.style.borderColor = '#ccc';
-
-            // Slider : On passe aux petits montants (Loyer)
-            slider.max = MAX_LOC;
-            slider.step = 100000;
-            slider.value = MAX_LOC;
-            updateHomeBudget(MAX_LOC);
-        }
-    }
-</script>
-
-
-
-
-        </div>
-    </header>
-
-    <script src="assets/js/main.js"></script>
 <section class="section-padding" style="background-color: #020610; color: white; border-top: 1px solid #333;">
     <div class="container">
         <h2 class="section-title text-center" style="color: white; margin-bottom: 40px;">
@@ -378,195 +334,128 @@
     </div>
 </section>
 
-
 <script src="assets/js/home.js"></script>
 
-        <section class="promo-section section-padding">
-        <div class="container">
-            <div class="promo-grid">
-                
-                <div class="promo-card card-prestige">
-                    <div class="promo-overlay">
-                        <h3>En quête de l'exceptionnel ?</h3>
-                        <p>Découvrez notre sélection "Ortus Prestige". Des biens rares pour des clients exigeants.</p>
-                        <a href="prestige.html" class="btn-promo">Explorer la collection</a>
-                    </div>
+<section class="promo-section section-padding">
+    <div class="container">
+        <div class="promo-grid">
+            <div class="promo-card card-prestige">
+                <div class="promo-overlay">
+                    <h3>En quête de l'exceptionnel ?</h3>
+                    <p>Découvrez notre sélection "Ortus Prestige". Des biens rares pour des clients exigeants.</p>
+                    <a href="prestige.html" class="btn-promo">Explorer la collection</a>
                 </div>
-
-                <div class="promo-card card-career">
-                    <div class="promo-overlay">
-                        <h3>Votre avenir commence ici</h3>
-                        <p>Vous avez la passion de l'immobilier ? Rejoignez la constellation Ortus et devenez Créateur d'Opportunités.</p>
-                        <a href="recrutement.html" class="btn-promo">Voir nos offres</a>
-                    </div>
+            </div>
+            <div class="promo-card card-career">
+                <div class="promo-overlay">
+                    <h3>Votre avenir commence ici</h3>
+                    <p>Vous avez la passion de l'immobilier ? Rejoignez la constellation Ortus et devenez Créateur d'Opportunités.</p>
+                    <a href="recrutement.html" class="btn-promo">Voir nos offres</a>
                 </div>
-
             </div>
         </div>
-    </section>
-        <section class="estimation-section section-padding">
-        <div class="container">
-            <div class="estimation-banner">
-                
-                <div class="estimation-content">
-                    <h2>Vous souhaitez connaître la valeur de votre bien ?</h2>
-                    <p>Une estimation précise est la clé d'une vente réussie. Nos experts Ortus utilisent les dernières données du marché pour valoriser votre patrimoine.</p>
-                </div>
+    </div>
+</section>
 
-                <div class="estimation-action">
-                    <a href="estimation.html" class="btn-estimation">
-                        <span>Estimer mon bien</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-
+<section class="estimation-section section-padding">
+    <div class="container">
+        <div class="estimation-banner">
+            <div class="estimation-content">
+                <h2>Vous souhaitez connaître la valeur de votre bien ?</h2>
+                <p>Une estimation précise est la clé d'une vente réussie. Nos experts Ortus utilisent les dernières données du marché pour valoriser votre patrimoine.</p>
+            </div>
+            <div class="estimation-action">
+                <a href="estimation.html" class="btn-estimation">
+                    <span>Estimer mon bien</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
-    </section>
-    <section class="section-padding" style="background-color: #020610;">
-        <div class="container">
-            <div class="section-title">
-                <h2 style="color: #ffffff; letter-spacing: 2px; text-transform: uppercase;">L'Excellence Ortus</h2>
-                <p style="color: #D4AF37; font-style: italic; margin-top: 10px;">La satisfaction de nos clients est notre plus belle signature.</p>
+    </div>
+</section>
+
+<section class="section-padding" style="background-color: #020610;">
+    <div class="container">
+        <div class="section-title">
+            <h2 style="color: #ffffff; letter-spacing: 2px; text-transform: uppercase;">L'Excellence Ortus</h2>
+            <p style="color: #D4AF37; font-style: italic; margin-top: 10px;">La satisfaction de nos clients est notre plus belle signature.</p>
+        </div>
+        <div class="properties-grid">
+            <div class="info-card" style="flex-direction: column; padding: 40px 30px; background: linear-gradient(145deg, #0a1120, #050912); border: 1px solid rgba(212, 175, 55, 0.4); box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center;">
+                <div style="color: #D4AF37; margin-bottom: 20px; font-size: 1.2rem;">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p style="font-family: 'Georgia', 'Times New Roman', serif; font-style: italic; color: #e0e0e0; font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px;">
+                    "Une équipe d'une efficacité redoutable. J'ai vendu ma villa à Amborovy en moins de 3 mois au prix estimé. Un service rare à Madagascar."
+                </p>
+                <h4 style="color: #D4AF37; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">— Marc R., Propriétaire</h4>
             </div>
-
-            <div class="properties-grid">
-                
-                <div class="info-card" style="
-                    flex-direction: column; 
-                    padding: 40px 30px; 
-                    /* Fond sombre légèrement plus clair que le fond de page pour ressortir */
-                    background: linear-gradient(145deg, #0a1120, #050912);
-                    /* Bordure fine dorée */
-                    border: 1px solid rgba(212, 175, 55, 0.4); 
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-                    text-align: center;">
-                    
-                    <div style="color: #D4AF37; margin-bottom: 20px; font-size: 1.2rem;">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    
-                    <p style="
-                        font-family: 'Georgia', 'Times New Roman', serif; 
-                        font-style: italic; 
-                        color: #e0e0e0; 
-                        font-size: 1.1rem; 
-                        line-height: 1.6; 
-                        margin-bottom: 25px;">
-                        "Une équipe d'une efficacité redoutable. J'ai vendu ma villa à Amborovy en moins de 3 mois au prix estimé. Un service rare à Madagascar."
-                    </p>
-                    
-                    <h4 style="color: #D4AF37; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">— Marc R., Propriétaire</h4>
+            <div class="info-card" style="flex-direction: column; padding: 40px 30px; background: linear-gradient(145deg, #0a1120, #050912); border: 1px solid rgba(212, 175, 55, 0.4); box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center;">
+                <div style="color: #D4AF37; margin-bottom: 20px; font-size: 1.2rem;">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                 </div>
-
-                <div class="info-card" style="
-                    flex-direction: column; 
-                    padding: 40px 30px; 
-                    background: linear-gradient(145deg, #0a1120, #050912);
-                    border: 1px solid rgba(212, 175, 55, 0.4); 
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-                    text-align: center;">
-                    
-                    <div style="color: #D4AF37; margin-bottom: 20px; font-size: 1.2rem;">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    
-                    <p style="
-                        font-family: 'Georgia', 'Times New Roman', serif; 
-                        font-style: italic; 
-                        color: #e0e0e0; 
-                        font-size: 1.1rem; 
-                        line-height: 1.6; 
-                        margin-bottom: 25px;">
-                        "Ortus a su trouver le local commercial parfait. Un suivi juridique impeccable qui rassure totalement l'investisseur étranger que je suis."
-                    </p>
-                    
-                    <h4 style="color: #D4AF37; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">— Sarah L., Investisseuse</h4>
+                <p style="font-family: 'Georgia', 'Times New Roman', serif; font-style: italic; color: #e0e0e0; font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px;">
+                    "Ortus a su trouver le local commercial parfait. Un suivi juridique impeccable qui rassure totalement l'investisseur étranger que je suis."
+                </p>
+                <h4 style="color: #D4AF37; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">— Sarah L., Investisseuse</h4>
+            </div>
+            <div class="info-card" style="flex-direction: column; padding: 40px 30px; background: linear-gradient(145deg, #0a1120, #050912); border: 1px solid rgba(212, 175, 55, 0.4); box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center;">
+                <div style="color: #D4AF37; margin-bottom: 20px; font-size: 1.2rem;">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
                 </div>
-
-                <div class="info-card" style="
-                    flex-direction: column; 
-                    padding: 40px 30px; 
-                    background: linear-gradient(145deg, #0a1120, #050912);
-                    border: 1px solid rgba(212, 175, 55, 0.4); 
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-                    text-align: center;">
-                    
-                    <div style="color: #D4AF37; margin-bottom: 20px; font-size: 1.2rem;">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                    </div>
-            
-                    <p style="
-                        font-family: 'Georgia', 'Times New Roman', serif; 
-                        font-style: italic; 
-                        color: #e0e0e0; 
-                        font-size: 1.1rem; 
-                        line-height: 1.6; 
-                        margin-bottom: 25px;">
-                        "Service conciergerie au top. Je reçois mes loyers sans m'occuper de rien. La tranquillité d'esprit n'a pas de prix."
-                    </p>
-                    
-                    <h4 style="color: #D4AF37; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">— Hery A., Bailleur</h4>
-                </div>
-
+                <p style="font-family: 'Georgia', 'Times New Roman', serif; font-style: italic; color: #e0e0e0; font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px;">
+                    "Service conciergerie au top. Je reçois mes loyers sans m'occuper de rien. La tranquillité d'esprit n'a pas de prix."
+                </p>
+                <h4 style="color: #D4AF37; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">— Hery A., Bailleur</h4>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-
-
-
-        <footer class="footer" id="contact">
-        <div class="container">
-            <div class="footer-grid">
-                
-                <div class="footer-col">
-                    <h3>ORTUS<span class="dot">.</span></h3>
-                    <p class="footer-desc">
-                        Votre partenaire de confiance pour l'immobilier à Madagascar. 
-                        Nous créons des opportunités pour votre avenir.
-                    </p>
-                    <div class="social-links">
-                        <a href="https://www.facebook.com/share/17ejwgcidf/?mibextid=wwXIfr"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/ortusmada?igsh=MWx6NW15cXpibDNubQ=="><i class="fab fa-instagram"></i></a>
-                        <a href="https://mg.linkedin.com/in/joelrafidisonformateurcoach"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
+<footer class="footer" id="contact">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>ORTUS<span class="dot">.</span></h3>
+                <p class="footer-desc">
+                    Votre partenaire de confiance pour l'immobilier à Madagascar. 
+                    Nous créons des opportunités pour votre avenir.
+                </p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/share/17ejwgcidf/?mibextid=wwXIfr"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/ortusmada?igsh=MWx6NW15cXpibDNubQ=="><i class="fab fa-instagram"></i></a>
+                    <a href="https://mg.linkedin.com/in/joelrafidisonformateurcoach"><i class="fab fa-linkedin-in"></i></a>
                 </div>
-
-                <div class="footer-col">
-    <h4>Navigation</h4>
-    <ul class="footer-links">
-      <li><a href="index.html">Accueil</a></li>
-      <li><a href="biens.html">Tous nos biens</a></li>
-      <li><a href="services.html">Nos Services</a></li>
-      <li><a href="apropos.html">L'Agence</a></li>
-      <li><a href="vendre.html">Vendre mon bien</a></li>
-      <li><a href="estimation.html">Estimation gratuite</a></li>
-    </ul>
-
-</div>
-
-
-                <div class="footer-col">
-                    <h4>Contact</h4>
-                    <ul class="footer-contact">
-                        <li><i class="fas fa-map-marker-alt"></i> Antananarivo, Madagascar</li>
-                        <li><i class="fas fa-phone"></i> 034 04 945 20</li>
-                        <li><i class="fas fa-envelope"></i> ortusmada@gmail.com</li>
-                    </ul>
-                </div>
-
             </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2026 Ortus Immobilier. Tous droits réservés.</p>
+            <div class="footer-col">
+                <h4>Navigation</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="biens.html">Tous nos biens</a></li>
+                    <li><a href="services.html">Nos Services</a></li>
+                    <li><a href="apropos.html">L'Agence</a></li>
+                    <li><a href="vendre.html">Vendre mon bien</a></li>
+                    <li><a href="estimation.html">Estimation gratuite</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul class="footer-contact">
+                    <li><i class="fas fa-map-marker-alt"></i> Antananarivo, Madagascar</li>
+                    <li><i class="fas fa-phone"></i> 034 04 945 20</li>
+                    <li><i class="fas fa-envelope"></i> ortusmada@gmail.com</li>
+                </ul>
             </div>
         </div>
-    </footer>
- <div id="ios-install-prompt">
+        <div class="footer-bottom">
+            <p>&copy; 2026 Ortus Immobilier. Tous droits réservés.</p>
+        </div>
+    </div>
+</footer>
+
+<div id="ios-install-prompt">
     <h4>Installez l'Application ORTUS</h4>
     <p>Pour une expérience fluide, ajoutez-nous à votre écran d'accueil.</p>
-    
     <div class="ios-instructions">
         <span>1. Appuyez sur le bouton "Partager"</span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 10px;">
@@ -575,7 +464,6 @@
             <line x1="12" y1="2" x2="12" y2="15"></line>
         </svg>
     </div>
-    
     <div class="ios-instructions">
         <span>2. Cherchez "Sur l'écran d'accueil"</span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 10px;">
@@ -584,26 +472,9 @@
             <line x1="8" y1="12" x2="16" y2="12"></line>
         </svg>
     </div>
-
     <button class="btn-close-ios" onclick="closeIosPrompt()">Fermer</button>
 </div>
 
-
-<script type="text/javascript">
-    window.addEventListener('load', function() {
-        // --- DÉBUT DU CODE OFFICIEL ---
-        window.$crisp=[];
-        window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";
-        (function(){
-            d=document;
-            s=d.createElement("script");
-            s.src="https://client.crisp.chat/l.js";
-            s.async=1;
-            d.getElementsByTagName("head")[0].appendChild(s);
-        })();
-        // --- FIN DU CODE OFFICIEL ---
-    });
-</script>
 <script type="text/javascript">
     window.addEventListener('load', function() {
         window.$crisp=[];
@@ -619,22 +490,22 @@
 </script>
 
 <script>
-    // A. Fonction pour fermer la pop-up (Doit être accessible par le bouton HTML)
+    // A. Fonction pour fermer la pop-up
     function closeIosPrompt() {
         document.getElementById('ios-install-prompt').style.display = 'none';
         if (window.$crisp) $crisp.push(['do', 'chat:show']);
     }
 
-    // B. Au chargement de la page, on lance tout le reste
+    // B. Au chargement de la page
     window.addEventListener('load', function() {
         
-        // --- 1. GESTION DE L'INTRO (3.85 secondes pour bien lire) ---
+        // --- 1. GESTION DE L'INTRO (3.8 secondes) ---
         setTimeout(function() {
             const overlay = document.getElementById('intro-overlay');
             if(overlay) overlay.classList.add('intro-hidden');
         }, 3800); 
 
-        // --- 2. ACTIVATION PWA (Installation App) ---
+        // --- 2. ACTIVATION PWA ---
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./sw.js')
                 .then(reg => console.log('App Ortus prête ✅'))
@@ -646,24 +517,18 @@
         const isStandalone = () => ('standalone' in window.navigator) && (window.navigator.standalone);
         const hasSeenPrompt = sessionStorage.getItem('ortus_ios_seen');
 
-        // Si iPhone + Pas App + Pas encore vu
         if (isIos() && !isStandalone() && !hasSeenPrompt) {
             setTimeout(() => {
                 const iosPrompt = document.getElementById('ios-install-prompt');
                 if(iosPrompt) {
                     iosPrompt.style.display = 'block';
-                    // On cache Crisp pour ne pas surcharger
                     if (window.$crisp) $crisp.push(['do', 'chat:hide']);
-                    // On note que c'est vu
                     sessionStorage.setItem('ortus_ios_seen', 'true');
                 }
-            }, 4500); // 4.5sec : juste après l'intro
+            }, 4500); 
         }
     });
 </script>
-
-
-
 
 </body>
 </html>
