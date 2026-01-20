@@ -543,50 +543,52 @@ function updateHomeBudget(val) {
   }
 </script>
 <script>
-    // --- 1. CONFIGURATION GENERALE ---
-    window.addEventListener('load', function() {
-        
-        // A. GESTION DE L'INTRO (5.5 secondes)
-        setTimeout(function() {
-            const overlay = document.getElementById('intro-overlay');
-            if(overlay) overlay.classList.add('intro-hidden');
-        }, 5500); 
+    // 1. Détection iPhone / iPad
+    const isIos = () => {
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        return /iphone|ipad|ipod/.test(userAgent);
+    }
 
-        // B. ACTIVATION DE LA PWA (Service Worker)
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js')
-                .then(reg => console.log('App Ortus prête ✅'))
-                .catch(err => console.log('Erreur PWA ❌', err));
+    // 2. Détection si l'app est déjà installée
+    const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+
+    // 3. Fonction pour fermer la pop-up
+    function closeIosPrompt() {
+        document.getElementById('ios-install-prompt').style.display = 'none';
+        if (window.$crisp) {
+            $crisp.push(['do', 'chat:show']);
         }
+    }
 
-        // --- 2. GESTION IPHONE & CRISP ---
+    // 4. Le Scénario de lancement (AVEC ANTI-HARCELEMENT)
+    window.addEventListener('load', () => {
         
-        // Détections
-        const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-        const isStandalone = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+        // On vérifie 3 choses :
+        // A. C'est un iPhone ?
+        // B. L'app n'est pas installée ?
+        // C. On ne l'a pas déjà montré dans cette session ? (C'est la nouveauté !)
+        const hasSeenPrompt = sessionStorage.getItem('ortus_ios_seen');
 
-        // Si c'est un iPhone ET que l'app n'est pas installée
-        if (isIos() && !isStandalone()) {
+        if (isIos() && !isInStandaloneMode() && !hasSeenPrompt) {
             
-            // On attend 6 secondes (Intro + 0.5s)
+            // On attend 6 secondes
             setTimeout(() => {
-                // On affiche la pop-up iPhone
-                const iosPrompt = document.getElementById('ios-install-prompt');
-                if(iosPrompt) iosPrompt.style.display = 'block';
+                // On affiche
+                document.getElementById('ios-install-prompt').style.display = 'block';
                 
                 // On cache le chat Crisp
-                if (window.$crisp) $crisp.push(['do', 'chat:hide']);
+                if (window.$crisp) {
+                    $crisp.push(['do', 'chat:hide']);
+                }
+
+                // IMPORTANT : On note dans la mémoire que c'est fait !
+                sessionStorage.setItem('ortus_ios_seen', 'true');
+
             }, 6000); 
         }
     });
-
-    // C. FONCTION POUR FERMER LA POP-UP IPHONE
-    function closeIosPrompt() {
-        document.getElementById('ios-install-prompt').style.display = 'none';
-        // On réaffiche le chat Crisp
-        if (window.$crisp) $crisp.push(['do', 'chat:show']);
-    }
 </script>
+
 
 
 </body>
