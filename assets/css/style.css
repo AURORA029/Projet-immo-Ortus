@@ -99,15 +99,17 @@ html, body {
 }
 
 .logo-sub {
-    color: var(--accent-gold); /* IMMOBILIER en Or */
-    font-size: 0.65rem; /* Petit et discret */
+    color: #FFD700; /* Un Or plus lumineux/jaune pour mieux ressortir sur le fond sombre */
+    font-size: 0.8rem; /* Plus gros (avant c'était 0.65rem) */
     text-transform: uppercase;
-    letter-spacing: 3.5px; /* Très espacé (Code Luxe) */
-    font-weight: 600;
-    margin-left: 2px; /* Petit alignement optique */
+    letter-spacing: 2px; /* Un peu moins espacé pour garder la compacité */
+    font-weight: 700; /* Plus GRAS pour la lisibilité */
+    margin-left: 2px; 
+    margin-top: 3px; /* Un petit espace pour ne pas coller à ORTUS */
     font-family: var(--font-main);
-    opacity: 0.9;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8); /* Petite ombre noire pour détacher le texte du fond */
 }
+
 
 /* Ajustement Mobile pour le logo */
 @media (max-width: 768px) {
