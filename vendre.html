@@ -3,120 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estimer mon bien - Ortus</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Espace Propriétaires - Ortus</title> <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar" style="position:relative;">
+    <nav class="navbar">
         <div class="container nav-container">
             <a href="index.html" class="logo">ORTUS<span class="dot">.</span></a>
-            <a href="index.html" class="nav-link">Retour accueil</a>
+            <a href="index.html" class="nav-link">Retour Accueil</a>
         </div>
     </nav>
 
-    <div class="container section-padding" style="text-align:center; padding-top: 100px;">
-        <h1>Estimation en ligne</h1>
-        <section class="section-padding" style="background-color: #020610; min-height: 80vh;">
-    <div class="container">
-        
-        <div class="section-title">
-            <h2 style="color: #ffffff;">Estimation Confidentielle</h2>
-            <p style="color: #e0e0e0;">Renseignez les caractéristiques de votre bien. Nos experts analysent le marché pour vous fournir une valeur précise (Vente ou Location) sous 24h.</p>
-        </div>
-
-        <div class="contact-form" style="
-            max-width: 700px; 
-            margin: 0 auto; 
-            background: linear-gradient(145deg, #0a1120, #050912); 
-            padding: 40px; 
-            border-radius: 10px; 
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5); 
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-top: 3px solid #D4AF37;">
-            
-            <form id="my-form" action="https://formspree.io/f/mvzzklrl" method="POST">
-                
-                <input type="hidden" name="_next" value="https://aurora029.github.io/Projet-immo-Ortus/merci.html">
-                
-                <input type="hidden" name="_subject" value="Nouvelle DEMANDE D'ESTIMATION (Vente/Loc) - Site Ortus">
-
-                <div class="input-group" style="margin-bottom: 20px;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 10px; color: #D4AF37;">Votre projet</label>
-                    <select name="type_projet" style="width: 100%; padding: 15px; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 5px; background: #020610; color: #fff;">
-                        <option value="vente">Je veux connaître le PRIX DE VENTE</option>
-                        <option value="location">Je veux connaître le LOYER (Location)</option>
-                    </select>
-                </div>
-
-                <div class="input-group" style="margin-bottom: 20px;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 10px; color: #D4AF37;">Type de bien</label>
-                    <select name="type_bien" style="width: 100%; padding: 15px; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 5px; background: #020610; color: #fff;">
-                        <option value="maison">Maison / Villa</option>
-                        <option value="appartement">Appartement</option>
-                        <option value="terrain">Terrain</option>
-                        <option value="local">Local Commercial</option>
-                    </select>
-                </div>
-
-                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
-                    <div style="flex: 1; min-width: 250px;">
-                        <label style="display: block; font-weight: bold; margin-bottom: 10px; color: #D4AF37;">Ville / Quartier</label>
-                        <input type="text" name="localisation" placeholder="Ex: Mahajanga, Amborovy..." required 
-                               style="width: 100%; padding: 15px; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 5px; background: #020610; color: #fff;">
-                    </div>
-                    <div style="flex: 1; min-width: 250px;">
-                        <label style="display: block; font-weight: bold; margin-bottom: 10px; color: #D4AF37;">Surface (m²)</label>
-                        <input type="number" name="surface" placeholder="Ex: 150" required 
-                               style="width: 100%; padding: 15px; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 5px; background: #020610; color: #fff;">
-                    </div>
-                </div>
-
-                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
-                    <div style="flex: 1; min-width: 250px;">
-                        <label style="display: block; font-weight: bold; margin-bottom: 10px; color: #D4AF37;">Nombre de pièces</label>
-                        <input type="number" name="pieces" placeholder="Ex: 4" 
-                               style="width: 100%; padding: 15px; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 5px; background: #020610; color: #fff;">
-                    </div>
-                    <div style="flex: 1; min-width: 250px;">
-                        <label style="display: block; font-weight: bold; margin-bottom: 10px; color: #D4AF37;">État du bien</label>
-                        <select name="etat" style="width: 100%; padding: 15px; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 5px; background: #020610; color: #fff;">
-                            <option value="excellent">Excellent état</option>
-                            <option value="bon">Bon état</option>
-                            <option value="travaux">Travaux à prévoir</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div style="background: rgba(212, 175, 55, 0.05); padding: 20px; border-radius: 5px; margin-bottom: 25px; border: 1px solid rgba(212, 175, 55, 0.2);">
-                    <h4 style="color: #D4AF37; margin-bottom: 15px;">Vos coordonnées (pour l'envoi du dossier)</h4>
-                    
-                    <div style="margin-bottom: 15px;">
-                        <input type="text" name="nom" placeholder="Votre Nom" required 
-                               style="width: 100%; padding: 15px; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 5px; background: #020610; color: #fff;">
-                    </div>
-                    
-                    <div style="margin-bottom: 10px;">
-                        <input type="tel" name="telephone" placeholder="Votre Téléphone (WhatsApp)" required 
-                               style="width: 100%; padding: 15px; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 5px; background: #020610; color: #fff;">
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-primary" style="width: 100%; padding: 18px; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px;">
-                    <i class="fas fa-calculator"></i> RECEVOIR MON ESTIMATION GRATUITE
-                </button>
-
-                <p style="font-size: 0.8rem; color: #888; text-align: center; margin-top: 15px;">
-                    <i class="fas fa-lock"></i> Vos données restent 100% confidentielles.
+    <div class="container section-padding">
+        <div class="estimation-banner" style="background: rgba(26, 16, 60, 0.9); margin: 0 auto; max-width: 800px; display:block;">
+            <div style="text-align: center; max-width: 800px; margin: 0 auto 40px auto; padding: 0 20px;">
+                <h2 style="color: #D4AF37; font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 20px;">
+                    Pourquoi confier votre bien à ORTUS ?
+                </h2>
+                <p style="color: #ccc; margin-bottom: 30px;">
+                    Vendre ou louer un bien d'exception demande une stratégie d'exception. Nous ne nous contentons pas de publier une annonce, nous créons le coup de cœur.
                 </p>
 
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; text-align: left;">
+                    
+                    <div style="flex: 1; min-width: 250px; background: #1a1f2e; padding: 20px; border-radius: 8px; border: 1px solid #333;">
+                        <h4 style="color: white; margin-top: 0;"><i class="fas fa-camera" style="color: #D4AF37; margin-right: 10px;"></i> Valorisation Visuelle</h4>
+                        <p style="font-size: 0.9rem; color: #bbb; margin-bottom: 0;">Photos HDR, vidéos drone et mise en scène. Nous révélons tout le potentiel de votre propriété.</p>
+                    </div>
+
+                    <div style="flex: 1; min-width: 250px; background: #1a1f2e; padding: 20px; border-radius: 8px; border: 1px solid #333;">
+                        <h4 style="color: white; margin-top: 0;"><i class="fas fa-user-secret" style="color: #D4AF37; margin-right: 10px;"></i> Discrétion Absolue</h4>
+                        <p style="font-size: 0.9rem; color: #bbb; margin-bottom: 0;">Accès à notre fichier privé d'investisseurs et d'expatriés qualifiés. Vendez sans publicité si vous le souhaitez.</p>
+                    </div>
+
+                    <div style="flex: 1; min-width: 250px; background: #1a1f2e; padding: 20px; border-radius: 8px; border: 1px solid #333;">
+                        <h4 style="color: white; margin-top: 0;"><i class="fas fa-chart-line" style="color: #D4AF37; margin-right: 10px;"></i> Expertise Juste</h4>
+                        <p style="font-size: 0.9rem; color: #bbb; margin-bottom: 0;">Une analyse précise du marché (Prix de vente ou Loyer) pour valoriser votre actif au mieux.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <h1 style="color:#c5a065; text-align:center; margin-bottom:20px;">Vendre ou Louer mon bien</h1>
+            <p style="color:white; text-align:center; margin-bottom:40px;">
+                Propriétaire ? Remplissez ce formulaire et un expert Ortus vous contactera sous 24h pour définir la meilleure stratégie (Vente ou Gestion Locative).
+            </p>
+            
+            <form id="my-form" action="https://formspree.io/f/mvzzklrl" method="POST" style="display:flex; flex-direction:column; gap:15px;">
+                
+                <input type="hidden" name="_next" value="https://aurora029.github.io/merci.html">
+                
+                <input type="hidden" name="_subject" value="Nouveau PROJET PROPRIETAIRE (Vente ou Location) - Site Ortus">
+
+                <select name="projet" required style="padding:15px; border-radius:4px; border:none; height:50px; background:white; color:#333;">
+                    <option value="" disabled selected>Quelle est votre intention ?</option>
+                    <option value="vente">Je veux VENDRE ce bien</option>
+                    <option value="location">Je veux le mettre en LOCATION / GESTION</option>
+                </select>
+
+                <input type="text" name="nom" placeholder="Votre Nom complet" required style="padding:15px; border-radius:4px; border:none;">
+                
+                <input type="tel" name="telephone" placeholder="Votre Téléphone" required style="padding:15px; border-radius:4px; border:none;">
+                
+                <input type="text" name="ville" placeholder="Ville du bien / Quartier" required style="padding:15px; border-radius:4px; border:none;">
+                
+                <select name="type_bien" style="padding:15px; border-radius:4px; border:none; height:50px;">
+                    <option value="">Type de bien</option>
+                    <option value="maison">Maison / Villa</option>
+                    <option value="appart">Appartement</option>
+                    <option value="terrain">Terrain</option>
+                    <option value="local">Local Commercial</option>
+                </select>
+
+                <textarea name="description" rows="5" placeholder="Description rapide du bien (Surface, nb de pièces...)" style="padding:15px; border-radius:4px; border:none;"></textarea>
+
+                <button type="submit" class="btn-estimation" style="margin-top:20px; text-align:center; cursor:pointer;">
+                    Envoyer ma demande
+                </button>
             </form>
-           
         </div>
     </div>
-</section>
+    
+    <section style="background-color: #020610; padding: 40px 0; border-bottom: 1px solid rgba(212, 175, 55, 0.2);">
+        <div class="container" style="text-align: center;">
+            <div style="
+                background: linear-gradient(145deg, #0a1120, #050912); 
+                padding: 30px; 
+                border-radius: 10px; 
+                border: 1px solid rgba(212, 175, 55, 0.3); 
+                display: inline-block; 
+                max-width: 800px;
+                width: 100%;">
+                
+                <i class="fas fa-balance-scale-right" style="color: #D4AF37; font-size: 2rem; margin-bottom: 15px;"></i>
+                
+                <h3 style="color: #ffffff; margin-bottom: 10px;">Vous hésitez sur la valeur ?</h3>
+                
+                <p style="color: #aaaaaa; margin-bottom: 25px;">
+                    La première étape est de connaître la valeur exacte de votre patrimoine (Vente ou Locatif). 
+                    Obtenez une analyse précise du marché sans engagement.
+                </p>
+                
+                <a href="estimation.html" class="btn-primary" style="
+                    background: transparent; 
+                    border: 2px solid #D4AF37; 
+                    color: #D4AF37; 
+                    padding: 12px 30px; 
+                    text-decoration: none; 
+                    display: inline-block;
+                    transition: all 0.3s ease;">
+                    <i class="fas fa-calculator"></i> SIMULER UNE ESTIMATION GRATUITE
+                </a>
+            </div>
+        </div>
+    </section>
 
-    </div>
     <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
     <script>
         var form = document.getElementById("my-form");
