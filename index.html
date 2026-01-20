@@ -250,11 +250,25 @@
         <div class="hero-overlay"></div> <div class="container hero-content">
             <h1>Créateur d'Opportunités</h1>
             <p>Trouvez le bien immobilier qui correspond à vos rêves.</p>
-<form action="biens.html" method="GET" style="background: white; padding: 20px; border-radius: 10px; display: flex; flex-direction: column; gap: 15px; max-width: 400px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+<form action="biens.html" method="GET" style="background: white; padding: 25px; border-radius: 10px; display: flex; flex-direction: column; gap: 20px; max-width: 400px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
     
+    <input type="hidden" name="mode" id="search-mode" value="vente">
+    
+    <div style="display: flex; gap: 10px;">
+        <button type="button" onclick="setSearchMode('vente')" id="btn-vente" 
+            style="flex: 1; padding: 10px; border: 1px solid #D4AF37; background: #D4AF37; color: #020610; font-family: 'Montserrat', sans-serif; font-weight: 700; border-radius: 5px; cursor: pointer; transition: 0.3s;">
+            ACHETER
+        </button>
+        
+        <button type="button" onclick="setSearchMode('location')" id="btn-location" 
+            style="flex: 1; padding: 10px; border: 1px solid #ccc; background: transparent; color: #888; font-family: 'Montserrat', sans-serif; font-weight: 600; border-radius: 5px; cursor: pointer; transition: 0.3s;">
+            LOUER
+        </button>
+    </div>
+
     <div style="display: flex; align-items: center; background: #f5f5f5; padding: 10px; border-radius: 5px;">
         <i class="fas fa-map-marker-alt" style="color: #D4AF37; margin-right: 10px;"></i>
-        <input type="text" name="filtre" placeholder="Ville, Quartier, Type (ex: Villa,..." 
+        <input type="text" name="filtre" placeholder="Ville, Quartier, Type..." 
                style="border: none; background: transparent; width: 100%; font-family: 'Montserrat', sans-serif; outline: none;">
     </div>
 
@@ -264,7 +278,7 @@
             <span id="home-budget-display" style="color: #D4AF37; font-weight: bold;">Tout afficher</span>
         </div>
         
-        <input type="range" name="budget" 
+        <input type="range" name="budget" id="budget-slider"
                min="0" max="5000000000" step="25000000" value="5000000000"
                oninput="updateHomeBudget(this.value)"
                style="width: 100%; accent-color: #D4AF37; cursor: pointer;">
@@ -276,12 +290,69 @@
 </form>
 
 <script>
-function updateHomeBudget(val) {
-    const display = document.getElementById('home-budget-display');
-    if(val >= 5000000000) display.innerText = "Tout afficher";
-    else display.innerText = new Intl.NumberFormat('fr-FR').format(val) + " Ar";
-}
+    // Configuration des montants Max (Vente vs Location)
+    const MAX_VENTE = 5000000000; // 5 Milliards Ar
+    const MAX_LOC = 20000000;     // 20 Millions Ar / mois
+
+    // 1. Fonction qui met à jour l'affichage du prix
+    function updateHomeBudget(val) {
+        const display = document.getElementById('home-budget-display');
+        const slider = document.getElementById('budget-slider');
+        
+        // Si la barre est au max, on affiche "Tout afficher"
+        if(parseInt(val) >= parseInt(slider.max)) {
+            display.innerText = "Tout afficher";
+        } else {
+            display.innerText = new Intl.NumberFormat('fr-FR').format(val) + " Ar";
+        }
+    }
+
+    // 2. Fonction qui change le mode (Clic sur les boutons)
+    function setSearchMode(mode) {
+        // On enregistre le mode choisi
+        document.getElementById('search-mode').value = mode;
+        
+        const btnVente = document.getElementById('btn-vente');
+        const btnLoc = document.getElementById('btn-location');
+        const slider = document.getElementById('budget-slider');
+
+        if (mode === 'vente') {
+            // --- MODE VENTE ---
+            // Bouton Vente en OR
+            btnVente.style.background = '#D4AF37';
+            btnVente.style.color = '#020610';
+            btnVente.style.borderColor = '#D4AF37';
+            // Bouton Loc en Gris
+            btnLoc.style.background = 'transparent';
+            btnLoc.style.color = '#888';
+            btnLoc.style.borderColor = '#ccc';
+
+            // Slider : On remet les gros montants
+            slider.max = MAX_VENTE;
+            slider.step = 25000000;
+            slider.value = MAX_VENTE;
+            updateHomeBudget(MAX_VENTE);
+            
+        } else {
+            // --- MODE LOCATION ---
+            // Bouton Loc en OR
+            btnLoc.style.background = '#D4AF37';
+            btnLoc.style.color = '#020610';
+            btnLoc.style.borderColor = '#D4AF37';
+            // Bouton Vente en Gris
+            btnVente.style.background = 'transparent';
+            btnVente.style.color = '#888';
+            btnVente.style.borderColor = '#ccc';
+
+            // Slider : On passe aux petits montants (Loyer)
+            slider.max = MAX_LOC;
+            slider.step = 100000;
+            slider.value = MAX_LOC;
+            updateHomeBudget(MAX_LOC);
+        }
+    }
 </script>
+
 
 
 
