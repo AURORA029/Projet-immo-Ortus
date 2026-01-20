@@ -424,7 +424,7 @@ function updateHomeBudget(val) {
                     <div style="color: #D4AF37; margin-bottom: 20px; font-size: 1.2rem;">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
                     </div>
-                    
+            
                     <p style="
                         font-family: 'Georgia', 'Times New Roman', serif; 
                         font-style: italic; 
@@ -522,72 +522,64 @@ function updateHomeBudget(val) {
         // --- FIN DU CODE OFFICIEL ---
     });
 </script>
-<script>
-    // On attend que la page soit chargée à 100%
+<script type="text/javascript">
     window.addEventListener('load', function() {
-        
-        // On laisse l'intro visible un peu plus longtemps pour lire le texte
-        setTimeout(function() {
-            const overlay = document.getElementById('intro-overlay');
-            overlay.classList.add('intro-hidden'); 
-        }, 3800); // <-- J'ai mis 3800 (3.8 secondes). Teste entre 3500 et 4500.
+        window.$crisp=[];
+        window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";
+        (function(){
+            d=document;
+            s=d.createElement("script");
+            s.src="https://client.crisp.chat/l.js";
+            s.async=1;
+            d.getElementsByTagName("head")[0].appendChild(s);
+        })();
     });
 </script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then(reg => console.log('App Ortus installable ✅', reg))
-        .catch(err => console.log('Erreur PWA ❌', err));
-    });
-  }
-</script>
-<script>
-    // 1. Détection iPhone / iPad
-    const isIos = () => {
-        const userAgent = window.navigator.userAgent.toLowerCase();
-        return /iphone|ipad|ipod/.test(userAgent);
-    }
 
-    // 2. Détection si l'app est déjà installée
-    const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
-
-    // 3. Fonction pour fermer la pop-up
+<script>
+    // A. Fonction pour fermer la pop-up (Doit être accessible par le bouton HTML)
     function closeIosPrompt() {
         document.getElementById('ios-install-prompt').style.display = 'none';
-        if (window.$crisp) {
-            $crisp.push(['do', 'chat:show']);
-        }
+        if (window.$crisp) $crisp.push(['do', 'chat:show']);
     }
 
-    // 4. Le Scénario de lancement (AVEC ANTI-HARCELEMENT)
-    window.addEventListener('load', () => {
+    // B. Au chargement de la page, on lance tout le reste
+    window.addEventListener('load', function() {
         
-        // On vérifie 3 choses :
-        // A. C'est un iPhone ?
-        // B. L'app n'est pas installée ?
-        // C. On ne l'a pas déjà montré dans cette session ? (C'est la nouveauté !)
+        // --- 1. GESTION DE L'INTRO (3.85 secondes pour bien lire) ---
+        setTimeout(function() {
+            const overlay = document.getElementById('intro-overlay');
+            if(overlay) overlay.classList.add('intro-hidden');
+        }, 3800); 
+
+        // --- 2. ACTIVATION PWA (Installation App) ---
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('App Ortus prête ✅'))
+                .catch(err => console.log('Erreur PWA ❌', err));
+        }
+
+        // --- 3. GESTION IPHONE (Anti-Harcèlement) ---
+        const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+        const isStandalone = () => ('standalone' in window.navigator) && (window.navigator.standalone);
         const hasSeenPrompt = sessionStorage.getItem('ortus_ios_seen');
 
-        if (isIos() && !isInStandaloneMode() && !hasSeenPrompt) {
-            
-            // On attend 6 secondes
+        // Si iPhone + Pas App + Pas encore vu
+        if (isIos() && !isStandalone() && !hasSeenPrompt) {
             setTimeout(() => {
-                // On affiche
-                document.getElementById('ios-install-prompt').style.display = 'block';
-                
-                // On cache le chat Crisp
-                if (window.$crisp) {
-                    $crisp.push(['do', 'chat:hide']);
+                const iosPrompt = document.getElementById('ios-install-prompt');
+                if(iosPrompt) {
+                    iosPrompt.style.display = 'block';
+                    // On cache Crisp pour ne pas surcharger
+                    if (window.$crisp) $crisp.push(['do', 'chat:hide']);
+                    // On note que c'est vu
+                    sessionStorage.setItem('ortus_ios_seen', 'true');
                 }
-
-                // IMPORTANT : On note dans la mémoire que c'est fait !
-                sessionStorage.setItem('ortus_ios_seen', 'true');
-
-            }, 6000); 
+            }, 4500); // 4.5sec : juste après l'intro
         }
     });
 </script>
+
 
 
 
