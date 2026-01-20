@@ -193,6 +193,38 @@
         from { transform: translateY(100%); opacity: 0; }
         to { transform: translateY(0); opacity: 1; }
     }
+    /* --- STYLE DU NOUVEAU LOGO NAV --- */
+.logo-container {
+    display: flex;
+    flex-direction: column; /* Empile ORTUS et IMMOBILIER */
+    align-items: flex-start; /* Aligné à gauche */
+    text-decoration: none;
+    line-height: 1; /* Resserre les lignes */
+}
+
+.logo-main {
+    font-size: 1.8rem; /* Taille de ORTUS */
+    font-weight: 700;
+    color: white; /* Ou la couleur que tu avais avant */
+    font-family: 'Montserrat', sans-serif;
+}
+
+.logo-sub {
+    font-size: 0.7rem; /* Très petit */
+    color: #D4AF37; /* Or */
+    text-transform: uppercase;
+    letter-spacing: 3px; /* Espacement chic */
+    font-weight: 500;
+    margin-left: 2px; /* Petit ajustement optique */
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Ajustement Mobile pour la Nav */
+@media (max-width: 768px) {
+    .logo-main { font-size: 1.5rem; }
+    .logo-sub { font-size: 0.6rem; letter-spacing: 2px; }
+}
+
 
 </style>
 <link rel="manifest" href="manifest.json">
@@ -203,9 +235,22 @@
 <body>
 
 <div id="intro-overlay">
-    <div class="intro-logo-container">
+<div class="intro-logo-container" style="display: flex; flex-direction: column; align-items: center;">
+    <div>
         <span class="intro-text">ORTUS</span><span class="intro-dot">.</span>
     </div>
+    <span class="intro-sub-text" style="
+        color: #D4AF37; /* Couleur Or */
+        font-size: 1.2rem; /* Beaucoup plus petit */
+        text-transform: uppercase; /* Majuscules */
+        letter-spacing: 8px; /* Lettres très espacées (Luxe) */
+        font-weight: 400; /* Pas trop gras */
+        margin-top: -10px; /* Remonte un peu vers le titre */
+        opacity: 0; /* Pour l'animation */
+        animation: subReveal 1.5s ease-out forwards 0.5s; /* Apparaît juste après ORTUS */
+    ">IMMOBILIER</span>
+</div>
+
     <div class="intro-sub-content">
         <div class="intro-icon">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
