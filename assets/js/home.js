@@ -43,7 +43,7 @@ async function fetchFeatured() {
             }
 
             // Création du badge HTML
-            const badgeStatus = `<span class="badge-status" style="position: absolute; top: 15px; right: 15px; background-color: #020610; color: #FFFFFF; border: 1px solid #D4AF37; padding: 5px 15px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; border-radius: 4px; z-index: 10; letter-spacing: 1px;">${typeAction}</span>`;
+            const badgeStatus = `<span class="badge-status" style="position: absolute; top: 15px; right: 15px; background-color: #020610; color: #FFFFFF !important; border: 1px solid #D4AF37; padding: 5px 15px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; border-radius: 4px; z-index: 10; letter-spacing: 1px;">${typeAction}</span>`;
 
             // CONSTRUCTION DE LA CARTE HTML
             card.innerHTML = `
