@@ -499,6 +499,39 @@
     </div>
     <button class="btn-close-ios" onclick="closeIosPrompt()">Fermer</button>
 </div>
+<div id="zorg-modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:10000; justify-content:center; align-items:center; backdrop-filter:blur(8px);">
+    <div style="background:#0a0a0a; padding:40px; width:90%; max-width:500px; text-align:center; border:1px solid #D4AF37; position:relative; box-shadow:0 0 50px rgba(212,175,55,0.2);">
+        <span onclick="document.getElementById('zorg-modal-overlay').style.display='none'" style="position:absolute; top:10px; right:20px; color:#666; cursor:pointer; font-size:2rem;">&times;</span>
+        
+        <h3 style="font-family:'Playfair Display', serif; color:#D4AF37; font-size:2rem; margin-bottom:10px;">Accès Privé</h3>
+        <p style="color:#ccc; font-size:0.95rem; line-height:1.6; margin-bottom:25px;">
+            Les biens les plus prestigieux d'Antananarivo ne sont jamais publiés sur le site public.
+            <br><br>
+            Rejoignez le <strong>Cercle Ortus</strong> pour recevoir les opportunités Off-Market.
+        </p>
+        
+        <form action="https://form.tally.so/r/w7Nejg" target="_blank" style="display:flex; flex-direction:column; gap:15px;">
+            <button type="submit" style="background:#D4AF37; color:black; font-weight:bold; border:none; padding:15px; font-size:1rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px; transition:0.3s;" onmouseover="this.style.background='#fff'" onmouseout="this.style.background='#D4AF37'">
+                ACCÉDER AU CATALOGUE SECRET
+            </button>
+            <a href="#" onclick="document.getElementById('zorg-modal-overlay').style.display='none'" style="color:#555; font-size:0.8rem; text-decoration:underline;">Non, je préfère les biens publics</a>
+        </form>
+    </div>
+</div>
+
+<script>
+    // SCRIPT D'ACTIVATION DU MODAL (8 SECONDES)
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            // On vérifie si l'utilisateur l'a déjà vu pour ne pas le harceler
+            if(!sessionStorage.getItem('zorg_modal_seen')) {
+                document.getElementById('zorg-modal-overlay').style.display = 'flex';
+                // On marque comme vu pour cette session
+                sessionStorage.setItem('zorg_modal_seen', 'true');
+            }
+        }, 8000); // 8000 ms = 8 secondes
+    });
+</script>
 
 <script type="text/javascript">
     window.addEventListener('load', function() {
