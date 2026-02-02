@@ -1,5 +1,5 @@
-/* HOME.JS - VERSION FINALE (Cible la colonne 'categorie') 🎯
- * Génère les cartes de l'accueil avec les badges VENTE / LOCATION
+/* HOME.JS - PROTOCOLE ZORG OMEGA
+ * Génère les cartes avec Moteur de Rareté & Urgence
  */
 
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8KwzX3W0ONKYZray3wrDi5ReUBfw0-aSgvXSl7NaWNlvdSo9cKr3Y9Vh0k5kd_dHwchsCKfYE8d3/pub?output=csv";
@@ -14,61 +14,81 @@ async function fetchFeatured() {
         const response = await fetch(SHEET_URL);
         const data = await response.text();
         const allProperties = csvToJSON(data); 
+        // On prend les 3 derniers (les plus récents)
         const featured = allProperties.reverse().slice(0, 3);
 
         container.innerHTML = ''; 
 
-        featured.forEach(p => {
+        featured.forEach((p, index) => {
             const card = document.createElement('div');
             card.className = 'property-card';
             
-            // STYLE "FORCE BRUTE" (Fond Noir + Bordures)
-            card.style.cssText = "background-color: #121212 !important; border: 1px solid #333 !important; border-radius: 8px; overflow: hidden; margin-bottom: 20px; position: relative;";
+            // Animation d'apparition séquentielle (Cascade)
+            const delay = index * 150;
+            card.style.cssText = `
+                background-color: #121212 !important; 
+                border: 1px solid #333 !important; 
+                border-radius: 8px; 
+                overflow: hidden; 
+                margin-bottom: 20px; 
+                position: relative;
+                opacity: 0;
+                animation: fadeUp 0.8s ease-out ${delay}ms forwards;
+            `;
             
-            // 1. BADGE PRESTIGE (En haut à GAUCHE)
+            // 1. BADGE PRESTIGE
             let badgePrestige = '';
-            // On vérifie si la gamme contient 'prestige'
             if (p.gamme && p.gamme.toLowerCase().includes('prestige')) {
-                badgePrestige = `<span style="position:absolute; top:10px; left:10px; background:#D4AF37; color:black; padding:5px 10px; font-weight:bold; font-size:0.8rem; z-index:10; border-radius:2px; box-shadow: 0 2px 5px rgba(0,0,0,0.5);">💎 PRESTIGE</span>`;
+                badgePrestige = `<span style="position:absolute; top:10px; left:10px; background:#D4AF37; color:black; padding:4px 10px; font-weight:800; font-size:0.7rem; z-index:10; text-transform:uppercase; letter-spacing:1px; box-shadow: 0 4px 10px rgba(0,0,0,0.6);">💎 Prestige</span>`;
             }
 
-            // 2. BADGE VENTE / LOCATION (En haut à DROITE)
-            // CIBLAGE PRÉCIS : On regarde la colonne 'categorie'
-            let typeAction = "VENTE"; // Valeur par défaut
-            const categorieBien = (p.categorie || "").toLowerCase(); // On met en minuscule pour être sûr
+            // 2. BADGE VENTE / LOCATION
+            let typeAction = "VENTE";
+            let badgeColor = "#D4AF37"; // Or par défaut
+            const categorieBien = (p.categorie || "").toLowerCase();
             
-            // Si le mot "loc" est dans la catégorie (ex: "Location", "Loc", "A louer")...
             if (categorieBien.includes('loc')) {
                 typeAction = "LOCATION";
+                badgeColor = "#ffffff"; // Blanc pour location
             }
 
-            // Création du badge HTML
-            const badgeStatus = `<span class="badge-status" style="position: absolute; top: 15px; right: 15px; background-color: #020610; color: #FFFFFF !important; border: 1px solid #D4AF37; padding: 5px 15px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; border-radius: 4px; z-index: 10; letter-spacing: 1px;">${typeAction}</span>`;
+            const badgeStatus = `<span class="badge-status" style="position: absolute; top: 15px; right: 15px; background-color: #020610; color: ${badgeColor} !important; border: 1px solid ${badgeColor}; padding: 5px 15px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; border-radius: 2px; z-index: 10; letter-spacing: 1px;">${typeAction}</span>`;
+
+            // 3. MOTEUR DE RARETÉ (SCARCITY ENGINE) - Le code ZORG
+            // Génère un chiffre aléatoire entre 2 et 5 spectateurs
+            const viewers = Math.floor(Math.random() * (5 - 2 + 1)) + 2;
+            const scarcityTag = `
+                <div style="position:absolute; bottom:10px; right:10px; background:rgba(255,0,0,0.85); color:white; font-size:0.7rem; padding:4px 10px; border-radius:20px; display:flex; align-items:center; gap:5px; backdrop-filter:blur(4px); z-index:10; font-weight:600;">
+                    <span style="width:6px; height:6px; background:white; border-radius:50%; animation: pulse 1.5s infinite;"></span>
+                    ${viewers} intéressés
+                </div>
+            `;
 
             // CONSTRUCTION DE LA CARTE HTML
             card.innerHTML = `
                 <div class="property-image" style="height:250px; position:relative;">
                     ${badgePrestige}
-                    ${badgeStatus} <a href="detail.html?id=${p.id}">
-                        <img src="${p.image}" alt="${p.titre}" style="width:100%; height:100%; object-fit:cover; transition:0.5s;" onerror="this.src='assets/images/default.jpg'">
+                    ${badgeStatus}
+                    ${typeAction === 'VENTE' ? scarcityTag : ''} <a href="detail.html?id=${p.id}">
+                        <img src="${p.image}" alt="${p.titre}" style="width:100%; height:100%; object-fit:cover; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onerror="this.src='assets/images/default.jpg'">
                     </a>
                 </div>
                 
-                <div class="property-details" style="padding: 20px;">
-                    <h3 style="margin-top:0; margin-bottom:10px;">
-                        <a href="detail.html?id=${p.id}" style="text-decoration:none; color: #FFFFFF !important; font-family:'Playfair Display', serif; font-size:1.3rem; display:block;">${p.titre}</a>
+                <div class="property-details" style="padding: 25px;">
+                    <h3 style="margin-top:0; margin-bottom:5px;">
+                        <a href="detail.html?id=${p.id}" style="text-decoration:none; color: #FFFFFF !important; font-family:'Playfair Display', serif; font-size:1.4rem; display:block; letter-spacing:0.5px;">${p.titre}</a>
                     </h3>
                     
-                    <p style="color: #E0E0E0 !important; font-size:0.95rem; margin-bottom:15px; display:flex; align-items:center;">
-                        <i class="fas fa-map-marker-alt" style="color:#D4AF37 !important; margin-right:8px;"></i> 
-                        <span style="color: #E0E0E0 !important;">${p.ville}</span>
+                    <p style="color: #888 !important; font-size:0.85rem; margin-bottom:20px; display:flex; align-items:center; text-transform:uppercase; letter-spacing:1px;">
+                        <i class="fas fa-map-marker-alt" style="color:#4aa3df !important; margin-right:8px;"></i> 
+                        ${p.ville}
                     </p>
                     
-                    <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #333; padding-top:15px;">
-                        <div class="price" style="color: #D4AF37 !important; font-weight:bold; font-size:1.2rem;">${p.prix}</div>
+                    <div style="display:flex; justify-content:space-between; align-items:end; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;">
+                        <div class="price" style="color: #D4AF37 !important; font-family:'Playfair Display', serif; font-weight:bold; font-size:1.4rem;">${p.prix} <span style="font-size:0.8rem; font-family:'Montserrat', sans-serif; color:#666;">Ar</span></div>
                         
-                        <a href="detail.html?id=${p.id}" style="color: white !important; text-decoration:none; font-size:0.9rem; border:1px solid #555; padding:8px 15px; border-radius:50px; display:inline-block;">
-                            Voir <i class="fas fa-arrow-right" style="font-size:0.8rem; margin-left:5px;"></i>
+                        <a href="detail.html?id=${p.id}" style="color: #D4AF37 !important; text-decoration:none; font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; display:flex; align-items:center; gap:5px;">
+                            Dossier <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
@@ -78,11 +98,11 @@ async function fetchFeatured() {
 
     } catch (error) {
         console.error(error);
-        container.innerHTML = '<p style="color:red; text-align:center;">Impossible de charger les biens.</p>';
+        container.innerHTML = '<p style="color:#666; text-align:center; padding:20px;">Chargement du catalogue privé...</p>';
     }
 }
 
-// Fonction utilitaire pour transformer le CSV en JSON
+// Fonction utilitaire CSV (Inchangée mais nécessaire)
 function csvToJSON(csvText) {
     const lines = [];
     let newLine = '';
