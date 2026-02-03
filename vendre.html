@@ -3,25 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Espace Propriétaires - Ortus Immobilier</title> <link rel="stylesheet" href="assets/css/style.css">
+    <title>Espace Propriétaires - Ortus Immobilier</title> 
+    <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script async src="https://tally.so/widgets/embed.js"></script>
 </head>
 <body>
     <nav class="navbar">
         <div class="container nav-container">
             <a href="index.html" class="logo-container">
-    <span class="logo-main">ORTUS<span class="dot">.</span></span>
-    <span class="logo-sub">IMMOBILIER</span>
-</a>
+                <span class="logo-main">ORTUS<span class="dot">.</span></span>
+                <span class="logo-sub">IMMOBILIER</span>
+            </a>
             <a href="index.html" class="nav-link">Retour Accueil</a>
         </div>
     </nav>
 
     <div class="container section-padding">
-        <div class="estimation-banner" style="background: rgba(26, 16, 60, 0.9); margin: 0 auto; max-width: 800px; display:block;">
-            <div style="text-align: center; max-width: 800px; margin: 0 auto 40px auto; padding: 0 20px;">
+        <div class="estimation-banner" style="background: rgba(26, 16, 60, 0.95); margin: 0 auto; max-width: 900px; display:block; padding-bottom: 0;">
+            
+            <div style="text-align: center; max-width: 800px; margin: 0 auto 40px auto; padding: 20px;">
                 <h2 style="color: #D4AF37; font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 20px;">
-                    Pourquoi confier votre bien à ORTUS Immobilier ?
+                    Pourquoi confier votre bien à ORTUS ?
                 </h2>
                 <p style="color: #ccc; margin-bottom: 30px;">
                     Vendre ou louer un bien d'exception demande une stratégie d'exception. Nous ne nous contentons pas de publier une annonce, nous créons le coup de cœur.
@@ -36,7 +40,7 @@
 
                     <div style="flex: 1; min-width: 250px; background: #1a1f2e; padding: 20px; border-radius: 8px; border: 1px solid #333;">
                         <h4 style="color: white; margin-top: 0;"><i class="fas fa-user-secret" style="color: #D4AF37; margin-right: 10px;"></i> Discrétion Absolue</h4>
-                        <p style="font-size: 0.9rem; color: #bbb; margin-bottom: 0;">Accès à notre fichier privé d'investisseurs et d'expatriés qualifiés. Vendez sans publicité si vous le souhaitez.</p>
+                        <p style="font-size: 0.9rem; color: #bbb; margin-bottom: 0;">Accès à notre fichier privé d'investisseurs qualifiés. Vendez sans publicité si vous le souhaitez.</p>
                     </div>
 
                     <div style="flex: 1; min-width: 250px; background: #1a1f2e; padding: 20px; border-radius: 8px; border: 1px solid #333;">
@@ -47,43 +51,24 @@
                 </div>
             </div>
 
-            <h1 style="color:#c5a065; text-align:center; margin-bottom:20px;">Vendre ou Louer mon bien</h1>
-            <p style="color:white; text-align:center; margin-bottom:40px;">
-                Propriétaire ? Remplissez ce formulaire et un expert Ortus vous contactera sous 24h pour définir la meilleure stratégie (Vente ou Gestion Locative).
-            </p>
+            <div id="dossier-form" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                <h1 style="color:#c5a065; text-align:center; margin-bottom:10px; font-family: 'Playfair Display', serif;">Dossier de Valorisation</h1>
+                <p style="color:#888; text-align:center; margin-bottom:30px; font-size: 0.9rem;">
+                    Espace sécurisé. Remplissez les détails ci-dessous pour activer votre dossier.
+                </p>
+
+                <iframe 
+                    data-tally-src="https://tally.so/embed/Xx0NM4?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
+                    loading="lazy" 
+                    width="100%" 
+                    height="600" 
+                    frameborder="0" 
+                    marginheight="0" 
+                    marginwidth="0" 
+                    title="Demande d'Estimation - ORTUS">
+                </iframe>
+            </div>
             
-            <form id="my-form" action="https://formspree.io/f/mvzzklrl" method="POST" style="display:flex; flex-direction:column; gap:15px;">
-                
-                <input type="hidden" name="_next" value="https://aurora029.github.io/merci.html">
-                
-                <input type="hidden" name="_subject" value="Nouveau PROJET PROPRIETAIRE (Vente ou Location) - Site Ortus">
-
-                <select name="projet" required style="padding:15px; border-radius:4px; border:none; height:50px; background:white; color:#333;">
-                    <option value="" disabled selected>Quelle est votre intention ?</option>
-                    <option value="vente">Je veux VENDRE ce bien</option>
-                    <option value="location">Je veux le mettre en LOCATION / GESTION</option>
-                </select>
-
-                <input type="text" name="nom" placeholder="Votre Nom complet" required style="padding:15px; border-radius:4px; border:none;">
-                
-                <input type="tel" name="telephone" placeholder="Votre Téléphone" required style="padding:15px; border-radius:4px; border:none;">
-                
-                <input type="text" name="ville" placeholder="Ville du bien / Quartier" required style="padding:15px; border-radius:4px; border:none;">
-                
-                <select name="type_bien" style="padding:15px; border-radius:4px; border:none; height:50px;">
-                    <option value="">Type de bien</option>
-                    <option value="maison">Maison / Villa</option>
-                    <option value="appart">Appartement</option>
-                    <option value="terrain">Terrain</option>
-                    <option value="local">Local Commercial</option>
-                </select>
-
-                <textarea name="description" rows="5" placeholder="Description rapide du bien (Surface, nb de pièces...)" style="padding:15px; border-radius:4px; border:none;"></textarea>
-
-                <button type="submit" class="btn-estimation" style="margin-top:20px; text-align:center; cursor:pointer;">
-                    Envoyer ma demande
-                </button>
-            </form>
         </div>
     </div>
     
@@ -122,30 +107,6 @@
     </section>
 
     <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
-    <script>
-        var form = document.getElementById("my-form");
-        
-        async function handleSubmit(event) {
-          event.preventDefault(); 
-          var status = document.getElementById("my-form-status");
-          var data = new FormData(event.target);
-          
-          fetch(event.target.action, {
-            method: form.method,
-            body: data,
-            headers: { 'Accept': 'application/json' }
-          }).then(response => {
-            if (response.ok) {
-              window.location.href = "merci.html"; 
-            } else {
-              alert("Oups ! Il y a eu un problème lors de l'envoi.");
-            }
-          }).catch(error => {
-            alert("Oups ! Il y a eu un problème lors de l'envoi.");
-          });
-        }
-        form.addEventListener("submit", handleSubmit);
-    </script>
 
 </body>
 </html>
