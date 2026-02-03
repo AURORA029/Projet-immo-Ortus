@@ -85,7 +85,7 @@ async function fetchFeatured() {
                     </p>
                     
                     <div style="display:flex; justify-content:space-between; align-items:end; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;">
-                        <div class="price" style="color: #D4AF37 !important; font-family:'Playfair Display', serif; font-weight:bold; font-size:1.4rem;">${p.prix} <span style="font-size:0.8rem; font-family:'Montserrat', sans-serif; color:#666;">Ar</span></div>
+                        <div class="price" style="color: #D4AF37 !important; font-family:'Playfair Display', serif; font-weight:bold; font-size:1.4rem;">${p.prix} <span style="font-size:0.8rem; font-family:'Montserrat', sans-serif; color:#666;"></span></div>
                         
                         <a href="detail.html?id=${p.id}" style="color: #D4AF37 !important; text-decoration:none; font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; display:flex; align-items:center; gap:5px;">
                             Dossier <i class="fas fa-arrow-right"></i>
