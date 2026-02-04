@@ -1,9 +1,12 @@
-/* LISTING.JS - VERSION FUSION (Design Actuel + Slider Budget) */
+/* LISTING.JS
+ * Gestion du catalogue immobilier complet.
+ * Inclus : Récupération Google Sheets, Filtrage dynamique (Smart Search), Pagination et Affichage.
+ */
 
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8KwzX3W0ONKYZray3wrDi5ReUBfw0-aSgvXSl7NaWNlvdSo9cKr3Y9Vh0k5kd_dHwchsCKfYE8d3/pub?output=csv";
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mvzzklrl"; 
 
-// --- RÉGLAGES ---
+// --- CONFIGURATION ---
 const ITEMS_PER_PAGE = 9; 
 let currentPage = 1;
 let currentProperties = []; 
@@ -12,19 +15,17 @@ let allProperties = [];
 document.addEventListener('DOMContentLoaded', () => {
     fetchProperties();
     
-    // Écouteur pour le slider de budget (Mise à jour en temps réel)
+    // Initialisation des écouteurs d'événements (Filtres & Recherche)
     const budgetRange = document.getElementById('budgetRange');
     if(budgetRange) {
         budgetRange.addEventListener('input', () => filterProperties());
     }
     
-    // Écouteur pour le bouton de recherche texte
     const searchBtn = document.getElementById('searchBtn');
     if(searchBtn) {
         searchBtn.addEventListener('click', () => filterProperties());
     }
     
-    // Écouteur pour la touche "Entrée" dans la barre de texte
     const searchInput = document.getElementById('searchInput');
     if(searchInput) {
         searchInput.addEventListener('keyup', (e) => {
@@ -33,7 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// 1. CHARGEMENT & GESTION URL
+/**
+ * 1. CHARGEMENT DES DONNÉES & GESTION URL
+ * Récupère le CSV, parse les données et applique les filtres initiaux si présents dans l'URL.
+ */
 async function fetchProperties() {
     const container = document.getElementById('listing-container');
     try {
@@ -41,36 +45,39 @@ async function fetchProperties() {
         const data = await response.text();
         allProperties = csvToJSON(data); 
         
-        // --- GESTION DES PARAMÈTRES VENANT DE L'ACCUEIL ---
+        // Gestion des paramètres URL (ex: venant de la page d'accueil)
         const urlParams = new URLSearchParams(window.location.search);
         const filterTexte = urlParams.get('filtre');
         const filterBudget = urlParams.get('budget');
 
-        // Si texte dans l'URL, on le met dans la barre
+        // Pré-remplissage de la barre de recherche
         if (filterTexte && filterTexte !== 'all') {
             const decodedTexte = decodeURIComponent(filterTexte).trim();
             const searchInput = document.getElementById('searchInput');
             if(searchInput) searchInput.value = decodedTexte;
         }
 
-        // Si budget dans l'URL, on règle le slider
+        // Pré-réglage du slider budget
         if (filterBudget) {
             const budgetRange = document.getElementById('budgetRange');
             if(budgetRange) budgetRange.value = filterBudget;
         }
 
-        // On lance le filtre immédiatement avec les valeurs récupérées
+        // Application immédiate des filtres
         filterProperties();
 
     } catch (error) {
-        console.error('Erreur:', error);
+        console.error('Erreur lors du chargement des données:', error);
         if(container) container.innerHTML = '<p style="text-align:center; color:white;">Erreur de lecture des données.</p>';
     }
 }
 
-// 2. MOTEUR DE RECHERCHE ULTIME (Smart Search + Budget + Type + Tri) 💎
+/**
+ * 2. MOTEUR DE RECHERCHE & FILTRAGE
+ * Filtre les biens selon 3 critères : Texte (Recherche intelligente), Prix et Catégorie.
+ */
 function filterProperties() {
-    // A. Récupération des Inputs
+    // A. Récupération des valeurs des inputs
     const inputEl = document.getElementById('searchInput');
     const textVal = inputEl ? inputEl.value.toLowerCase().trim() : '';
 
@@ -80,44 +87,35 @@ function filterProperties() {
     const categoryEl = document.getElementById('categorySelect');
     const categoryVal = categoryEl ? categoryEl.value : 'all'; 
     
-    // Mise à jour visuelle budget
+    // Mise à jour de l'affichage du budget
     const displayEl = document.getElementById('budgetDisplay');
     if(displayEl) {
         if(maxBudget >= 5000000000) displayEl.innerText = "Tout afficher";
         else displayEl.innerText = new Intl.NumberFormat('fr-FR').format(maxBudget) + " Ar";
     }
 
-    // B. Le Filtrage
+    // B. Application du filtre
     currentProperties = allProperties.filter(p => {
-        // --- MODIFICATION ICI (Smart Search) 👇 ---
         
-        // 1. Filtre TEXTE (Multi-mots : "Bungalow Mahajanga")
-        // On découpe ce que le client a tapé en mots séparés
+        // Critère 1 : Recherche Texte (Multi-mots)
         const searchTerms = textVal.split(' ');
-
-        // On rassemble toutes les infos de la maison en une seule phrase pour chercher dedans
-        // (J'ajoute p.description et p.caracteristiques pour être sûr de tout trouver)
+        // Concaténation des champs pertinents pour la recherche
         const content = (p.ville + " " + p.titre + " " + p.type + " " + (p.description || "") + " " + (p.caracteristiques || "")).toLowerCase();
-
-        // On vérifie que CHAQUE mot tapé par le client existe quelque part dans la fiche maison
+        // Vérification que tous les termes sont présents
         const matchText = searchTerms.every(term => content.includes(term));
 
-        // --- FIN MODIFICATION 👆 ---
-
-
-        // 2. Filtre PRIX
+        // Critère 2 : Prix
         const rawPrice = p.prix_calcul ? parseInt(p.prix_calcul.replace(/\s/g, '')) : 0;
         const matchPrice = (maxBudget >= 5000000000) || (rawPrice <= maxBudget);
 
-        // 3. Filtre CATEGORIE (Vente/Location)
+        // Critère 3 : Catégorie (Vente/Location)
         const cat = p.categorie ? p.categorie.toLowerCase() : '';
         const matchCategory = (categoryVal === 'all') || cat.includes(categoryVal);
 
-        // Il faut que les 3 conditions soient OK
         return matchText && matchPrice && matchCategory;
     });
 
-    // C. Le TRI
+    // C. Tri des résultats
     const sortSelect = document.getElementById('sortSelect');
     const sortValue = sortSelect ? sortSelect.value : 'default';
 
@@ -135,40 +133,52 @@ function filterProperties() {
         });
     }
 
-    // Retour page 1
+    // Réinitialisation à la page 1 après filtrage
     renderPage(1);
 }
 
-
-
-
-// 3. PAGINATION (Identique à ton code)
+/**
+ * 3. GESTION DE LA PAGINATION
+ * Affiche les biens par lots (ex: 9 par page) et génère les boutons de navigation.
+ * @param {number} page - Le numéro de page à afficher.
+ */
 function renderPage(page) {
     currentPage = page;
     const container = document.getElementById('listing-container');
     const paginationContainer = document.getElementById('pagination-container');
     
-    if(!container) return; // Sécurité
+    if(!container) return; 
 
     container.innerHTML = '';
     paginationContainer.innerHTML = '';
 
+    // Cas : Aucun résultat
     if (currentProperties.length === 0) {
-        container.innerHTML = '<div style="text-align:center; width:100%; padding:50px;"><h3 style="color:white;">Aucun résultat pour ces critères.</h3><button onclick="document.getElementById(\'searchInput\').value=\'\'; document.getElementById(\'budgetRange\').value=5000000000; filterProperties();" style="margin-top:20px; padding:10px 20px; background:#D4AF37; border:none; cursor:pointer;">Réinitialiser la recherche</button></div>';
+        container.innerHTML = `
+            <div style="text-align:center; width:100%; padding:50px;">
+                <h3 style="color:white;">Aucun résultat pour ces critères.</h3>
+                <button onclick="document.getElementById('searchInput').value=''; document.getElementById('budgetRange').value=5000000000; filterProperties();" style="margin-top:20px; padding:10px 20px; background:#D4AF37; border:none; cursor:pointer;">Réinitialiser la recherche</button>
+            </div>`;
         return;
     }
 
+    // Découpage des données
     const start = (page - 1) * ITEMS_PER_PAGE;
     const end = start + ITEMS_PER_PAGE;
     const paginatedItems = currentProperties.slice(start, end);
 
+    // Génération des cartes
     paginatedItems.forEach(p => {
         container.appendChild(createPropertyCard(p));
     });
 
+    // Réattachement des gestionnaires de formulaires (car le DOM a changé)
     attachFormHandlers();
+    
+    // Génération des boutons de pagination
     renderPaginationButtons();
-    // Scroll doux vers le haut de la liste
+    
+    // Scroll automatique vers le haut
     window.scrollTo({ top: 300, behavior: 'smooth' });
 }
 
@@ -178,6 +188,7 @@ function renderPaginationButtons() {
 
     if (totalPages <= 1) return;
 
+    // Bouton Précédent
     if (currentPage > 1) {
         const btnPrev = document.createElement('button');
         btnPrev.innerHTML = '<i class="fas fa-chevron-left"></i>';
@@ -186,6 +197,7 @@ function renderPaginationButtons() {
         paginationContainer.appendChild(btnPrev);
     }
 
+    // Boutons Numérotés
     for (let i = 1; i <= totalPages; i++) {
         const btn = document.createElement('button');
         btn.innerText = i;
@@ -198,6 +210,7 @@ function renderPaginationButtons() {
         paginationContainer.appendChild(btn);
     }
 
+    // Bouton Suivant
     if (currentPage < totalPages) {
         const btnNext = document.createElement('button');
         btnNext.innerHTML = '<i class="fas fa-chevron-right"></i>';
@@ -207,12 +220,18 @@ function renderPaginationButtons() {
     }
 }
 
-// 4. DESIGN CARTE (TON DESIGN PRÉSERVÉ) ✨
+/**
+ * 4. GÉNÉRATION HTML DE LA CARTE
+ * Crée le DOM pour un bien immobilier (Design Standard).
+ * @param {Object} p - Données du bien.
+ * @returns {HTMLElement} - La carte construite.
+ */
 function createPropertyCard(p) {
     const div = document.createElement('div');
     div.className = 'property-card';
     div.style.cssText = "background-color: #FFFFFF; border: 1px solid #ddd; overflow: hidden; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: transform 0.3s ease;";
 
+    // Gestion des badges
     let badgesHtml = '';
     if (p.gamme && p.gamme.toLowerCase().includes('prestige')) {
         badgesHtml += `<span style="position:absolute; top:15px; left:15px; background:#D4AF37; color:black; padding:6px 12px; font-weight:800; font-size:0.75rem; border-radius:4px; z-index:10; box-shadow: 0 2px 5px rgba(0,0,0,0.3); letter-spacing:1px;">💎 PRESTIGE</span>`;
@@ -221,6 +240,7 @@ function createPropertyCard(p) {
         badgesHtml += `<span class="badge status" style="background:#000 !important; color:#FFFFFF !important; border:1px solid #D4AF37; position:absolute; top:10px; right:10px; padding:5px 10px; z-index:2; font-weight:bold; text-transform:uppercase; font-size:0.8rem; border-radius:4px;">${p.categorie}</span>`;
     }
 
+    // Liste des caractéristiques (Max 3)
     let featuresList = '';
     if (p.caracteristiques) {
         let cleanFeat = p.caracteristiques.replace(/\n/g, ',');
@@ -270,7 +290,10 @@ function createPropertyCard(p) {
     return div;
 }
 
-// 5. PARSEUR CSV (Identique)
+/**
+ * 5. UTILITAIRES CSV ET FORMULAIRES
+ */
+
 function csvToJSON(csvText) {
     const lines = [];
     let newLine = '';
@@ -300,7 +323,14 @@ function csvToJSON(csvText) {
         return obj;
     });
 }
-function toggleForm(id) { const form = document.getElementById(id); form.style.display = (form.style.display === 'none') ? 'block' : 'none'; }
+
+// Affiche/Masque le formulaire de contact rapide
+function toggleForm(id) { 
+    const form = document.getElementById(id); 
+    form.style.display = (form.style.display === 'none') ? 'block' : 'none'; 
+}
+
+// Gestion de l'envoi AJAX des formulaires (sans rechargement de page)
 function attachFormHandlers() {
     const forms = document.querySelectorAll('.ajax-form');
     forms.forEach(form => {
@@ -308,11 +338,31 @@ function attachFormHandlers() {
             e.preventDefault();
             const btn = form.querySelector('button');
             const status = form.querySelector('.form-status');
+            const originalText = btn.innerText;
+            
             btn.innerText = 'Envoi...';
             const data = new FormData(form);
-            fetch(form.action, { method: form.method, body: data, headers: { 'Accept': 'application/json' } })
-            .then(r => { if (r.ok) { btn.innerText = "ENVOYÉ !"; btn.style.background = "green"; } else { status.innerText = "Erreur."; status.style.display='block'; btn.innerText="RÉESSAYER"; }})
-            .catch(e => { status.innerText = "Erreur réseau."; status.style.display='block'; btn.innerText="RÉESSAYER"; });
+            
+            fetch(form.action, { 
+                method: form.method, 
+                body: data, 
+                headers: { 'Accept': 'application/json' } 
+            })
+            .then(r => { 
+                if (r.ok) { 
+                    btn.innerText = "ENVOYÉ !"; 
+                    btn.style.background = "green"; 
+                } else { 
+                    status.innerText = "Erreur."; 
+                    status.style.display='block'; 
+                    btn.innerText = originalText; 
+                }
+            })
+            .catch(e => { 
+                status.innerText = "Erreur réseau."; 
+                status.style.display='block'; 
+                btn.innerText = originalText; 
+            });
         });
     });
 }
