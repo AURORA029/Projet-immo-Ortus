@@ -2,22 +2,32 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nos Biens - Ortus Immobilier</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Nos Biens | Vente & Location - ORTUS Immobilier</title>
+    <meta name="description" content="Catalogue immobilier ORTUS. Villas de luxe, terrains, appartements à Tana et en province. Utilisez nos filtres pour trouver votre opportunité.">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aurora029.github.io/Projet-immo-Ortus/biens.html">
+    <meta property="og:title" content="Le Catalogue ORTUS Immobilier">
+    <meta property="og:description" content="Découvrez nos dernières opportunités : Vente et Location à Madagascar.">
+    <meta property="og:image" content="https://aurora029.github.io/Projet-immo-Ortus/assets/img/hero-bg.jpg">
+
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="assets/img/icon.png">
+    <link rel="manifest" href="manifest.json">
     
     <style>
-        /* --- CORRECTIFS DESIGN --- */
+        /* Styles spécifiques au catalogue */
         .badge.status {
             left: auto !important; right: 10px !important;
             background-color: #000 !important; color: #FFFFFF !important;
             border: 1px solid #D4AF37 !important; z-index: 100 !important;
         }
-        .amenities-list li { color: #000000 !important; }
-        
-        /* Menu Mobile */
+        /* Correctif Mobile Menu */
         @media (max-width: 768px) {
             .menu-toggle { display: block; cursor: pointer; position: absolute; right: 20px; top: 25px; z-index: 1001; }
             .bar { display: block; width: 25px; height: 3px; margin: 5px auto; background-color: white; transition: 0.3s; }
@@ -27,17 +37,20 @@
         }
     </style>
 </head>
+
 <body>
 
     <nav class="navbar">
         <div class="container nav-container">
             <a href="index.html" class="logo-container">
-    <span class="logo-main">ORTUS<span class="dot">.</span></span>
-    <span class="logo-sub">IMMOBILIER</span>
-</a>
+                <span class="logo-main">ORTUS<span class="dot">.</span></span>
+                <span class="logo-sub">IMMOBILIER</span>
+            </a>
+            
             <div class="menu-toggle" id="mobile-menu-btn">
                 <span class="bar"></span><span class="bar"></span><span class="bar"></span>
             </div>
+
             <ul class="nav-menu" id="nav-menu-list">
                 <li><a href="index.html" class="nav-link">Accueil</a></li>
                 <li><a href="biens.html?filtre=all" class="nav-link" style="color: #D4AF37;">Nos Biens</a></li>
@@ -50,7 +63,7 @@
         </div>
     </nav>
 
-    <header class="hero" style="height: 40vh; min-height: 300px;">
+    <header class="hero" style="height: 40vh; min-height: 300px; background: linear-gradient(rgba(2,6,16,0.5), rgba(2,6,16,0.5)), url('assets/img/hero-bg.jpg') center/cover;">
         <div class="hero-overlay"></div>
         <div class="container hero-content">
             <h1 id="page-title">Tous nos biens</h1>
@@ -59,14 +72,14 @@
 
     <section class="section-padding">
         <div class="container">
+            
             <div style="text-align: center; max-width: 700px; margin: 0 auto 25px auto; padding: 0 15px;">
-    <p style="color: #bbb; font-size: 0.9rem; line-height: 1.6; font-family: 'Montserrat', sans-serif;">
-        <i class="fas fa-info-circle" style="color: #D4AF37; margin-right: 5px;"></i>
-        <strong>Astuce :</strong> Commencez par sélectionner votre projet avec le bouton
-        (<span style="color:white;">Tout type: Acheter</span> ou <span style="color:white;">Louer</span>), 
-        puis glissez le curseur doré pour définir votre budget maximum.
-    </p>
-</div>
+                <p style="color: #bbb; font-size: 0.9rem; line-height: 1.6; font-family: 'Montserrat', sans-serif;">
+                    <i class="fas fa-info-circle" style="color: #D4AF37; margin-right: 5px;"></i>
+                    <strong>Astuce :</strong> Sélectionnez votre projet (<span style="color:white;">Acheter</span> ou <span style="color:white;">Louer</span>), 
+                    puis glissez le curseur doré pour définir votre budget.
+                </p>
+            </div>
 
             <div class="search-container" style="text-align: center; margin-bottom: 40px; margin-top: -20px;">
                 
@@ -93,7 +106,6 @@
                 </div>
 
                 <div style="margin-top: 15px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                    
                     <select id="categorySelect" onchange="updateSliderScale(); filterProperties();" 
                             style="background: #020610; color: white; border: 1px solid #D4AF37; padding: 10px 15px; border-radius: 5px; font-family: 'Montserrat', sans-serif; cursor: pointer; outline: none;">
                         <option value="all">Tout type</option>
@@ -113,6 +125,7 @@
             <div class="properties-grid" id="listing-container">
                 <p style="color:white; text-align:center;">Chargement des biens en cours...</p>
             </div>
+            
             <div id="pagination-container" style="display:flex; justify-content:center; gap:10px; margin-top:50px; flex-wrap:wrap;"></div>
         </div> 
     </section>
@@ -127,12 +140,12 @@
                 <div class="footer-col">
                     <h4>Navigation</h4>
                     <ul class="footer-links">
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="biens.html">Tous nos biens</a></li>
-                    <li><a href="services.html">Nos Services</a></li>
-                    <li><a href="apropos.html">L'Agence</a></li>
-                    <li><a href="vendre.html">Vendre ou Estimer mon bien</a></li>
-                </ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="biens.html">Tous nos biens</a></li>
+                        <li><a href="services.html">Nos Services</a></li>
+                        <li><a href="apropos.html">L'Agence</a></li>
+                        <li><a href="vendre.html">Vendre</a></li>
+                    </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Contact</h4>
@@ -146,7 +159,13 @@
         </div>
     </footer>
 
-    <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+    <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";
+            (function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
+        });
+        if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js'); }
+    </script>
 
     <script src="assets/js/listing.js?v=9999"></script> 
 
@@ -167,80 +186,51 @@
     </script>
 
     <script>
-        // Configuration des montants
-        const MAX_VENTE = 5000000000; // 5 Milliards
-        const MAX_LOC = 20000000;     // 20 Millions
+        const MAX_VENTE = 5000000000; 
+        const MAX_LOC = 20000000;     
 
-        // 1. Au chargement de la page : On lit l'URL
         window.addEventListener('load', function() {
-            // On attend un tout petit peu que listing.js ait chargé les biens
             setTimeout(() => {
                 const params = new URLSearchParams(window.location.search);
-                const modeRecu = params.get('mode');   // 'vente' ou 'location'
+                const modeRecu = params.get('mode');   
                 const budgetRecu = params.get('budget');
                 const filtreRecu = params.get('filtre');
 
-                // A. Appliquer le mode (Vente ou Location)
                 if (modeRecu) {
                     const select = document.getElementById('categorySelect');
-                    if(select) {
-                        select.value = modeRecu; // Change le selecteur
-                        updateSliderScale();     // Change l'échelle du slider
-                    }
+                    if(select) { select.value = modeRecu; updateSliderScale(); }
                 }
 
-                // B. Appliquer le budget
                 if (budgetRecu) {
                     const slider = document.getElementById('budgetRange');
-                    if(slider) {
-                        slider.value = budgetRecu;
-                        updateBudgetLabel();
-                    }
+                    if(slider) { slider.value = budgetRecu; updateBudgetLabel(); }
                 }
 
-                // C. Appliquer le texte de recherche
                 if (filtreRecu && filtreRecu !== 'all') {
                     const input = document.getElementById('searchInput');
                     if(input) input.value = filtreRecu;
                 }
 
-                // D. On lance le filtrage
-                if(typeof filterProperties === 'function') {
-                    filterProperties();
-                }
-            }, 500); // Délai de sécurité de 0.5s
+                if(typeof filterProperties === 'function') { filterProperties(); }
+            }, 500); 
         });
 
-        // 2. Fonction qui met à jour l'étiquette du budget
         function updateBudgetLabel() {
             const slider = document.getElementById('budgetRange');
             const display = document.getElementById('budgetDisplay');
-            
-            if(parseInt(slider.value) >= parseInt(slider.max)) {
-                display.innerText = "Tout afficher";
-            } else {
-                display.innerText = new Intl.NumberFormat('fr-FR').format(slider.value) + " Ar";
-            }
+            if(parseInt(slider.value) >= parseInt(slider.max)) { display.innerText = "Tout afficher"; } 
+            else { display.innerText = new Intl.NumberFormat('fr-FR').format(slider.value) + " Ar"; }
         }
 
-        // 3. Fonction qui adapte l'échelle du slider (Achat vs Location)
         function updateSliderScale() {
             const select = document.getElementById('categorySelect');
             const slider = document.getElementById('budgetRange');
             const maxLabel = document.getElementById('maxBudgetLabel');
             
             if(select.value === 'location') {
-                // Mode LOCATION
-                slider.max = MAX_LOC;
-                slider.step = 100000;
-                slider.value = MAX_LOC; // Reset à fond
-                maxLabel.innerText = "20M+";
+                slider.max = MAX_LOC; slider.step = 100000; slider.value = MAX_LOC; maxLabel.innerText = "20M+";
             } else {
-                // Mode VENTE ou TOUT
-                slider.max = MAX_VENTE;
-                slider.step = 25000000;
-                slider.value = MAX_VENTE; // Reset à fond
-                maxLabel.innerText = "5Md+";
+                slider.max = MAX_VENTE; slider.step = 25000000; slider.value = MAX_VENTE; maxLabel.innerText = "5Md+";
             }
             updateBudgetLabel();
         }
