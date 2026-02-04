@@ -499,6 +499,7 @@
     </div>
     <button class="btn-close-ios" onclick="closeIosPrompt()">Fermer</button>
 </div>
+
 <div id="zorg-modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(2, 6, 16, 0.95); z-index:10000; justify-content:center; align-items:center; backdrop-filter:blur(8px);">
     <div style="background:#0a0a0a; padding:40px; width:90%; max-width:550px; text-align:center; border:1px solid #D4AF37; position:relative; box-shadow:0 0 60px rgba(212,175,55,0.15);">
         <span onclick="document.getElementById('zorg-modal-overlay').style.display='none'" style="position:absolute; top:10px; right:20px; color:#666; cursor:pointer; font-size:2rem;">&times;</span>
@@ -530,9 +531,8 @@
     </div>
 </div>
 
-
 <script>
-    // SCRIPT D'ACTIVATION DU MODAL (8 SECONDES)
+    // SCRIPT D'ACTIVATION DU MODAL CONFIDENTIEL (8 SECONDES)
     window.addEventListener('load', function() {
         setTimeout(function() {
             // On vérifie si l'utilisateur l'a déjà vu pour ne pas le harceler
@@ -598,6 +598,74 @@
             }, 4500); 
         }
     });
+</script>
+
+<div id="cookie-banner" style="
+    display: none; /* Caché au début */
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: rgba(20, 20, 20, 0.95);
+    border: 1px solid #D4AF37; /* Bordure Or subtile */
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 9998; /* Juste en dessous de l'install iPhone et du modal Confidentiel */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    max-width: 500px;
+    margin: 0 auto;
+">
+    <div style="display: flex; flex-direction: column; gap: 15px;">
+        <p style="font-size: 0.85rem; margin: 0; line-height: 1.5; color: #ccc;">
+            <span style="color: #D4AF37; font-weight: bold;">Respect de votre vie privée.</span><br>
+            Nous utilisons des cookies pour assurer le bon fonctionnement du site et de l'assistance en ligne.
+        </p>
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button onclick="acceptCookies()" style="
+                background: #D4AF37;
+                color: #000;
+                border: none;
+                padding: 8px 20px;
+                border-radius: 4px;
+                font-size: 0.8rem;
+                font-weight: bold;
+                cursor: pointer;
+            ">Accepter</button>
+            <button onclick="rejectCookies()" style="
+                background: transparent;
+                border: 1px solid #555;
+                color: #aaa;
+                padding: 8px 15px;
+                border-radius: 4px;
+                font-size: 0.8rem;
+                cursor: pointer;
+            ">Continuer sans accepter</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // LOGIQUE COOKIES (Apparition à 5 secondes pour ne pas surcharger le démarrage)
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            // Si l'utilisateur n'a jamais répondu, on affiche
+            if (!localStorage.getItem('cookieConsent')) {
+                document.getElementById('cookie-banner').style.display = 'block';
+            }
+        }, 5000); 
+    });
+
+    function acceptCookies() {
+        localStorage.setItem('cookieConsent', 'accepted');
+        document.getElementById('cookie-banner').style.display = 'none';
+    }
+
+    function rejectCookies() {
+        localStorage.setItem('cookieConsent', 'rejected');
+        document.getElementById('cookie-banner').style.display = 'none';
+    }
 </script>
 
 </body>
