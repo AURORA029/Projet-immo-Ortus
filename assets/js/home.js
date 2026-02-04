@@ -78,7 +78,6 @@ function createPropertyCard(p, index) {
     const badgeStatus = `<span class="badge-status" style="position: absolute; top: 15px; right: 15px; background-color: #000; color: #fff !important; border: 1px solid #D4AF37; padding: 5px 10px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; border-radius: 4px; z-index: 10;">${typeAction}</span>`;
 
     // 3. Indicateur de popularité (Simulation temps réel)
-    // Génère un nombre aléatoire entre 2 et 5 pour simuler l'intérêt
     const viewers = Math.floor(Math.random() * (5 - 2 + 1)) + 2;
     const popularityTag = `
         <div style="position:absolute; bottom:10px; right:10px; background:rgba(220, 20, 60, 0.95); color:white; font-size:0.75rem; padding:6px 12px; border-radius:20px; display:flex; align-items:center; gap:6px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); z-index:10; font-weight:700;">
@@ -98,7 +97,6 @@ function createPropertyCard(p, index) {
     // 5. Liste des atouts (Limité aux 3 premiers)
     let featuresList = '';
     if (p.caracteristiques) {
-        // Nettoyage des sauts de ligne et découpage
         let cleanFeat = p.caracteristiques.replace(/\n/g, ',');
         const feats = cleanFeat.split(',').slice(0, 3); 
         
@@ -112,6 +110,7 @@ function createPropertyCard(p, index) {
     }
 
     // Construction du HTML interne de la carte
+    // MODIFICATION : Retrait de 'font-family: Playfair Display' sur le prix pour utiliser la police système (comme listing.js)
     card.innerHTML = `
         <div class="property-image" style="height:250px; position:relative; overflow:hidden;">
             ${badgePrestige}
@@ -134,7 +133,7 @@ function createPropertyCard(p, index) {
             
             ${specsHTML}
             
-            <div style="color: #D4AF37; font-family:'Playfair Display', serif; font-weight:800; font-size:1.5rem; margin-bottom:15px;">
+            <div style="color: #D4AF37; font-weight:800; font-size:1.5rem; margin-bottom:15px;">
                 ${p.prix}
             </div>
 
@@ -156,14 +155,11 @@ function createPropertyCard(p, index) {
 
 /**
  * Fonction utilitaire pour convertir le CSV en JSON.
- * Gère les cas de guillemets et les sauts de ligne dans les cellules.
  */
 function csvToJSON(csvText) {
     const lines = [];
     let newLine = '';
     let inQuote = false;
-    
-    // 1. Découpage brut en respectant les guillemets
     for (let i = 0; i < csvText.length; i++) {
         let char = csvText[i];
         if (char === '"') inQuote = !inQuote;
@@ -171,18 +167,12 @@ function csvToJSON(csvText) {
         else { newLine += char; }
     }
     if (newLine) lines.push(newLine);
-    
     if (lines.length < 2) return []; 
-    
-    // 2. Extraction des en-têtes
     const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
-    
-    // 3. Construction des objets
     return lines.slice(1).map(line => {
         const values = [];
         let currentVal = '';
         let inQuoteVal = false;
-        
         for (let i = 0; i < line.length; i++) {
             const char = line[i];
             if (char === '"') { inQuoteVal = !inQuoteVal; continue; }
@@ -190,7 +180,6 @@ function csvToJSON(csvText) {
             else { currentVal += char; }
         }
         values.push(currentVal.trim());
-        
         let obj = {};
         headers.forEach((header, i) => { obj[header] = values[i] || ''; });
         return obj;
