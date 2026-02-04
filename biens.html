@@ -16,6 +16,7 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="assets/img/icon.png">
     <link rel="manifest" href="manifest.json">
@@ -27,6 +28,7 @@
             background-color: #000 !important; color: #FFFFFF !important;
             border: 1px solid #D4AF37 !important; z-index: 100 !important;
         }
+        
         /* Correctif Mobile Menu */
         @media (max-width: 768px) {
             .menu-toggle { display: block; cursor: pointer; position: absolute; right: 20px; top: 25px; z-index: 1001; }
@@ -36,32 +38,34 @@
             .menu-toggle.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
-        /* STYLE DU HACK SEO (Discret mais lisible pour Google) */
+        /* STYLE DU HACK SEO (Mega Pack) */
         .seo-hack-section {
-            background-color: #f4f4f4;
-            padding: 40px 20px;
-            border-top: 1px solid #ddd;
-            font-size: 0.9rem;
-            color: #666;
+            background-color: #f8f9fa;
+            padding: 60px 20px;
+            border-top: 1px solid #e9ecef;
+            font-family: 'Montserrat', sans-serif;
         }
         .seo-hack-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
             max-width: 1200px;
             margin: 0 auto;
         }
-        .seo-hack-column h3 {
+        .seo-hack-column h4 {
             font-size: 1rem;
-            color: #020610;
+            color: #D4AF37;
+            text-transform: uppercase;
             margin-bottom: 15px;
-            border-bottom: 2px solid #D4AF37;
-            display: inline-block;
+            border-bottom: 1px solid #ddd;
             padding-bottom: 5px;
+            letter-spacing: 1px;
         }
         .seo-hack-column ul {
             list-style: none;
             padding: 0;
+            font-size: 0.9rem;
+            line-height: 1.8;
         }
         .seo-hack-column li {
             margin-bottom: 8px;
@@ -74,6 +78,10 @@
         .seo-hack-column a:hover {
             color: #D4AF37;
             padding-left: 5px;
+        }
+        .seo-hack-column strong {
+            color: #000;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -171,66 +179,84 @@
     </section>
 
     <section class="seo-hack-section">
-        <div class="seo-hack-grid">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h3 style="color: #020610; font-family: 'Playfair Display', serif; font-size: 1.8rem;">Explorez l'immobilier par zone</h3>
+                <p style="color: #666; font-size: 0.9rem;">Accès direct aux opportunités les plus recherchées à Madagascar.</p>
+            </div>
+
+            <div class="seo-hack-grid">
+                
+                <div class="seo-hack-column">
+                    <h4>Antananarivo Centre</h4>
+                    <ul>
+                        <li><a href="biens.html?filtre=centre ville">Appartements Centre Ville</a></li>
+                        <li><a href="biens.html?filtre=faravohitra">Maisons de caractère Faravohitra</a></li>
+                        <li><a href="biens.html?filtre=ambohijatovo">Immobilier Ambohijatovo</a></li>
+                        <li><a href="biens.html?filtre=analakely">Locaux commerciaux Analakely</a></li>
+                        <li><a href="biens.html?filtre=isoraka">Vente Isoraka & Antaninarenina</a></li>
+                    </ul>
+                </div>
+
+                <div class="seo-hack-column">
+                    <h4>Quartiers Prisés</h4>
+                    <ul>
+                        <li><a href="biens.html?filtre=ivato"><strong>Villas proches Aéroport Ivato</strong></a></li>
+                        <li><a href="biens.html?filtre=ambatobe">Résidences de luxe Ambatobe</a></li>
+                        <li><a href="biens.html?filtre=talatamaty">Maison à vendre Talatamaty</a></li>
+                        <li><a href="biens.html?filtre=alasora">Terrains panoramiques Alasora</a></li>
+                        <li><a href="biens.html?filtre=by-pass">Investissement By-Pass / Iavoloha</a></li>
+                    </ul>
+                </div>
+
+                <div class="seo-hack-column">
+                    <h4>Côte & Province</h4>
+                    <ul>
+                        <li><a href="biens.html?filtre=mahajanga"><strong>Bungalows à Mahajanga (Majunga)</strong></a></li>
+                        <li><a href="biens.html?filtre=nosy be">Villas vue mer Nosy Be</a></li>
+                        <li><a href="biens.html?filtre=tamatave">Immobilier Toamasina (Tamatave)</a></li>
+                        <li><a href="biens.html?filtre=diego">Terrains Antsiranana (Diego)</a></li>
+                        <li><a href="biens.html?filtre=sainte marie">Hôtels et Ecolodges Sainte-Marie</a></li>
+                    </ul>
+                </div>
+
+                <div class="seo-hack-column">
+                    <h4>Type de Projet</h4>
+                    <ul>
+                        <li><a href="biens.html?filtre=terrain">Achat Terrain Titré Borné</a></li>
+                        <li><a href="prestige.html"><strong>Immobilier de Prestige</strong></a></li>
+                        <li><a href="biens.html?filtre=bureaux">Location Bureaux & Entrepôts</a></li>
+                        <li><a href="vendre.html">Faire estimer ma maison</a></li>
+                        <li><a href="biens.html?filtre=meublé">Location Appartement Meublé</a></li>
+                    </ul>
+                </div>
+
+            </div>
             
-            <div class="seo-hack-column">
-                <h3>Vente & Location à Tana</h3>
-                <ul>
-                    <li><a href="biens.html?filtre=ivato">Maison à vendre Ivato</a></li>
-                    <li><a href="biens.html?filtre=ambatobe">Villas de luxe Ambatobe</a></li>
-                    <li><a href="biens.html?filtre=ankorondrano">Bureaux Ankorondrano</a></li>
-                    <li><a href="biens.html?filtre=tanjombato">Terrains industriels Tanjombato</a></li>
-                    <li><a href="biens.html?filtre=by-pass">Propriétés By-Pass</a></li>
-                    <li><a href="biens.html?filtre=centre ville">Appartements Centre Ville</a></li>
-                </ul>
-            </div>
-
-            <div class="seo-hack-column">
-                <h3>Immobilier en Province</h3>
-                <ul>
-                    <li><a href="biens.html?filtre=mahajanga">Bungalow à Mahajanga (Majunga)</a></li>
-                    <li><a href="biens.html?filtre=amborovy">Terrains bord de mer Amborovy</a></li>
-                    <li><a href="biens.html?filtre=nosy be">Investir à Nosy Be</a></li>
-                    <li><a href="biens.html?filtre=tamatave">Immobilier Tamatave</a></li>
-                    <li><a href="biens.html?filtre=antsirabe">Maisons à Antsirabe</a></li>
-                    <li><a href="biens.html?filtre=sainte marie">Ecolodge Sainte-Marie</a></li>
-                </ul>
-            </div>
-
-            <div class="seo-hack-column">
-                <h3>Nos Catégories</h3>
-                <ul>
-                    <li><a href="biens.html?filtre=terrain">Terrains Titrés et Bornés</a></li>
-                    <li><a href="prestige.html">Villas de Prestige avec Piscine</a></li>
-                    <li><a href="biens.html?filtre=vente">Achat Maison Madagascar</a></li>
-                    <li><a href="biens.html?filtre=location">Location Appartement Meublé</a></li>
-                    <li><a href="vendre.html">Estimer mon bien immobilier</a></li>
-                    <li><a href="services.html">Gestion Locative Tana</a></li>
-                </ul>
-            </div>
-
-            <div class="seo-hack-column">
-                <h3>L'Expertise ORTUS</h3>
-                <p>
-                    ORTUS est votre agence immobilière de référence à Madagascar. 
-                    Spécialiste de l'immobilier de luxe et d'entreprise, nous vous accompagnons 
-                    pour l'achat, la vente et la location de biens d'exception.
-                </p>
-                <p>
-                    Que vous cherchiez une villa à <strong>Ambatobe</strong>, un terrain à 
-                    <strong>Majunga</strong> ou un appartement à <strong>Tana</strong>, 
-                    notre catalogue est mis à jour quotidiennement.
+            <div style="margin-top: 40px; padding: 20px; background: white; border: 1px solid #eee; border-radius: 8px;">
+                <h5 style="margin-top:0;">L'immobilier à Madagascar avec ORTUS</h5>
+                <p style="font-size: 0.85rem; color: #777; margin-bottom: 0;">
+                    Que vous cherchiez une <em>villa avec piscine à Ivato</em>, un <em>terrain agricole à Ambatolampy</em> ou un <em>appartement sécurisé au centre-ville</em>, 
+                    notre catalogue est mis à jour en temps réel. ORTUS est spécialiste de la transaction sécurisée, de la gestion locative et du conseil en investissement pour les expatriés et locaux.
                 </p>
             </div>
-
         </div>
     </section>
+
     <footer class="footer" id="contact">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
                     <h3>ORTUS<span class="dot">.</span></h3>
-                    <p class="footer-desc">Votre partenaire de confiance.</p>
+                    <p class="footer-desc">
+                        Votre partenaire de confiance pour l'immobilier à Madagascar. 
+                        Nous créons des opportunités pour votre avenir.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/share/17ejwgcidf/?mibextid=wwXIfr"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/ortusmada?igsh=MWx6NW15cXpibDNubQ=="><i class="fab fa-instagram"></i></a>
+                        <a href="https://mg.linkedin.com/in/joelrafidisonformateurcoach"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
                 </div>
                 <div class="footer-col">
                     <h4>Navigation</h4>
@@ -250,6 +276,9 @@
                         <li><i class="fas fa-envelope"></i> ortusmada@gmail.com</li>
                     </ul>
                 </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Ortus Immobilier. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
