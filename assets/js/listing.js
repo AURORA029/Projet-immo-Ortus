@@ -234,7 +234,7 @@ function createPropertyCard(p) {
     // Gestion des badges
     let badgesHtml = '';
     if (p.gamme && p.gamme.toLowerCase().includes('prestige')) {
-        badgesHtml += `<span style="position:absolute; top:15px; left:15px; background:#D4AF37; color:black; padding:6px 12px; font-weight:800; font-size:0.75rem; border-radius:4px; z-index:10; box-shadow: 0 2px 5px rgba(0,0,0,0.3); letter-spacing:1px;">💎 PRESTIGE</span>`;
+        badgesHtml += `<span style="position:absolute; top:15px; left:15px; background:#D4AF37; color:black; padding:6px 12px; font-weight:800; font-size:0.75rem; border-radius:4px; z-index:10; box-shadow: 0 2px 5px rgba(0,0,0,0.3); letter-spacing:1px;">PRESTIGE</span>`;
     }
     if (p.categorie) {
         badgesHtml += `<span class="badge status" style="background:#000 !important; color:#FFFFFF !important; border:1px solid #D4AF37; position:absolute; top:10px; right:10px; padding:5px 10px; z-index:2; font-weight:bold; text-transform:uppercase; font-size:0.8rem; border-radius:4px;">${p.categorie}</span>`;
