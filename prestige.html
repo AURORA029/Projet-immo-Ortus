@@ -2,68 +2,142 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Collection Prestige - ORTUS Immobilier</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Collection Prestige | ORTUS Immobilier</title>
+    <meta name="description" content="Découvrez l'immobilier d'exception à Madagascar. Villas de maître, propriétés historiques et domaines privés. Une collection signée ORTUS.">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aurora029.github.io/Projet-immo-Ortus/prestige.html">
+    <meta property="og:title" content="ORTUS Prestige - L'Art de Vivre">
+    <meta property="og:description" content="Accédez à notre collection confidentielle de biens d'exception.">
+    <meta property="og:image" content="https://aurora029.github.io/Projet-immo-Ortus/assets/img/hero-bg.jpg">
+
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/img/icon.png">
+    <link rel="manifest" href="manifest.json">
     
     <style>
-        body { background-color: #020610; color: white; }
-        .prestige-header { text-align: center; padding: 100px 20px 50px; }
-        .prestige-title { font-family: 'Playfair Display', serif; font-size: 3rem; color: #D4AF37; margin-bottom: 20px; }
-        .prestige-subtitle { color: #888; font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+        /* --- DESIGN ROYAL MALAGASY (PAPIER PEINT DE LUXE) --- */
+        body { 
+            background-color: #020610; 
+            color: white; 
+            position: relative;
+        }
+
+        /* Le motif "Tissage Royal" en arrière-plan */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            /* Motif géométrique subtil (Losanges) */
+            background-image: linear-gradient(135deg, #050a14 25%, transparent 25%), 
+                              linear-gradient(225deg, #050a14 25%, transparent 25%), 
+                              linear-gradient(45deg, #050a14 25%, transparent 25%), 
+                              linear-gradient(315deg, #050a14 25%, transparent 25%);
+            background-position: 10px 0, 10px 0, 0 0, 0 0;
+            background-size: 20px 20px;
+            background-repeat: repeat;
+            opacity: 0.4; /* Très subtil pour ne pas gêner la lecture */
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* En-tête Prestige */
+        .prestige-header { 
+            text-align: center; 
+            padding: 120px 20px 60px; 
+            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+        }
+        .prestige-title { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 3.5rem; 
+            color: #D4AF37; 
+            margin-bottom: 20px; 
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            letter-spacing: 2px;
+        }
+        .prestige-subtitle { 
+            color: #ccc; 
+            font-size: 1.1rem; 
+            max-width: 600px; 
+            margin: 0 auto; 
+            line-height: 1.6; 
+            font-weight: 300;
+        }
         
+        /* Ornement sous le titre */
+        .royal-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px auto;
+        }
+        .royal-line { width: 60px; height: 1px; background: #D4AF37; opacity: 0.6; }
+        .royal-icon { color: #D4AF37; font-size: 1.2rem; }
+
+        /* Menu Mobile */
+        @media (max-width: 768px) {
+            .prestige-title { font-size: 2.5rem; }
+            .menu-toggle { display: block; cursor: pointer; position: absolute; right: 20px; top: 25px; z-index: 1001; }
+            .bar { display: block; width: 25px; height: 3px; margin: 5px auto; background-color: white; transition: 0.3s; }
+            .menu-toggle.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
+            .menu-toggle.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        }
     </style>
 </head>
+
 <body>
 
     <nav class="navbar">
         <div class="container nav-container">
- <a href="index.html" class="logo-container">
-    <span class="logo-main">ORTUS<span class="dot">.</span></span>
-    <span class="logo-sub">IMMOBILIER</span>
-</a>
+            <a href="index.html" class="logo-container">
+                <span class="logo-main">ORTUS<span class="dot">.</span></span>
+                <span class="logo-sub">IMMOBILIER</span>
+            </a>
 
-   <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+           <div class="menu-toggle" id="mobile-menu-btn">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
             </div>
 
-            <ul class="nav-menu">
-    <li><a href="index.html" class="nav-link">Accueil</a></li>
-    
-    <li><a href="biens.html?filtre=all" class="nav-link">Nos Biens</a></li>
-    
-    <li><a href="services.html" class="nav-link">Services</a></li>
-    
-    <li><a href="vendre.html" class="nav-link">Propriétaires</a></li>
-
-    <li><a href="prestige.html" class="nav-link">Prestige</a></li>
-    
-    <li><a href="apropos.html" class="nav-link">L'Agence</a></li>
-    
-    <li><a href="#contact" class="btn-contact">Contact</a></li>
-</ul>
-
-
+            <ul class="nav-menu" id="nav-menu-list">
+                <li><a href="index.html" class="nav-link">Accueil</a></li>
+                <li><a href="biens.html?filtre=all" class="nav-link">Nos Biens</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="vendre.html" class="nav-link">Propriétaires</a></li>
+                <li><a href="prestige.html" class="nav-link" style="color:#D4AF37;">Prestige</a></li>
+                <li><a href="apropos.html" class="nav-link">L'Agence</a></li>
+                <li><a href="#contact" class="btn-contact">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
     <header class="prestige-header">
         <h1 class="prestige-title">Collection Prestige</h1>
-        <p class="prestige-subtitle">Découvrez notre sélection exclusive de propriétés d'exception. Luxe, calme et volupté.</p>
-        <div style="width: 100px; height: 2px; background: #D4AF37; margin: 30px auto;"></div>
+        
+        <div class="royal-divider">
+            <span class="royal-line"></span>
+            <i class="fas fa-crown royal-icon"></i> <span class="royal-line"></span>
+        </div>
+
+        <p class="prestige-subtitle">
+            Une sélection confidentielle de propriétés d'exception.<br>
+            Luxe, volupté et art de vivre malgache.
+        </p>
     </header>
 
     <section class="section-padding">
         <div class="container">
             <div id="prestige-container" class="properties-grid">
-                <p style="text-align:center; color:#666;">Recherche des biens d'exception...</p>
+                <p style="text-align:center; color:#666;">Ouverture du coffre-fort...</p>
             </div>
-             <div id="pagination-container" style="display:flex; justify-content:center; gap:10px; margin-top:50px; flex-wrap:wrap;">
-            </div>
+            
+            <div id="pagination-container" style="display:flex; justify-content:center; gap:10px; margin-top:50px; flex-wrap:wrap;"></div>
         </div>
     </section>
 
@@ -72,10 +146,7 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <h3>ORTUS<span class="dot">.</span></h3>
-                <p class="footer-desc">
-                    Votre partenaire de confiance pour l'immobilier à Madagascar. 
-                    Nous créons des opportunités pour votre avenir.
-                </p>
+                <p class="footer-desc">Votre partenaire de confiance.</p>
                 <div class="social-links">
                     <a href="https://www.facebook.com/share/17ejwgcidf/?mibextid=wwXIfr"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://www.instagram.com/ortusmada?igsh=MWx6NW15cXpibDNubQ=="><i class="fab fa-instagram"></i></a>
@@ -90,7 +161,6 @@
                     <li><a href="services.html">Nos Services</a></li>
                     <li><a href="apropos.html">L'Agence</a></li>
                     <li><a href="vendre.html">Vendre mon bien</a></li>
-                    <li><a href="estimation.html">Estimation gratuite</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -111,21 +181,28 @@
     <script src="assets/js/prestige.js"></script> 
     
     <script>
-    // On sélectionne ".menu-toggle" au lieu de ".hamburger"
-    const hamburger = document.querySelector(".menu-toggle"); 
-    const navMenu = document.querySelector(".nav-menu");
-
-    if(hamburger) {
-        hamburger.addEventListener("click", () => {
-            // Ajoute ou retire la classe "active" au clic
-            hamburger.classList.toggle("active");
-            navMenu.classList.toggle("active");
+        // Menu Mobile Script
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('nav-menu-list');
+            if(btn && menu) {
+                const newBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(newBtn, btn);
+                newBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    this.classList.toggle('active');
+                    menu.classList.toggle('active');
+                });
+            }
         });
-    }
-</script>
 
-
-    <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+        // Crisp Chat
+        window.addEventListener('load', function() {
+            window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";
+            (function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
+        });
+        if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js'); }
+    </script>
 
 </body>
 </html>
