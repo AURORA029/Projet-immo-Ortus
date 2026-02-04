@@ -1,4 +1,7 @@
-/* DETAIL.JS - Affiche un seul bien + Galerie */
+/* DETAIL.JS
+ * Gestion de l'affichage d'un bien unique (Fiche Produit).
+ * Inclus : Parsing des paramètres URL, affichage des détails, galerie photo et formulaire de contact.
+ */
 
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8KwzX3W0ONKYZray3wrDi5ReUBfw0-aSgvXSl7NaWNlvdSo9cKr3Y9Vh0k5kd_dHwchsCKfYE8d3/pub?output=csv";
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mvzzklrl"; 
@@ -7,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchPropertyDetail();
 });
 
+/**
+ * Récupère l'ID dans l'URL et charge les données correspondantes depuis le Google Sheet.
+ */
 async function fetchPropertyDetail() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
@@ -24,11 +30,16 @@ async function fetchPropertyDetail() {
             displayDetail(property);
         }
     } catch (error) {
-        console.error(error);
+        console.error("Erreur lors du chargement du détail :", error);
     }
 }
 
+/**
+ * Injecte les données du bien dans le DOM.
+ * @param {Object} p - L'objet contenant les informations du bien.
+ */
 function displayDetail(p) {
+    // Mise à jour des balises de base
     document.title = `${p.titre} - ORTUS`;
     document.getElementById('detail-title').innerText = p.titre;
     document.getElementById('detail-location').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${p.ville} - ${p.categorie}`;
@@ -36,9 +47,9 @@ function displayDetail(p) {
     document.getElementById('detail-desc').innerText = p.description;
 
     // Image Principale
-    document.getElementById('detail-image').innerHTML = `<img src="${p.image}" style="width:100%; height:100%; object-fit:cover;">`;
+    document.getElementById('detail-image').innerHTML = `<img src="${p.image}" style="width:100%; height:100%; object-fit:cover;" alt="${p.titre}">`;
 
-    // Vidéo
+    // Gestion du lien Vidéo
     let videoLink = p.video ? p.video.trim() : '';
     if (videoLink && videoLink.startsWith('http')) {
         document.getElementById('detail-video').innerHTML = `
@@ -47,14 +58,14 @@ function displayDetail(p) {
             </a>`;
     }
 
-    // Specs
+    // Caractéristiques techniques (Specs)
     document.getElementById('detail-specs').innerHTML = `
         <div class="tech-spec"><i class="fas fa-door-open" style="color:#D4AF37;"></i> ${p.pieces} Pièces</div>
         <div class="tech-spec"><i class="fas fa-ruler-combined" style="color:#D4AF37;"></i> ${p.surface} m²</div>
         <div class="tech-spec"><i class="fas fa-home" style="color:#D4AF37;"></i> ${p.type}</div>
     `;
 
-    // Atouts
+    // Liste des atouts
     if (p.caracteristiques) {
         let cleanFeats = p.caracteristiques.replace(/\n/g, ',');
         const feats = cleanFeats.split(',');
@@ -62,52 +73,68 @@ function displayDetail(p) {
         document.getElementById('detail-features').innerHTML = featsHTML;
     }
 
-    // --- 📸 GESTION DE LA GALERIE (NOUVEAU) ---
+    // --- Gestion de la Galerie d'images ---
+    initGallery(p);
+
+    // --- Initialisation du Formulaire ---
+    initContactForm(p);
+}
+
+/**
+ * Génère la grille d'images et configure la Lightbox.
+ */
+function initGallery(p) {
     const gallerySection = document.getElementById('gallery-section');
     const galleryGrid = document.getElementById('gallery-grid');
 
-    // On vérifie si la colonne "galerie" existe et n'est pas vide
+    // Vérification de l'existence de la galerie
     if (p.galerie && p.galerie.trim() !== "") {
-        gallerySection.style.display = 'block'; // On affiche la section
-        galleryGrid.innerHTML = ''; // On vide au cas où
+        gallerySection.style.display = 'block'; 
+        galleryGrid.innerHTML = ''; 
 
-        // On découpe les liens (séparateur = virgule)
         const images = p.galerie.split(',');
 
         images.forEach(imgUrl => {
             const cleanUrl = imgUrl.trim();
-            if(cleanUrl.length > 5) { // Petite sécurité
+            if(cleanUrl.length > 5) { 
                 const img = document.createElement('img');
                 img.src = cleanUrl;
-                // Style CSS direct pour l'image
+                
+                // Styles inline conservés pour compatibilité immédiate sans fichier CSS externe
                 img.style.cssText = "width: 100%; height: 200px; object-fit: cover; border-radius: 8px; cursor: pointer; transition: transform 0.3s; border: 1px solid #333;";
                 
-                // Effet Zoom au survol
+                // Interaction
                 img.onmouseover = function() { this.style.transform = 'scale(1.03)'; };
                 img.onmouseout = function() { this.style.transform = 'scale(1)'; };
 
-                // Clic pour ouvrir la Lightbox
+                // Ouverture Lightbox
                 img.onclick = function() {
                     const lightbox = document.getElementById('lightbox');
                     const lightboxImg = document.getElementById('lightbox-img');
-                    lightboxImg.src = cleanUrl;
-                    lightbox.style.display = 'flex'; // Affiche la lightbox
+                    if(lightbox && lightboxImg) {
+                        lightboxImg.src = cleanUrl;
+                        lightbox.style.display = 'flex';
+                    }
                 };
 
                 galleryGrid.appendChild(img);
             }
         });
     } else {
-        // Si pas de photos, on cache la section pour ne pas laisser un vide
         if(gallerySection) gallerySection.style.display = 'none';
     }
-    // --- FIN GALERIE ---
+}
 
-    // Formulaire Contact
+/**
+ * Configure le formulaire de contact spécifique au bien.
+ */
+function initContactForm(p) {
     const formContainer = document.getElementById('detail-form-container');
+    if (!formContainer) return;
+
     formContainer.innerHTML = `
         <form id="contact-form" action="${FORMSPREE_ENDPOINT}" method="POST" style="display:flex; flex-direction:column; gap:10px;">
-            <input type="hidden" name="sujet" value="Intérêt pour : ${p.titre}">
+            <input type="hidden" name="sujet" value="Intérêt pour : ${p.titre} (ID: ${p.id})">
             <input type="text" name="nom" placeholder="Votre Nom" required style="padding:15px; border:none; border-radius:5px;">
             <input type="tel" name="tel" placeholder="Votre Téléphone" required style="padding:15px; border:none; border-radius:5px;">
             <input type="email" name="email" placeholder="Votre Email" required style="padding:15px; border:none; border-radius:5px;">
@@ -116,7 +143,6 @@ function displayDetail(p) {
         </form>
     `;
 
-    // Gestion Envoi Formulaire
     const form = document.getElementById('contact-form');
     form.addEventListener('submit', async function(event) {
         event.preventDefault();
@@ -137,23 +163,21 @@ function displayDetail(p) {
             });
 
             if (response.ok) {
+                // Redirection ou message de succès
                 window.location.href = "merci.html"; 
             } else {
-                status.style.display = 'block';
-                status.innerText = "Erreur lors de l'envoi.";
-                btn.innerText = originalText;
-                btn.disabled = false;
+                throw new Error('Erreur serveur');
             }
         } catch (error) {
             status.style.display = 'block';
-            status.innerText = "Problème de connexion.";
+            status.innerText = "Une erreur est survenue. Veuillez réessayer.";
             btn.innerText = originalText;
             btn.disabled = false;
         }
     });
 }
 
-// PARSEUR CSV
+// Fonction utilitaire CSV
 function csvToJSON(csvText) {
     const lines = [];
     let newLine = '';
