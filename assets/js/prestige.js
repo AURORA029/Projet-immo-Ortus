@@ -1,11 +1,12 @@
-/* PRESTIGE.JS - VERSION PAGINÉE & LUXE 💎
- * Affiche uniquement les biens 'Prestige' avec pagination
+/* PRESTIGE.JS
+ * Gestion de la page dédiée aux biens de prestige.
+ * Filtre les données pour n'afficher que la gamme 'Prestige' avec une pagination spécifique.
  */
 
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8KwzX3W0ONKYZray3wrDi5ReUBfw0-aSgvXSl7NaWNlvdSo9cKr3Y9Vh0k5kd_dHwchsCKfYE8d3/pub?output=csv";
 
-// --- RÉGLAGES ---
-const ITEMS_PER_PAGE = 9; // Nombre de villas par page
+// --- CONFIGURATION ---
+const ITEMS_PER_PAGE = 9; 
 let currentPage = 1;
 let prestigeProperties = []; 
 
@@ -13,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchPrestigeProperties();
 });
 
+/**
+ * Récupère et filtre les biens de prestige.
+ */
 async function fetchPrestigeProperties() {
     const container = document.getElementById('prestige-container');
     
@@ -21,7 +25,7 @@ async function fetchPrestigeProperties() {
         const data = await response.text();
         const allProperties = csvToJSON(data); 
 
-        // FILTRE : On ne garde que PRESTIGE
+        // Filtrage strict sur la colonne 'gamme'
         prestigeProperties = allProperties.filter(p => 
             p.gamme && p.gamme.toLowerCase().includes('prestige')
         );
@@ -31,16 +35,18 @@ async function fetchPrestigeProperties() {
             return;
         }
 
-        // On lance l'affichage de la page 1
         renderPage(1);
 
     } catch (error) {
-        console.error('Erreur:', error);
-        container.innerHTML = '<p style="text-align:center; color:red;">Erreur de chargement.</p>';
+        console.error('Erreur de chargement prestige:', error);
+        container.innerHTML = '<p style="text-align:center; color:red;">Le catalogue est temporairement indisponible.</p>';
     }
 }
 
-// SYSTÈME DE PAGINATION
+/**
+ * Affiche la page demandée.
+ * @param {number} page - Numéro de la page.
+ */
 function renderPage(page) {
     currentPage = page;
     const container = document.getElementById('prestige-container');
@@ -58,9 +64,13 @@ function renderPage(page) {
     });
 
     renderPaginationButtons();
+    // Retour en haut de page fluide
     window.scrollTo({ top: 300, behavior: 'smooth' });
 }
 
+/**
+ * Génère les contrôles de pagination (Précédent / Numéros / Suivant).
+ */
 function renderPaginationButtons() {
     const paginationContainer = document.getElementById('pagination-container');
     const totalPages = Math.ceil(prestigeProperties.length / ITEMS_PER_PAGE);
@@ -76,7 +86,7 @@ function renderPaginationButtons() {
         paginationContainer.appendChild(btnPrev);
     }
 
-    // Boutons Numéros
+    // Boutons Numérotés
     for (let i = 1; i <= totalPages; i++) {
         const btn = document.createElement('button');
         btn.innerText = i;
@@ -99,17 +109,17 @@ function renderPaginationButtons() {
     }
 }
 
-// DESIGN CARTE SPÉCIAL PRESTIGE (FOND NOIR / TEXTE OR & BLANC) - VERSION BRUTE 🛡️
+/**
+ * Crée la carte HTML spécifique au design 'Prestige' (Dark Mode).
+ */
 function createPrestigeCard(p) {
     const div = document.createElement('div');
     div.className = 'property-card';
     
-    // FOND NOIR LUXE IMPOSÉ
-    // J'ajoute !important sur le fond aussi, au cas où.
+    // Style forcé pour le thème sombre (Dark Mode)
     div.style.cssText = "background-color: #121212 !important; border: 1px solid #333; border-radius: 8px; overflow: hidden; position: relative; margin-bottom: 20px;";
 
-    // Badge Exclusivité ( inchangé )
-    const badgeHtml = `<span style="position:absolute; top:15px; left:15px; background:#D4AF37; color:black; padding:5px 15px; font-weight:bold; letter-spacing:1px; font-size:0.8rem; z-index:10; border-radius:2px;">💎 EXCLUSIVITÉ</span>`;
+    const badgeHtml = `<span style="position:absolute; top:15px; left:15px; background:#D4AF37; color:black; padding:5px 15px; font-weight:bold; letter-spacing:1px; font-size:0.8rem; z-index:10; border-radius:2px;">EXCLUSIVITÉ</span>`;
 
     div.innerHTML = `
         <div class="property-image" style="height:300px; position:relative;">
@@ -140,8 +150,7 @@ function createPrestigeCard(p) {
     return div;
 }
 
-
-// Convertisseur CSV standard
+// Fonction utilitaire CSV
 function csvToJSON(csvText) {
     const lines = [];
     let newLine = '';
