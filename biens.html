@@ -35,6 +35,46 @@
             .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
             .menu-toggle.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
+
+        /* STYLE DU HACK SEO (Discret mais lisible pour Google) */
+        .seo-hack-section {
+            background-color: #f4f4f4;
+            padding: 40px 20px;
+            border-top: 1px solid #ddd;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .seo-hack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .seo-hack-column h3 {
+            font-size: 1rem;
+            color: #020610;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #D4AF37;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        .seo-hack-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        .seo-hack-column li {
+            margin-bottom: 8px;
+        }
+        .seo-hack-column a {
+            color: #555;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .seo-hack-column a:hover {
+            color: #D4AF37;
+            padding-left: 5px;
+        }
     </style>
 </head>
 
@@ -130,6 +170,61 @@
         </div> 
     </section>
 
+    <section class="seo-hack-section">
+        <div class="seo-hack-grid">
+            
+            <div class="seo-hack-column">
+                <h3>Vente & Location à Tana</h3>
+                <ul>
+                    <li><a href="biens.html?filtre=ivato">Maison à vendre Ivato</a></li>
+                    <li><a href="biens.html?filtre=ambatobe">Villas de luxe Ambatobe</a></li>
+                    <li><a href="biens.html?filtre=ankorondrano">Bureaux Ankorondrano</a></li>
+                    <li><a href="biens.html?filtre=tanjombato">Terrains industriels Tanjombato</a></li>
+                    <li><a href="biens.html?filtre=by-pass">Propriétés By-Pass</a></li>
+                    <li><a href="biens.html?filtre=centre ville">Appartements Centre Ville</a></li>
+                </ul>
+            </div>
+
+            <div class="seo-hack-column">
+                <h3>Immobilier en Province</h3>
+                <ul>
+                    <li><a href="biens.html?filtre=mahajanga">Bungalow à Mahajanga (Majunga)</a></li>
+                    <li><a href="biens.html?filtre=amborovy">Terrains bord de mer Amborovy</a></li>
+                    <li><a href="biens.html?filtre=nosy be">Investir à Nosy Be</a></li>
+                    <li><a href="biens.html?filtre=tamatave">Immobilier Tamatave</a></li>
+                    <li><a href="biens.html?filtre=antsirabe">Maisons à Antsirabe</a></li>
+                    <li><a href="biens.html?filtre=sainte marie">Ecolodge Sainte-Marie</a></li>
+                </ul>
+            </div>
+
+            <div class="seo-hack-column">
+                <h3>Nos Catégories</h3>
+                <ul>
+                    <li><a href="biens.html?filtre=terrain">Terrains Titrés et Bornés</a></li>
+                    <li><a href="prestige.html">Villas de Prestige avec Piscine</a></li>
+                    <li><a href="biens.html?filtre=vente">Achat Maison Madagascar</a></li>
+                    <li><a href="biens.html?filtre=location">Location Appartement Meublé</a></li>
+                    <li><a href="vendre.html">Estimer mon bien immobilier</a></li>
+                    <li><a href="services.html">Gestion Locative Tana</a></li>
+                </ul>
+            </div>
+
+            <div class="seo-hack-column">
+                <h3>L'Expertise ORTUS</h3>
+                <p>
+                    ORTUS est votre agence immobilière de référence à Madagascar. 
+                    Spécialiste de l'immobilier de luxe et d'entreprise, nous vous accompagnons 
+                    pour l'achat, la vente et la location de biens d'exception.
+                </p>
+                <p>
+                    Que vous cherchiez une villa à <strong>Ambatobe</strong>, un terrain à 
+                    <strong>Majunga</strong> ou un appartement à <strong>Tana</strong>, 
+                    notre catalogue est mis à jour quotidiennement.
+                </p>
+            </div>
+
+        </div>
+    </section>
     <footer class="footer" id="contact">
         <div class="container">
             <div class="footer-grid">
