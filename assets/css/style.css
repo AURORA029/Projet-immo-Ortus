@@ -1325,3 +1325,55 @@ p {
         margin-bottom: 10px !important;
     }
 }
+/* ==========================================================================
+   STYLE "GLASSMORPHISM" TECH 2026 (Effet Apple/Luxe)
+   ========================================================================== */
+
+/* La classe magique à appliquer sur tes blocs */
+.glass-tech-2026 {
+    /* 1. Le fond : Blanc mais ultra transparent (10%) */
+    background: rgba(255, 255, 255, 0.1) !important;
+    
+    /* 2. Le Flou d'arrière-plan (C'est ça le secret Apple) */
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important; /* Pour Safari/iPhone */
+    
+    /* 3. La Bordure : Très fine, blanche semi-transparente pour l'effet "tranche de verre" */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    
+    /* 4. L'ombre : Profonde et diffusée pour détacher le verre du fond */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+    
+    /* 5. Texte : On force le blanc pour que ça soit lisible sur le verre sombre */
+    color: #ffffff !important;
+}
+
+/* --- ADAPTATION DES ÉLÉMENTS DANS LE VERRE --- */
+
+/* Les champs de texte à l'intérieur deviennent transparents aussi */
+.glass-tech-2026 input[type="text"], 
+.glass-tech-2026 input[type="number"],
+.glass-tech-2026 .input-group {
+    background: rgba(0, 0, 0, 0.3) !important; /* Fond noir léger pour lisibilité */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: white !important; /* Texte tapé en blanc */
+    border-radius: 6px !important;
+}
+
+/* Couleur du texte "placeholder" (Ville, Quartier...) en gris clair */
+.glass-tech-2026 ::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Les icônes à l'intérieur passent en Or */
+.glass-tech-2026 i {
+    color: #D4AF37 !important;
+}
+
+/* Le bouton RECHERCHER devient "Plein" pour contraster avec le verre */
+.glass-tech-2026 button[type="submit"] {
+    background: #D4AF37 !important;
+    color: #020610 !important;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4) !important;
+    border: none !important;
+}
