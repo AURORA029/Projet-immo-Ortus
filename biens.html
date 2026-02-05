@@ -171,9 +171,9 @@
             <div class="search-container" style="text-align: center; margin-bottom: 40px; margin-top: -20px;">
                 
                 <div style="display: inline-flex; background: #020610; border: 1px solid #D4AF37; border-radius: 50px; padding: 5px 20px; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
-                    <input type="text" id="searchInput" placeholder="Rechercher (Ville, Type ex: Villa,...)" oninput="filterProperties()"
+                    <input type="text" id="searchInput" placeholder="Rechercher (Ville, Type ex: Villa,...)" 
                            style="background: transparent; border: none; color: white; padding: 10px; width: 250px; outline: none; font-family: 'Montserrat', sans-serif;">
-                    <button id="searchBtn" onclick="filterProperties()" style="background: transparent; border: none; color: #D4AF37; cursor: pointer; font-size: 1.2rem;">
+                    <button id="searchBtn" style="background: transparent; border: none; color: #D4AF37; cursor: pointer; font-size: 1.2rem;">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
@@ -186,21 +186,20 @@
                         <span style="font-size: 0.7rem; color: #888;">0</span>
                         <input type="range" id="budgetRange" 
                                min="0" max="5000000000" step="25000000" value="5000000000"
-                               oninput="updateBudgetLabel();" onchange="filterProperties()"
                                style="width: 100%; accent-color: #D4AF37; cursor: pointer;">
                         <span id="maxBudgetLabel" style="font-size: 0.7rem; color: #888;">5Md+</span>
                     </div>
                 </div>
 
                 <div style="margin-top: 15px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                    <select id="categorySelect" onchange="updateSliderScale(); filterProperties();" 
+                    <select id="categorySelect" 
                             style="background: #020610; color: white; border: 1px solid #D4AF37; padding: 10px 15px; border-radius: 5px; font-family: 'Montserrat', sans-serif; cursor: pointer; outline: none;">
                         <option value="all">Tout type</option>
                         <option value="vente">Acheter</option>
                         <option value="location">Louer</option>
                     </select>
 
-                    <select id="sortSelect" onchange="filterProperties()" 
+                    <select id="sortSelect" 
                             style="background: #020610; color: #D4AF37; border: 1px solid #D4AF37; padding: 10px 15px; border-radius: 5px; font-family: 'Montserrat', sans-serif; cursor: pointer; outline: none;">
                         <option value="default">Trier par...</option>
                         <option value="asc">Prix Croissant</option>
@@ -348,57 +347,6 @@
                 });
             }
         });
-    </script>
-
-    <script>
-        const MAX_VENTE = 5000000000; 
-        const MAX_LOC = 20000000;     
-
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                const params = new URLSearchParams(window.location.search);
-                const modeRecu = params.get('mode');   
-                const budgetRecu = params.get('budget');
-                const filtreRecu = params.get('filtre');
-
-                if (modeRecu) {
-                    const select = document.getElementById('categorySelect');
-                    if(select) { select.value = modeRecu; updateSliderScale(); }
-                }
-
-                if (budgetRecu) {
-                    const slider = document.getElementById('budgetRange');
-                    if(slider) { slider.value = budgetRecu; updateBudgetLabel(); }
-                }
-
-                if (filtreRecu && filtreRecu !== 'all') {
-                    const input = document.getElementById('searchInput');
-                    if(input) input.value = filtreRecu;
-                }
-
-                if(typeof filterProperties === 'function') { filterProperties(); }
-            }, 500); 
-        });
-
-        function updateBudgetLabel() {
-            const slider = document.getElementById('budgetRange');
-            const display = document.getElementById('budgetDisplay');
-            if(parseInt(slider.value) >= parseInt(slider.max)) { display.innerText = "Tout afficher"; } 
-            else { display.innerText = new Intl.NumberFormat('fr-FR').format(slider.value) + " Ar"; }
-        }
-
-        function updateSliderScale() {
-            const select = document.getElementById('categorySelect');
-            const slider = document.getElementById('budgetRange');
-            const maxLabel = document.getElementById('maxBudgetLabel');
-            
-            if(select.value === 'location') {
-                slider.max = MAX_LOC; slider.step = 100000; slider.value = MAX_LOC; maxLabel.innerText = "20M+";
-            } else {
-                slider.max = MAX_VENTE; slider.step = 25000000; slider.value = MAX_VENTE; maxLabel.innerText = "5Md+";
-            }
-            updateBudgetLabel();
-        }
     </script>
 
 </body>
