@@ -32,7 +32,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            z-index: 0; /* Derrière l'iframe */
+            z-index: 10; /* PASSE DEVANT L'IFRAME */
+            pointer-events: none; /* Laisse cliquer au travers si bug */
         }
 
         .graph-loader {
@@ -78,12 +79,16 @@
             position: relative;
             min-height: 600px;
             width: 100%;
+            background: rgba(0,0,0,0.2); /* Fond sombre pendant le chargement */
+            border-radius: 8px;
         }
         
-        /* L'iframe doit passer devant le loader une fois chargée */
+        /* L'iframe commence invisible pour éviter le flash blanc */
         iframe {
             position: relative;
-            z-index: 2;
+            z-index: 5;
+            opacity: 0; 
+            transition: opacity 0.8s ease-in-out;
         }
     </style>
 </head>
@@ -102,7 +107,7 @@
 
             <ul class="nav-menu" id="nav-menu-list">
                 <li><a href="index.html" class="nav-link">Accueil</a></li>
-                <li><a href="biens.html" class="nav-link">Nos Biens</a></li>
+                <li><a href="biens.html?filtre=all" class="nav-link">Nos Biens</a></li>
                 <li><a href="services.html" class="nav-link">Services</a></li>
                 <li><a href="vendre.html" class="nav-link" style="color: #D4AF37;">Propriétaires</a></li>
                 <li><a href="prestige.html" class="nav-link nav-link-prestige"><i class="fas fa-crown"></i> Prestige</a></li>
@@ -168,7 +173,7 @@
                     marginheight="0" 
                     marginwidth="0" 
                     title="Dossier Propriétaire Ortus"
-                    onload="document.getElementById('tally-loader').style.display='none';"> 
+                    onload="document.getElementById('tally-loader').style.display='none'; this.style.opacity='1';"> 
                 </iframe>
             </div>
             
@@ -218,7 +223,7 @@
     </footer>
     
     <script type="text/javascript">
-        // Menu Mobile Script (Ajouté car manquant aussi !)
+        // Menu Mobile Script
         document.addEventListener('DOMContentLoaded', function() {
             const btn = document.getElementById('mobile-menu-btn');
             const menu = document.getElementById('nav-menu-list');
