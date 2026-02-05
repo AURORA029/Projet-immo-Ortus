@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>Espace Propriétaires | Vendre ou Estimer - ORTUS Immobilier</title>
-    <meta name="description" content="Confiez votre bien à ORTUS Immobilier. Estimation précise, valorisation visuelle (drone/photo) et accès à notre fichier d'investisseurs qualifiés.">
+    <meta name="description" content="Confiez votre bien à ORTUS Immobilier. Estimation précise, valorisation visuelle et accès à notre fichier d'investisseurs qualifiés.">
     
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aurora029.github.io/Projet-immo-Ortus/vendre.html">
@@ -22,6 +22,70 @@
     <link rel="manifest" href="manifest.json">
 
     <script async src="https://tally.so/widgets/embed.js"></script>
+
+    <style>
+        /* --- LOADER VALEUR (Graphique qui monte) --- */
+        .loader-container {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 0; /* Derrière l'iframe */
+        }
+
+        .graph-loader {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            height: 40px;
+        }
+
+        .bar {
+            width: 8px;
+            background-color: #D4AF37;
+            animation: grow 1.5s infinite ease-in-out;
+            opacity: 0.8;
+        }
+
+        .bar:nth-child(1) { height: 40%; animation-delay: -0.3s; }
+        .bar:nth-child(2) { height: 100%; animation-delay: -0.15s; }
+        .bar:nth-child(3) { height: 70%; animation-delay: 0s; }
+
+        .loader-text {
+            margin-top: 15px;
+            color: #D4AF37;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: pulseText 2s infinite;
+        }
+
+        @keyframes grow {
+            0%, 100% { transform: scaleY(1); opacity: 0.8; }
+            50% { transform: scaleY(1.5); opacity: 1; box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
+        }
+
+        @keyframes pulseText {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Conteneur Iframe Relatif pour positionner le loader */
+        .iframe-wrapper {
+            position: relative;
+            min-height: 600px;
+            width: 100%;
+        }
+        
+        /* L'iframe doit passer devant le loader une fois chargée */
+        iframe {
+            position: relative;
+            z-index: 2;
+        }
+    </style>
 </head>
 
 <body>
@@ -31,7 +95,20 @@
                 <span class="logo-main">ORTUS<span class="dot">.</span></span>
                 <span class="logo-sub">IMMOBILIER</span>
             </a>
-            <a href="index.html" class="nav-link">Retour Accueil</a>
+            
+            <div class="menu-toggle" id="mobile-menu-btn">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
+
+            <ul class="nav-menu" id="nav-menu-list">
+                <li><a href="index.html" class="nav-link">Accueil</a></li>
+                <li><a href="biens.html" class="nav-link">Nos Biens</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="vendre.html" class="nav-link" style="color: #D4AF37;">Propriétaires</a></li>
+                <li><a href="prestige.html" class="nav-link nav-link-prestige"><i class="fas fa-crown"></i> Prestige</a></li>
+                <li><a href="apropos.html" class="nav-link">L'Agence</a></li>
+                <li><a href="#contact" class="btn-contact">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
@@ -71,16 +148,29 @@
                 Propriétaire ? Remplissez ce formulaire et un expert Ortus vous contactera sous 24h pour définir la meilleure stratégie.
             </p>
             
-            <iframe 
-                data-tally-src="https://tally.so/embed/Xx0NM4?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
-                loading="lazy" 
-                width="100%" 
-                height="600" 
-                frameborder="0" 
-                marginheight="0" 
-                marginwidth="0" 
-                title="Dossier Propriétaire Ortus">
-            </iframe>
+            <div class="iframe-wrapper">
+                <div class="loader-container" id="tally-loader">
+                    <div class="graph-loader">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                    <div class="loader-text">Chargement du dossier...</div>
+                </div>
+
+                <iframe 
+                    id="tally-frame"
+                    data-tally-src="https://tally.so/embed/Xx0NM4?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
+                    loading="lazy" 
+                    width="100%" 
+                    height="600" 
+                    frameborder="0" 
+                    marginheight="0" 
+                    marginwidth="0" 
+                    title="Dossier Propriétaire Ortus"
+                    onload="document.getElementById('tally-loader').style.display='none';"> 
+                </iframe>
+            </div>
             
             <p style="text-align: center; font-size: 0.8rem; color: #aaa; margin-top: 20px; font-style: italic; max-width: 600px; margin-left: auto; margin-right: auto;">
                 <span style="color: #D4AF37; font-weight: bold;">*</span> 
@@ -91,8 +181,58 @@
 
         </div>
     </div>
+
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>ORTUS<span class="dot">.</span></h3>
+                    <p class="footer-desc">Votre partenaire de confiance pour l'immobilier à Madagascar.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/share/17ejwgcidf/?mibextid=wwXIfr"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/ortusmada?igsh=MWx6NW15cXpibDNubQ=="><i class="fab fa-instagram"></i></a>
+                        <a href="https://mg.linkedin.com/in/joelrafidisonformateurcoach"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="biens.html">Tous nos biens</a></li>
+                        <li><a href="services.html">Nos Services</a></li>
+                        <li><a href="apropos.html">L'Agence</a></li>
+                        <li><a href="vendre.html">Vendre</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i> Antananarivo, Madagascar</li>
+                        <li><i class="fas fa-phone"></i> 034 04 945 20</li>
+                        <li><i class="fas fa-envelope"></i> ortusmada@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 Ortus Immobilier. Tous droits réservés.</p></div>
+        </div>
+    </footer>
     
     <script type="text/javascript">
+        // Menu Mobile Script (Ajouté car manquant aussi !)
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('nav-menu-list');
+            if(btn && menu) {
+                const newBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(newBtn, btn);
+                newBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    this.classList.toggle('active');
+                    menu.classList.toggle('active');
+                });
+            }
+        });
+
         window.addEventListener('load', function() {
             window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";
             (function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
