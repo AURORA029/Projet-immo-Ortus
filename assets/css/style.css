@@ -1326,60 +1326,58 @@ p {
     }
 }
 /* ==========================================================================
-   FORMULAIRE TECH 2026 (FINAL)
+   FORMULAIRE TECH 2026 (CORRECTIF FINAL & ABSOLU)
    ========================================================================== */
 
 /* 1. LE CADRE EN VERRE GLOBAL */
 .glass-tech-2026 {
-    background: rgba(15, 23, 42, 0.6) !important; /* Fond sombre transparent */
-    backdrop-filter: blur(20px) !important;       /* Le flou Apple */
+    background: rgba(15, 23, 42, 0.6) !important;
+    backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     box-shadow: 0 20px 40px rgba(0,0,0,0.4) !important;
 }
 
-/* 2. LA BARRE DE RECHERCHE (Celle qui était blanche moche) */
+/* 2. LA BARRE DE RECHERCHE (Le conteneur) */
 .glass-input-group {
     display: flex;
     align-items: center;
-    background: rgba(0, 0, 0, 0.4); /* Fond NOIR transparent */
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.4) !important; /* Force le fond NOIR transparent */
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
     padding: 12px;
     border-radius: 8px;
     transition: 0.3s;
-}
-
-/* Effet quand on clique dedans */
-.glass-input-group:focus-within {
-    border-color: #D4AF37; /* Bordure dorée au clic */
-    background: rgba(0, 0, 0, 0.6);
+    margin-bottom: 10px; /* Petit espace */
 }
 
 /* 3. L'ICONE MAP */
 .glass-input-group i {
-    color: #D4AF37; /* Or */
+    color: #D4AF37 !important; /* Or */
     margin-right: 12px;
     font-size: 1.1rem;
+    background: none !important; /* Sécurité */
 }
 
-/* 4. LE TEXTE QUE TU TAPES */
+/* 4. LE TEXTE QUE TU TAPES (C'est ici que ça bloquait !) */
 .glass-input-group input {
-    background: transparent;
-    border: none;
+    background-color: transparent !important; /* CRUCIAL : Écrase le fond blanc global */
+    border: none !important;                  /* CRUCIAL : Enlève la bordure grise globale */
     width: 100%;
     font-family: 'Montserrat', sans-serif;
     outline: none;
-    color: #ffffff !important; /* TEXTE BLANC (Trés important) */
+    color: #ffffff !important; /* Texte BLANC */
     font-size: 1rem;
     font-weight: 500;
+    box-shadow: none !important;
 }
 
 /* 5. LE TEXTE "PLACEHOLDER" (Ville, Quartier...) */
 .glass-input-group input::placeholder {
-    color: rgba(255, 255, 255, 0.6) !important; /* Gris clair */
+    color: rgba(255, 255, 255, 0.7) !important; /* Gris clair */
+    opacity: 1;
 }
 
-/* 6. LES LABELS (Budget Max...) */
+/* 6. LES LABELS */
 .glass-tech-2026 span, .glass-tech-2026 label {
     color: #eee !important;
 }
@@ -1389,4 +1387,5 @@ p {
     background: #D4AF37 !important;
     color: #051024 !important;
     box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    border: none !important;
 }
