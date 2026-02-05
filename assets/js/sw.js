@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ortus-v2';
+const CACHE_NAME = 'ortus-v3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
