@@ -83,6 +83,45 @@
             color: #000;
             font-weight: 600;
         }
+
+        /* --- LOADER LUXE (SPINNER OR) --- */
+        .loader-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 0;
+            width: 100%;
+        }
+        
+        .luxury-spinner {
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(212, 175, 55, 0.1); /* Cercle pâle */
+            border-top: 2px solid #D4AF37; /* Cercle plein Or */
+            border-radius: 50%;
+            animation: spin 1s cubic-bezier(0.5, 0, 0.5, 1) infinite; /* Rotation fluide */
+            margin-bottom: 20px;
+        }
+
+        .loader-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #D4AF37;
+            animation: pulseText 2s infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulseText {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
     </style>
 </head>
 
@@ -171,7 +210,10 @@
             </div>
 
             <div class="properties-grid" id="listing-container">
-                <p style="color:white; text-align:center;">Chargement des biens en cours...</p>
+                <div class="loader-wrapper">
+                    <div class="luxury-spinner"></div>
+                    <span class="loader-text">Recherche des opportunités...</span>
+                </div>
             </div>
             
             <div id="pagination-container" style="display:flex; justify-content:center; gap:10px; margin-top:50px; flex-wrap:wrap;"></div>
