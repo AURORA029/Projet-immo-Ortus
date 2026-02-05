@@ -96,11 +96,12 @@ html, body {
 
 .logo-main .dot {
     color: var(--accent-blue); /* Le point reste Cyan */
+    font-size: 2.1rem; /*taille du point */
 }
 
 .logo-sub {
     color: #FFD700; /* Un Or plus lumineux/jaune pour mieux ressortir sur le fond sombre */
-    font-size: 0.8rem; /* Plus gros (avant c'était 0.65rem) */
+    font-size: 0.6rem; /* Plus gros (avant c'était 0.65rem) */
     text-transform: uppercase;
     letter-spacing: 2px; /* Un peu moins espacé pour garder la compacité */
     font-weight: 700; /* Plus GRAS pour la lisibilité */
