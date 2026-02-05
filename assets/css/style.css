@@ -1261,41 +1261,79 @@ p {
     border: 1px solid rgba(212, 175, 55, 0.3) !important;
     box-shadow: 0 20px 50px rgba(0,0,0,0.6) !important;
 }
-/* --- POUR ACTIVER LA VIDEO --- */
+/* ==========================================================================
+   FIX FINAL : VIDEO + MOBILE + CENTRAGE
+   (Ce bloc écrase tout le reste pour la section Hero)
+   ========================================================================== */
 
-/* 1. On cadre la vidéo */
+/* 1. FORCE LA SECTION A PRENDRE TOUT L'ECRAN (PC & MOBILE) */
 .hero {
-    position: relative;
-    overflow: hidden; 
+    position: relative !important;
+    width: 100% !important;
+    height: 100vh !important; /* Prend 100% de la hauteur de l'écran */
+    min-height: 600px !important;
+    display: flex !important;
+    align-items: center !important; /* Centre verticalement */
+    justify-content: center !important; /* Centre horizontalement */
+    overflow: hidden !important;
+    padding: 0 !important; /* ANNULE L'ANCIEN FIX QUI POUSSAIT LE TEXTE */
+    margin: 0 !important;
+    background: #020610 !important; /* Fond noir si vidéo charge pas */
 }
 
-/* 2. On place la vidéo en fond (derrière le texte) */
+/* 2. LA VIDÉO (Gestion du Zoom et Position) */
 .hero-video-bg {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%); /* Centrage parfait */
-    min-width: 100%; min-height: 100%;
-    width: auto; height: auto;
-    z-index: -2; /* Tout au fond */
-    object-fit: cover;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    z-index: 0 !important; /* Tout au fond */
+    object-fit: cover !important; /* Remplit l'écran sans déformer */
 }
 
-/* 3. On ajuste le filtre sombre pour bien voir le texte sur la vidéo */
+/* 3. LE FILTRE SOMBRE (Pour voir le texte) */
 .hero-overlay {
-    background: linear-gradient(to bottom, rgba(5, 16, 36, 0.3), rgba(5, 16, 36, 0.9)) !important;
-    z-index: -1;
+    position: absolute !important;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(5, 16, 36, 0.3), rgba(5, 16, 36, 0.8)) !important;
+    z-index: 1 !important; /* Au-dessus de la vidéo */
 }
 
-/* 4. Les petites animations (Optionnel mais classe) */
-.animate-text {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUpVideo 1s ease-out forwards;
+/* 4. LE CONTENU (Texte + Formulaire) */
+.hero-content {
+    position: relative !important;
+    z-index: 10 !important; /* Au-dessus de TOUT le reste */
+    width: 100% !important;
+    max-width: 1200px !important;
+    text-align: center !important;
+    margin-top: 0 !important; /* On remet à zéro les marges */
 }
-.delay-1 { animation-delay: 0.2s; }
-.animate-up { animation: fadeUpVideo 1s ease-out forwards; opacity: 0; transform: translateY(40px); }
-.delay-2 { animation-delay: 0.4s; }
 
-@keyframes fadeUpVideo {
-    to { opacity: 1; transform: translateY(0); }
+/* 5. GESTION SPÉCIFIQUE MOBILE (Le "Dé-zoom" partiel) */
+@media (max-width: 768px) {
+    .hero {
+        height: 100vh !important; /* Force la pleine hauteur sur mobile aussi */
+        align-items: center !important; /* Centre bien le formulaire */
+    }
+    
+    /* On décale légèrement la vidéo sur mobile pour voir le meilleur côté */
+    .hero-video-bg {
+        width: 100vh !important; /* Astuce : force la vidéo à être plus large sur mobile */
+        max-width: none !important;
+        height: 100% !important;
+    }
+
+    .hero-content {
+        padding: 0 15px !important; /* Petite marge sur les côtés */
+    }
+    
+    /* On réduit un peu la taille du titre sur mobile pour qu'il ne mange pas tout */
+    .hero h1 {
+        font-size: 2rem !important;
+        margin-bottom: 10px !important;
+    }
 }
