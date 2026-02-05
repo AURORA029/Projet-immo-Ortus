@@ -1262,101 +1262,65 @@ p {
     box-shadow: 0 20px 50px rgba(0,0,0,0.6) !important;
 }
 /* ==========================================================================
-   FIX FINAL : VIDEO + MOBILE + CENTRAGE
-   (Ce bloc écrase tout le reste pour la section Hero)
+   FIX ISOLÉ : HOMEPAGE VIDEO UNIQUEMENT
+   (Ne touche plus aux autres pages !)
    ========================================================================== */
 
-/* 1. FORCE LA SECTION A PRENDRE TOUT L'ECRAN (PC & MOBILE) */
-.hero {
+/* 1. SEULEMENT POUR LA PAGE D'ACCUEIL (.home-hero) */
+.home-hero {
     position: relative !important;
     width: 100% !important;
-    height: 100vh !important; /* Prend 100% de la hauteur de l'écran */
+    height: 100vh !important;
     min-height: 600px !important;
     display: flex !important;
-    align-items: center !important; /* Centre verticalement */
-    justify-content: center !important; /* Centre horizontalement */
+    align-items: center !important;
+    justify-content: center !important;
     overflow: hidden !important;
-    padding: 0 !important; /* ANNULE L'ANCIEN FIX QUI POUSSAIT LE TEXTE */
+    padding: 0 !important;
     margin: 0 !important;
-    background: #020610 !important; /* Fond noir si vidéo charge pas */
+    background: #020610 !important; /* Fond noir */
+    background-image: none !important; /* On tue l'image JUSTE ici */
 }
 
-/* 2. LA VIDÉO (Gestion du Zoom et Position) */
-.hero-video-bg {
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    min-width: 100% !important;
-    min-height: 100% !important;
-    width: auto !important;
-    height: auto !important;
-    z-index: 0 !important; /* Tout au fond */
-    object-fit: cover !important; /* Remplit l'écran sans déformer */
-}
-
-/* 3. LE FILTRE SOMBRE (Pour voir le texte) */
-.hero-overlay {
-    position: absolute !important;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(to bottom, rgba(5, 16, 36, 0.3), rgba(5, 16, 36, 0.8)) !important;
-    z-index: 1 !important; /* Au-dessus de la vidéo */
-}
-
-/* 4. LE CONTENU (Texte + Formulaire) */
-.hero-content {
-    position: relative !important;
-    z-index: 10 !important; /* Au-dessus de TOUT le reste */
-    width: 100% !important;
-    max-width: 1200px !important;
-    text-align: center !important;
-    margin-top: 0 !important; /* On remet à zéro les marges */
-}
-
-/* 5. GESTION SPÉCIFIQUE MOBILE (Le "Dé-zoom" partiel) */
-@media (max-width: 768px) {
-    .hero {
-        height: 100vh !important; /* Force la pleine hauteur sur mobile aussi */
-        align-items: center !important; /* Centre bien le formulaire */
-    }
-    
-    /* CORRECTIF NETTETÉ & CADRAGE */
+/* 2. LA VIDÉO (Reste identique) */
 .hero-video-bg {
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
-    
-    /* On force la vidéo à prendre la taille exacte du bloc, ni plus ni moins */
     width: 100% !important;
     height: 100% !important;
-    
-    /* Cover : Remplit intelligemment. 
-       SI tu veux voir plus de maison et moins de zoom, change 'cover' par 'fill' (mais ça déforme un peu) 
-       ou reste en 'cover' qui est le standard pro. */
-    object-fit: cover !important; 
-    
-    /* Centre l'image pour qu'on coupe les bords égalitairement si l'écran est bizarre */
+    object-fit: cover !important;
     object-position: center center !important;
-    
     z-index: 0 !important;
 }
 
-/* OPTIONNEL : Si tu trouves que sur PC c'est trop haut (trop d'espace vide) */
-@media (min-width: 1024px) {
-    .hero {
-        /* On réduit un peu la hauteur sur PC pour éviter l'effet "immense poster" */
-        height: 85vh !important; 
-        min-height: 600px !important;
-    }
+/* 3. LE FILTRE (Seulement sur l'accueil pour garder le dégradé vidéo) */
+.home-hero .hero-overlay {
+    background: linear-gradient(to bottom, rgba(5, 16, 36, 0.3), rgba(5, 16, 36, 0.8)) !important;
+    z-index: 1 !important;
 }
 
+/* 4. LE CONTENU (Seulement sur l'accueil) */
+.home-hero .hero-content {
+    position: relative !important;
+    z-index: 10 !important;
+    width: 100% !important;
+    max-width: 1200px !important;
+    text-align: center !important;
+    margin-top: 0 !important;
+}
 
-    .hero-content {
-        padding: 0 15px !important; /* Petite marge sur les côtés */
+/* 5. MOBILE SPÉCIFIQUE ACCUEIL */
+@media (max-width: 768px) {
+    .home-hero {
+        height: 100vh !important;
     }
     
-    /* On réduit un peu la taille du titre sur mobile pour qu'il ne mange pas tout */
-    .hero h1 {
+    .home-hero .hero-content {
+        padding: 0 15px !important;
+    }
+    
+    .home-hero h1 {
         font-size: 2rem !important;
         margin-bottom: 10px !important;
     }
