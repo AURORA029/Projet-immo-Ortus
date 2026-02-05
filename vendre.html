@@ -32,8 +32,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            z-index: 10; /* PASSE DEVANT L'IFRAME */
-            pointer-events: none; /* Laisse cliquer au travers si bug */
+            z-index: 10;
+            pointer-events: none;
         }
 
         .graph-loader {
@@ -74,16 +74,15 @@
             50% { opacity: 1; }
         }
 
-        /* Conteneur Iframe Relatif pour positionner le loader */
+        /* Conteneur Iframe Relatif */
         .iframe-wrapper {
             position: relative;
             min-height: 600px;
             width: 100%;
-            background: rgba(0,0,0,0.2); /* Fond sombre pendant le chargement */
+            background: rgba(0,0,0,0.2);
             border-radius: 8px;
         }
         
-        /* L'iframe commence invisible pour éviter le flash blanc */
         iframe {
             position: relative;
             z-index: 5;
@@ -94,6 +93,7 @@
 </head>
 
 <body>
+
     <nav class="navbar">
         <div class="container nav-container">
             <a href="index.html" class="logo-container">
