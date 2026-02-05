@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>Espace Propriétaires | Vendre ou Estimer - ORTUS Immobilier</title>
-    <meta name="description" content="Confiez votre bien à ORTUS Immobilier. Estimation précise, valorisation visuelle et accès à notre fichier d'investisseurs qualifiés.">
+    <meta name="description" content="Confiez votre bien à ORTUS Immobilier. Estimation précise, valorisation visuelle (drone/photo) et accès à notre fichier d'investisseurs qualifiés.">
     
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aurora029.github.io/Projet-immo-Ortus/vendre.html">
@@ -24,15 +24,6 @@
     <script async src="https://tally.so/widgets/embed.js"></script>
 
     <style>
-        /* --- CORRECTIF DE SURETÉ MOBILE (Force l'affichage des barres) --- */
-        @media (max-width: 768px) {
-            .menu-toggle { display: block; cursor: pointer; position: absolute; right: 20px; top: 25px; z-index: 1001; }
-            .bar { display: block; width: 25px; height: 3px; margin: 5px auto; background-color: white !important; transition: 0.3s; }
-            .menu-toggle.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-            .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
-            .menu-toggle.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-        }
-
         /* --- LOADER VALEUR (Graphique qui monte) --- */
         .loader-container {
             position: absolute;
@@ -41,8 +32,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            z-index: 10;
-            pointer-events: none;
+            z-index: 0;
         }
 
         .graph-loader {
@@ -83,7 +73,7 @@
             50% { opacity: 1; }
         }
 
-        /* Conteneur Iframe Relatif */
+        /* Conteneur Iframe Relatif pour l'animation */
         .iframe-wrapper {
             position: relative;
             min-height: 600px;
@@ -94,35 +84,21 @@
         
         iframe {
             position: relative;
-            z-index: 5;
+            z-index: 2;
             opacity: 0; 
-            transition: opacity 0.8s ease-in-out;
+            transition: opacity 0.5s ease-in-out;
         }
     </style>
 </head>
 
 <body>
-
     <nav class="navbar">
         <div class="container nav-container">
             <a href="index.html" class="logo-container">
                 <span class="logo-main">ORTUS<span class="dot">.</span></span>
                 <span class="logo-sub">IMMOBILIER</span>
             </a>
-            
-            <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-            </div>
-
-            <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">Accueil</a></li>
-                <li><a href="biens.html?filtre=all" class="nav-link">Nos Biens</a></li>
-                <li><a href="services.html" class="nav-link">Services</a></li>
-                <li><a href="vendre.html" class="nav-link" style="color: #D4AF37;">Propriétaires</a></li>
-                <li><a href="prestige.html" class="nav-link nav-link-prestige"><i class="fas fa-crown"></i> Prestige</a></li>
-                <li><a href="apropos.html" class="nav-link">L'Agence</a></li>
-                <li><a href="#contact" class="btn-contact">Contact</a></li>
-            </ul>
+            <a href="index.html" class="nav-link">Retour Accueil</a>
         </div>
     </nav>
 
@@ -173,7 +149,6 @@
                 </div>
 
                 <iframe 
-                    id="tally-frame"
                     data-tally-src="https://tally.so/embed/Xx0NM4?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
                     loading="lazy" 
                     width="100%" 
@@ -182,7 +157,7 @@
                     marginheight="0" 
                     marginwidth="0" 
                     title="Dossier Propriétaire Ortus"
-                    onload="document.getElementById('tally-loader').style.display='none'; this.style.opacity='1';"> 
+                    onload="document.getElementById('tally-loader').style.display='none'; this.style.opacity='1';">
                 </iframe>
             </div>
             
@@ -195,7 +170,7 @@
 
         </div>
     </div>
-
+    
     <footer class="footer" id="contact">
         <div class="container">
             <div class="footer-grid">
@@ -230,8 +205,8 @@
             <div class="footer-bottom"><p>&copy; 2026 Ortus Immobilier. Tous droits réservés.</p></div>
         </div>
     </footer>
-    
-    <script src="assets/js/main.js"></script> <script type="text/javascript">
+
+    <script type="text/javascript">
         window.addEventListener('load', function() {
             window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";
             (function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
