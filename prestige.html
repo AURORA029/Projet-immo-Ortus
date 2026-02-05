@@ -89,6 +89,57 @@
             .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
             .menu-toggle.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
+
+        /* --- LOADER PRESTIGE (DIAMOND PULSE) --- */
+        .loader-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 0;
+            width: 100%;
+        }
+
+        .diamond-loader {
+            width: 40px;
+            height: 40px;
+            background-color: transparent;
+            border: 1px solid #D4AF37;
+            transform: rotate(45deg);
+            animation: diamondPulse 2.5s infinite ease-in-out;
+            position: relative;
+        }
+
+        /* Le petit cœur du diamant */
+        .diamond-loader::after {
+            content: '';
+            position: absolute;
+            top: 10px; left: 10px;
+            width: 18px; height: 18px;
+            background-color: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+        }
+
+        .loader-text {
+            margin-top: 40px;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #D4AF37;
+            animation: fadeText 2.5s infinite ease-in-out;
+        }
+
+        @keyframes diamondPulse {
+            0% { transform: rotate(45deg) scale(1); box-shadow: 0 0 0 rgba(212, 175, 55, 0); border-color: rgba(212, 175, 55, 0.3); }
+            50% { transform: rotate(45deg) scale(1.1); box-shadow: 0 0 30px rgba(212, 175, 55, 0.3); border-color: rgba(212, 175, 55, 1); }
+            100% { transform: rotate(45deg) scale(1); box-shadow: 0 0 0 rgba(212, 175, 55, 0); border-color: rgba(212, 175, 55, 0.3); }
+        }
+
+        @keyframes fadeText {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
     </style>
 </head>
 
@@ -134,7 +185,10 @@
     <section class="section-padding">
         <div class="container">
             <div id="prestige-container" class="properties-grid">
-                <p style="text-align:center; color:#666;">Ouverture du coffre-fort...</p>
+                <div class="loader-wrapper">
+                    <div class="diamond-loader"></div>
+                    <span class="loader-text">Accès Confidentiel...</span>
+                </div>
             </div>
             
             <div id="pagination-container" style="display:flex; justify-content:center; gap:10px; margin-top:50px; flex-wrap:wrap;"></div>
