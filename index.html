@@ -188,21 +188,33 @@
     </nav>
 
     <header class="hero">
-        <div class="hero-overlay"></div> 
-        <div class="container hero-content">
-            <h1 style="font-family:'Playfair Display', serif;">Créateur d'Opportunités</h1>
-            <p style="font-family:'Montserrat', sans-serif;">Trouvez le bien immobilier qui correspond à vos rêves.</p>
+    
+    <video autoplay muted loop playsinline class="hero-video-bg" poster="assets/img/hero-bg.jpg">
+        <source src="assets/img/hero-video.mp4" type="video/mp4">
+        <img src="assets/img/hero-bg.jpg" alt="Immobilier Luxe Madagascar">
+    </video>
 
+    <div class="hero-overlay"></div> 
+
+    <div class="container hero-content">
+        
+        <h1 class="animate-text" style="font-family:'Playfair Display', serif;">Créateur d'Opportunités</h1>
+        <p class="animate-text delay-1" style="font-family:'Montserrat', sans-serif;">Trouvez le bien immobilier qui correspond à vos rêves.</p>
+
+        <div class="animate-up delay-2">
             <form action="biens.html" method="GET" style="background: white; padding: 25px; border-radius: 10px; display: flex; flex-direction: column; gap: 20px; max-width: 400px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
                 <input type="hidden" name="mode" id="search-mode" value="vente">
+                
                 <div style="display: flex; gap: 10px;">
                     <button type="button" onclick="setSearchMode('vente')" id="btn-vente" style="flex: 1; padding: 10px; border: 1px solid #D4AF37; background: #D4AF37; color: #020610; font-family: 'Montserrat', sans-serif; font-weight: 700; border-radius: 5px; cursor: pointer; transition: 0.3s;">ACHETER</button>
                     <button type="button" onclick="setSearchMode('location')" id="btn-location" style="flex: 1; padding: 10px; border: 1px solid #ccc; background: transparent; color: #888; font-family: 'Montserrat', sans-serif; font-weight: 600; border-radius: 5px; cursor: pointer; transition: 0.3s;">LOUER</button>
                 </div>
+
                 <div style="display: flex; align-items: center; background: #f5f5f5; padding: 10px; border-radius: 5px;">
                     <i class="fas fa-map-marker-alt" style="color: #D4AF37; margin-right: 10px;"></i>
                     <input type="text" name="filtre" placeholder="Ville, Quartier, Type..." style="border: none; background: transparent; width: 100%; font-family: 'Montserrat', sans-serif; outline: none;">
                 </div>
+
                 <div style="padding: 0 5px;">
                     <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #666; margin-bottom: 5px;">
                         <span>Budget Max :</span>
@@ -210,39 +222,42 @@
                     </div>
                     <input type="range" name="budget" id="budget-slider" min="0" max="5000000000" step="25000000" value="5000000000" oninput="updateHomeBudget(this.value)" style="width: 100%; accent-color: #D4AF37; cursor: pointer;">
                 </div>
+
                 <button type="submit" style="background: #020610; color: white; border: none; padding: 15px; border-radius: 5px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px;">
                     <i class="fas fa-search"></i> RECHERCHER
                 </button>
             </form>
-
-            <script>
-                const MAX_VENTE = 5000000000; const MAX_LOC = 20000000;     
-                function updateHomeBudget(val) {
-                    const display = document.getElementById('home-budget-display');
-                    const slider = document.getElementById('budget-slider');
-                    if(parseInt(val) >= parseInt(slider.max)) display.innerText = "Tout afficher";
-                    else display.innerText = new Intl.NumberFormat('fr-FR').format(val) + " Ar";
-                }
-                function setSearchMode(mode) {
-                    document.getElementById('search-mode').value = mode;
-                    const btnVente = document.getElementById('btn-vente');
-                    const btnLoc = document.getElementById('btn-location');
-                    const slider = document.getElementById('budget-slider');
-                    if (mode === 'vente') {
-                        btnVente.style.background = '#D4AF37'; btnVente.style.borderColor = '#D4AF37'; btnVente.style.color = '#020610';
-                        btnLoc.style.background = 'transparent'; btnLoc.style.borderColor = '#ccc'; btnLoc.style.color = '#888';
-                        slider.max = MAX_VENTE; slider.step = 25000000; slider.value = MAX_VENTE;
-                        updateHomeBudget(MAX_VENTE);
-                    } else {
-                        btnLoc.style.background = '#D4AF37'; btnLoc.style.borderColor = '#D4AF37'; btnLoc.style.color = '#020610';
-                        btnVente.style.background = 'transparent'; btnVente.style.borderColor = '#ccc'; btnVente.style.color = '#888';
-                        slider.max = MAX_LOC; slider.step = 100000; slider.value = MAX_LOC;
-                        updateHomeBudget(MAX_LOC);
-                    }
-                }
-            </script>
         </div>
-    </header>
+
+        <script>
+            const MAX_VENTE = 5000000000; const MAX_LOC = 20000000;     
+            function updateHomeBudget(val) {
+                const display = document.getElementById('home-budget-display');
+                const slider = document.getElementById('budget-slider');
+                if(parseInt(val) >= parseInt(slider.max)) display.innerText = "Tout afficher";
+                else display.innerText = new Intl.NumberFormat('fr-FR').format(val) + " Ar";
+            }
+            function setSearchMode(mode) {
+                document.getElementById('search-mode').value = mode;
+                const btnVente = document.getElementById('btn-vente');
+                const btnLoc = document.getElementById('btn-location');
+                const slider = document.getElementById('budget-slider');
+                if (mode === 'vente') {
+                    btnVente.style.background = '#D4AF37'; btnVente.style.borderColor = '#D4AF37'; btnVente.style.color = '#020610';
+                    btnLoc.style.background = 'transparent'; btnLoc.style.borderColor = '#ccc'; btnLoc.style.color = '#888';
+                    slider.max = MAX_VENTE; slider.step = 25000000; slider.value = MAX_VENTE;
+                    updateHomeBudget(MAX_VENTE);
+                } else {
+                    btnLoc.style.background = '#D4AF37'; btnLoc.style.borderColor = '#D4AF37'; btnLoc.style.color = '#020610';
+                    btnVente.style.background = 'transparent'; btnVente.style.borderColor = '#ccc'; btnVente.style.color = '#888';
+                    slider.max = MAX_LOC; slider.step = 100000; slider.value = MAX_LOC;
+                    updateHomeBudget(MAX_LOC);
+                }
+            }
+        </script>
+    </div>
+</header>
+
 
     <script src="assets/js/main.js"></script>
 
