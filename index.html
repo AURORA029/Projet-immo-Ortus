@@ -56,6 +56,36 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
+        /* --- STYLE SPECIAL BOUTON PRESTIGE (Couronne + Brillance) --- */
+        .nav-link-prestige {
+            color: #D4AF37 !important; /* Force la couleur de base Or */
+            display: flex;
+            align-items: center;
+            gap: 6px; /* Espace entre couronne et texte */
+            font-weight: 600;
+            animation: prestigePulse 3s infinite ease-in-out; /* L'animation magique */
+        }
+        
+        .nav-link-prestige i {
+            font-size: 0.9em; /* Ajuste la taille de la couronne */
+            margin-bottom: 2px;
+        }
+
+        @keyframes prestigePulse {
+            0% { 
+                color: #D4AF37; 
+                text-shadow: none; 
+            }
+            50% { 
+                color: #FFF8DC; /* Devient presque blanc (éclat) */
+                text-shadow: 0 0 10px rgba(212, 175, 55, 0.8), 0 0 2px #fff; /* Lueur dorée autour */
+            }
+            100% { 
+                color: #D4AF37; 
+                text-shadow: none; 
+            }
+        }
+
         /* --- INTRO ANIMATION --- */
         #intro-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -145,7 +175,7 @@
                 <li><a href="biens.html?filtre=all" class="nav-link">Nos Biens</a></li>
                 <li><a href="services.html" class="nav-link">Services</a></li>
                 <li><a href="vendre.html" class="nav-link">Propriétaires</a></li>
-                <li><a href="prestige.html" class="nav-link" style="color:#D4AF37;">Prestige</a></li>
+                <li><a href="prestige.html" class="nav-link nav-link-prestige"><i class="fas fa-crown"></i> Prestige</a></li>
                 <li><a href="apropos.html" class="nav-link">L'Agence</a></li>
                 <li><a href="#contact" class="btn-contact">Contact</a></li>
             </ul>
@@ -292,6 +322,34 @@
                     <h4 style="color: #D4AF37; font-size: 0.8rem; text-transform: uppercase;">— Hery A.</h4>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section class="section-padding" style="background-color: #f9f9f9; padding: 60px 0; border-top: 1px solid #eee;">
+        <div class="container" style="max-width: 900px; margin: 0 auto; color: #444; font-family: 'Montserrat', sans-serif;">
+            
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #020610; margin-bottom: 10px;">
+                    ORTUS : Votre Agence Immobilière de Référence à Madagascar
+                </h2>
+                <div style="width: 60px; height: 2px; background: #D4AF37; margin: 0 auto;"></div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; line-height: 1.8; font-size: 0.95rem;">
+                <div>
+                    <h3 style="font-size: 1.1rem; color: #020610; margin-bottom: 10px;">Expertise Locale et Standards Internationaux</h3>
+                    <p>
+                        Spécialiste de l'immobilier à <strong>Antananarivo</strong> et en province, ORTUS accompagne les propriétaires, investisseurs et expatriés dans leurs projets de vie. Que vous cherchiez une <em>villa de luxe à Ivato</em>, un appartement sécurisé en centre-ville ou un terrain titré et borné à <strong>Mahajanga</strong>, notre équipe vous garantit une transaction transparente et sécurisée.
+                    </p>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.1rem; color: #020610; margin-bottom: 10px;">Gestion, Vente et Investissement</h3>
+                    <p>
+                        Au-delà de la simple transaction, nous proposons un service complet de <strong>gestion locative</strong> pour sécuriser vos revenus fonciers. Grâce à notre connaissance pointue du marché malgache (quartiers d'Ambatobe, Ankorondrano, By-Pass), nous estimons votre bien à sa juste valeur pour une vente rapide et efficace. Faites le choix de l'excellence avec ORTUS.
+                    </p>
+                </div>
+            </div>
+
         </div>
     </section>
 
