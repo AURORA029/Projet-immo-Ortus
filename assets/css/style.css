@@ -521,6 +521,8 @@ html, body {
 /* Le point du logo devient OR */
 .footer-col h3 .dot { 
     color: var(--accent-gold); 
+    font-size: 2.1rem !important; /*taille du point */
+}
 }
 
 .footer-col h4 {
