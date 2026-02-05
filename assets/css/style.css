@@ -1320,12 +1320,36 @@ p {
         align-items: center !important; /* Centre bien le formulaire */
     }
     
-    /* On décale légèrement la vidéo sur mobile pour voir le meilleur côté */
-    .hero-video-bg {
-        width: 100vh !important; /* Astuce : force la vidéo à être plus large sur mobile */
-        max-width: none !important;
-        height: 100% !important;
+    /* CORRECTIF NETTETÉ & CADRAGE */
+.hero-video-bg {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    
+    /* On force la vidéo à prendre la taille exacte du bloc, ni plus ni moins */
+    width: 100% !important;
+    height: 100% !important;
+    
+    /* Cover : Remplit intelligemment. 
+       SI tu veux voir plus de maison et moins de zoom, change 'cover' par 'fill' (mais ça déforme un peu) 
+       ou reste en 'cover' qui est le standard pro. */
+    object-fit: cover !important; 
+    
+    /* Centre l'image pour qu'on coupe les bords égalitairement si l'écran est bizarre */
+    object-position: center center !important;
+    
+    z-index: 0 !important;
+}
+
+/* OPTIONNEL : Si tu trouves que sur PC c'est trop haut (trop d'espace vide) */
+@media (min-width: 1024px) {
+    .hero {
+        /* On réduit un peu la hauteur sur PC pour éviter l'effet "immense poster" */
+        height: 85vh !important; 
+        min-height: 600px !important;
     }
+}
+
 
     .hero-content {
         padding: 0 15px !important; /* Petite marge sur les côtés */
