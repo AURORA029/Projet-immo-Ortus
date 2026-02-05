@@ -86,24 +86,13 @@
             }
         }
 
+        * --- INTRO ANIMATION --- */
         #intro-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    /* 1. Fond noir avec une nuance dorée profonde */
-    background-color: #0a0904; 
-    z-index: 2147483647 !important;
-    
-    /* 2. Motif avec des lignes dorées très fines (opacité réduite) */
-    background-image: linear-gradient(135deg, rgba(184, 134, 11, 0.15) 25%, transparent 25%), 
-                      linear-gradient(225deg, rgba(184, 134, 11, 0.15) 25%, transparent 25%), 
-                      linear-gradient(45deg, rgba(184, 134, 11, 0.15) 25%, transparent 25%), 
-                      linear-gradient(315deg, rgba(184, 134, 11, 0.15) 25%, transparent 25%);
-    
-    background-position: 10px 0, 10px 0, 0 0, 0 0;
-    background-size: 20px 20px;
-    background-repeat: repeat;
-    
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    transition: opacity 1.5s ease-in-out, visibility 1.5s;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #020610; z-index: 2147483647 !important;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 1.5s ease-in-out, visibility 1.5s;
+        }1.5s;
 }
 
         
