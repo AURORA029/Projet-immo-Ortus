@@ -1379,5 +1379,71 @@ p {
     
     .hero h1 { font-size: 2.2rem !important; }
 }
+/* ==========================================================================
+   CORRECTIF AFFICHAGE LAPTOP & NAV PRO
+   ========================================================================== */
+
+/* 1. LOGO : Alignement strict & Point visible */
+.logo-container {
+    align-items: flex-start !important;
+    gap: 0 !important;
+}
+
+.logo-main {
+    line-height: 0.9 !important; /* Resserre la hauteur de ligne */
+    margin-bottom: 0 !important;
+    display: flex;
+    align-items: baseline;
+}
+
+.logo-sub {
+    margin-left: 1px !important;
+    margin-top: 2px !important;
+    padding: 0 !important;
+    letter-spacing: 3px !important; /* Plus aéré pour le sous-titre */
+}
+
+/* Le point "." plus visible et lumineux */
+.logo-main .dot {
+    font-size: 1.5rem !important; /* Plus gros */
+    color: var(--accent-gold) !important; /* Passe en OR pour la visibilité */
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.6); /* Effet néon */
+    margin-left: 2px;
+}
+
+/* 2. NAVBAR PC "COSY" (Plus resserrée et classe) */
+@media (min-width: 769px) {
+    .nav-link {
+        margin-right: 20px !important; /* Resserre l'espace entre les liens (avant 25px) */
+        font-size: 0.85rem !important; /* Texte légèrement plus fin */
+        letter-spacing: 1px !important;
+    }
+    
+    .btn-contact {
+        padding: 8px 18px !important; /* Bouton un peu plus discret */
+        font-size: 0.85rem !important;
+    }
+}
+
+/* 3. FIX LAPTOP (Le titre coupé) */
+.hero {
+    /* Ajoute un "coussin" en haut pour que le texte ne touche jamais la barre */
+    padding-top: 100px !important; 
+    align-items: center !important;
+}
+
+/* Règle spécifique pour les écrans de PC Portables (moins hauts) */
+@media (max-height: 800px) {
+    .hero {
+        height: auto !important; /* Laisse la hauteur s'adapter */
+        min-height: 550px !important;
+        padding-bottom: 60px !important;
+    }
+    
+    .hero h1 {
+        font-size: 2.8rem !important; /* Réduit légèrement le titre sur petit écran */
+        margin-top: 20px !important;
+    }
+}
 
 
