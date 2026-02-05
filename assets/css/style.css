@@ -1258,5 +1258,126 @@ p {
     border: 1px solid rgba(212, 175, 55, 0.3) !important;
     box-shadow: 0 20px 50px rgba(0,0,0,0.6) !important;
 }
+/* ==========================================================================
+   DESIGN UPGRADE - NAVIGATION & RECHERCHE
+   ========================================================================== */
+
+/* --- 1. NAVIGATION FLOTTANTE (Desktop uniquement) --- */
+@media (min-width: 769px) {
+    .navbar {
+        width: 90% !important;
+        margin: 20px auto 0 auto !important;
+        border-radius: 16px !important;
+        background: rgba(5, 16, 36, 0.75) !important; /* Fond sombre semi-transparent */
+        backdrop-filter: blur(20px) !important; /* Flou d'arrière-plan */
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25) !important;
+        top: 20px !important;
+    }
+    
+    .logo-main { font-size: 1.4rem !important; }
+    .nav-link { font-size: 0.9rem !important; text-transform: uppercase; letter-spacing: 1px; }
+}
+
+/* --- 2. BARRE DE RECHERCHE UNIFIÉE (Style Capsule) --- */
+.search-bar {
+    border-radius: 100px !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    border: none !important;
+    padding: 6px !important;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3) !important;
+    max-width: 750px !important;
+    gap: 0 !important;
+}
+
+.input-group {
+    background: transparent !important;
+    border: none !important;
+    padding: 10px 20px !important;
+}
+
+/* Séparateurs verticaux entre les champs (Desktop) */
+@media (min-width: 769px) {
+    .input-group:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        height: 60%;
+        width: 1px;
+        background-color: #e0e0e0;
+    }
+}
+
+/* Bouton de recherche circulaire/pillule */
+.btn-search {
+    border-radius: 50px !important;
+    padding: 12px 35px !important;
+    margin: 4px !important;
+    background: var(--primary-dark) !important;
+    color: var(--accent-gold) !important;
+    border: 1px solid var(--primary-dark) !important;
+    box-shadow: 0 4px 12px rgba(5, 16, 36, 0.2) !important;
+}
+
+.btn-search:hover {
+    background: var(--accent-gold) !important;
+    color: var(--primary-dark) !important;
+    border-color: var(--accent-gold) !important;
+    transform: scale(1.02);
+}
+
+.input-group i {
+    color: #aaa !important;
+    font-size: 1rem !important;
+}
+
+.input-group:focus-within i {
+    color: var(--accent-gold) !important;
+}
+
+/* --- 3. TYPOGRAPHIE HEADER --- */
+.hero h1 {
+    font-size: 3.5rem !important;
+    letter-spacing: -0.5px !important;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+}
+
+.hero p {
+    font-size: 1.15rem !important;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-bottom: 50px !important;
+}
+
+/* --- 4. ADAPTATION MOBILE --- */
+@media (max-width: 768px) {
+    .navbar {
+        width: 100% !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        top: 0 !important;
+        background: rgba(5, 16, 36, 0.95) !important; /* Plus opaque sur mobile pour lisibilité */
+    }
+    
+    .search-bar {
+        border-radius: 16px !important;
+        padding: 15px !important;
+    }
+    
+    .input-group:not(:last-child)::after {
+        display: none;
+    }
+    
+    .btn-search {
+        width: 100%;
+        border-radius: 8px !important;
+        margin: 10px 0 0 0 !important;
+    }
+    
+    .hero h1 { font-size: 2.2rem !important; }
+}
 
 
