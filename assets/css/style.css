@@ -1326,64 +1326,67 @@ p {
     }
 }
 /* ==========================================================================
-   GLASSMORPHISM 2.0 (CORRECTIF TEXTE & INPUTS)
+   FORMULAIRE TECH 2026 (FINAL)
    ========================================================================== */
 
+/* 1. LE CADRE EN VERRE GLOBAL */
 .glass-tech-2026 {
-    /* 1. Le Fond Verre (Plus sombre pour le contraste) */
-    background: rgba(15, 23, 42, 0.6) !important; /* Bleu nuit très transparent */
-    backdrop-filter: blur(20px) !important; /* Flou puissant style Apple */
+    background: rgba(15, 23, 42, 0.6) !important; /* Fond sombre transparent */
+    backdrop-filter: blur(20px) !important;       /* Le flou Apple */
     -webkit-backdrop-filter: blur(20px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important; /* Bordure fine */
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important; /* Ombre profonde */
-}
-
-/* 2. CORRECTION BARRE DE RECHERCHE (Le truc blanc moche) */
-/* On cible la div qui contient l'input et l'icône map */
-.glass-tech-2026 div[style*="background: #f5f5f5"], 
-.glass-tech-2026 div[style*="background:#f5f5f5"] {
-    background: rgba(0, 0, 0, 0.4) !important; /* Fond NOIR transparent */
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: white !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4) !important;
 }
 
-/* 3. L'INPUT (Le texte qu'on tape) */
-.glass-tech-2026 input[type="text"] {
-    color: #ffffff !important; /* Texte blanc pur */
-    font-weight: 500 !important;
+/* 2. LA BARRE DE RECHERCHE (Celle qui était blanche moche) */
+.glass-input-group {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4); /* Fond NOIR transparent */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 12px;
+    border-radius: 8px;
+    transition: 0.3s;
 }
-/* Le texte "Ville, Quartier..." quand c'est vide */
-.glass-tech-2026 input::placeholder {
+
+/* Effet quand on clique dedans */
+.glass-input-group:focus-within {
+    border-color: #D4AF37; /* Bordure dorée au clic */
+    background: rgba(0, 0, 0, 0.6);
+}
+
+/* 3. L'ICONE MAP */
+.glass-input-group i {
+    color: #D4AF37; /* Or */
+    margin-right: 12px;
+    font-size: 1.1rem;
+}
+
+/* 4. LE TEXTE QUE TU TAPES */
+.glass-input-group input {
+    background: transparent;
+    border: none;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    color: #ffffff !important; /* TEXTE BLANC (Trés important) */
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* 5. LE TEXTE "PLACEHOLDER" (Ville, Quartier...) */
+.glass-input-group input::placeholder {
     color: rgba(255, 255, 255, 0.6) !important; /* Gris clair */
 }
 
-/* 4. BOUTON "LOUER" (Le texte invisible) */
-#btn-location {
-    color: rgba(255, 255, 255, 0.6) !important; /* Blanc cassé par défaut */
-    border-color: rgba(255, 255, 255, 0.2) !important;
-}
-/* Quand on clique dessus (Géré par ton JS, mais on force le style ici au cas où) */
-#btn-location.active-mode {
-    color: #020610 !important;
-    background: #D4AF37 !important;
-    border-color: #D4AF37 !important;
+/* 6. LES LABELS (Budget Max...) */
+.glass-tech-2026 span, .glass-tech-2026 label {
+    color: #eee !important;
 }
 
-/* 5. TEXTES "BUDGET MAX" ET LABELS */
-.glass-tech-2026 span, 
-.glass-tech-2026 label {
-    color: rgba(255, 255, 255, 0.9) !important; /* Blanc quasi pur */
-}
-
-/* 6. COULEUR DES ICÔNES (Map, Search...) */
-.glass-tech-2026 i {
-    color: #D4AF37 !important; /* Or */
-}
-
-/* 7. BOUTON RECHERCHER (Le gros bouton du bas) */
+/* 7. LE BOUTON RECHERCHER */
 .glass-tech-2026 button[type="submit"] {
-    background: #D4AF37 !important; /* Fond Or */
-    color: #020610 !important; /* Texte Noir */
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4) !important; /* Lueur dorée */
-    border: none !important;
+    background: #D4AF37 !important;
+    color: #051024 !important;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
 }
