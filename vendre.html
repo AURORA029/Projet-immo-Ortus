@@ -24,6 +24,15 @@
     <script async src="https://tally.so/widgets/embed.js"></script>
 
     <style>
+        /* --- CORRECTIF DE SURETÉ MOBILE (Force l'affichage des barres) --- */
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; cursor: pointer; position: absolute; right: 20px; top: 25px; z-index: 1001; }
+            .bar { display: block; width: 25px; height: 3px; margin: 5px auto; background-color: white !important; transition: 0.3s; }
+            .menu-toggle.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
+            .menu-toggle.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        }
+
         /* --- LOADER VALEUR (Graphique qui monte) --- */
         .loader-container {
             position: absolute;
@@ -101,11 +110,11 @@
                 <span class="logo-sub">IMMOBILIER</span>
             </a>
             
-            <div class="menu-toggle" id="mobile-menu-btn">
+            <div class="menu-toggle" id="mobile-menu">
                 <span class="bar"></span><span class="bar"></span><span class="bar"></span>
             </div>
 
-            <ul class="nav-menu" id="nav-menu-list">
+            <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">Accueil</a></li>
                 <li><a href="biens.html?filtre=all" class="nav-link">Nos Biens</a></li>
                 <li><a href="services.html" class="nav-link">Services</a></li>
@@ -222,22 +231,7 @@
         </div>
     </footer>
     
-    <script type="text/javascript">
-        // Menu Mobile Script
-        document.addEventListener('DOMContentLoaded', function() {
-            const btn = document.getElementById('mobile-menu-btn');
-            const menu = document.getElementById('nav-menu-list');
-            if(btn && menu) {
-                const newBtn = btn.cloneNode(true);
-                btn.parentNode.replaceChild(newBtn, btn);
-                newBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    this.classList.toggle('active');
-                    menu.classList.toggle('active');
-                });
-            }
-        });
-
+    <script src="assets/js/main.js"></script> <script type="text/javascript">
         window.addEventListener('load', function() {
             window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";
             (function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
@@ -247,4 +241,3 @@
 
 </body>
 </html>
-
