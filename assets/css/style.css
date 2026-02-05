@@ -1261,3 +1261,41 @@ p {
     border: 1px solid rgba(212, 175, 55, 0.3) !important;
     box-shadow: 0 20px 50px rgba(0,0,0,0.6) !important;
 }
+/* --- POUR ACTIVER LA VIDEO --- */
+
+/* 1. On cadre la vidéo */
+.hero {
+    position: relative;
+    overflow: hidden; 
+}
+
+/* 2. On place la vidéo en fond (derrière le texte) */
+.hero-video-bg {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%); /* Centrage parfait */
+    min-width: 100%; min-height: 100%;
+    width: auto; height: auto;
+    z-index: -2; /* Tout au fond */
+    object-fit: cover;
+}
+
+/* 3. On ajuste le filtre sombre pour bien voir le texte sur la vidéo */
+.hero-overlay {
+    background: linear-gradient(to bottom, rgba(5, 16, 36, 0.3), rgba(5, 16, 36, 0.9)) !important;
+    z-index: -1;
+}
+
+/* 4. Les petites animations (Optionnel mais classe) */
+.animate-text {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUpVideo 1s ease-out forwards;
+}
+.delay-1 { animation-delay: 0.2s; }
+.animate-up { animation: fadeUpVideo 1s ease-out forwards; opacity: 0; transform: translateY(40px); }
+.delay-2 { animation-delay: 0.4s; }
+
+@keyframes fadeUpVideo {
+    to { opacity: 1; transform: translateY(0); }
+}
