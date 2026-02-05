@@ -1446,4 +1446,28 @@ p {
     }
 }
 
+/* ==========================================================================
+   FIX URGENCE MOBILE (ANTI-CHEVAUCHEMENT)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .hero {
+        /* 1. On annule le centrage vertical qui pousse tout en bas */
+        align-items: flex-start !important; 
+        
+        /* 2. On définit un espace précis en haut pour passer sous la barre */
+        padding-top: 110px !important; 
+        
+        /* 3. On libère de l'espace en bas pour le Chat et les Cookies */
+        padding-bottom: 150px !important;
+        
+        /* 4. On laisse la hauteur s'adapter au contenu */
+        height: auto !important; 
+        min-height: 100vh !important;
+    }
+    
+    /* On s'assure que le titre ne colle pas trop haut */
+    .hero-content {
+        margin-top: 0 !important;
+    }
+}
 
