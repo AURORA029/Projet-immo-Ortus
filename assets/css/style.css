@@ -96,7 +96,7 @@ html, body {
 
 .logo-main .dot {
     color: var(--accent-blue); /* Le point reste Cyan */
-    font-size: 2.1rem; /*taille du point */
+    font-size: 2.1rem !important; /*taille du point */
 }
 
 .logo-sub {
