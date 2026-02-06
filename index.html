@@ -13,16 +13,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* CSS INTERNE LANDING (Pour charger ultra-vite sans dépendre de style.css) */
+        /* CSS INTERNE LANDING (Autonome) */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { height: 100%; overflow: hidden; font-family: 'Montserrat', sans-serif; background: #020610; }
 
         /* VIDÉO BACKGROUND */
         .video-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            /* FIX ARCHITECTE : Image de secours si la vidéo ne charge pas */
+            background: url('assets/img/hero-bg.jpg') no-repeat center center/cover;
         }
         .video-container video {
-            width: 100%; height: 100%; object-fit: cover; opacity: 0.6; /* Assombri pour le texte */
+            width: 100%; height: 100%; object-fit: cover; opacity: 0.6;
         }
         
         /* OVERLAY GRADIENT */
@@ -107,7 +109,6 @@
             window.$crisp=[]; window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";
             (function(){ d=document; s=d.createElement("script"); s.src="https://client.crisp.chat/l.js"; s.async=1; d.getElementsByTagName("head")[0].appendChild(s); })();
         });
-
         // 2. PWA (Service Worker)
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./sw.js');
