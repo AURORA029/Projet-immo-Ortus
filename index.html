@@ -15,11 +15,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- CSS SPÉCIFIQUE LANDING PAGE --- */
+        /* --- CSS SPÉCIFIQUE LANDING PAGE (SÉCURISÉ) --- */
         
         body, html { 
             height: 100%; 
-            overflow: hidden; 
+            /* SÉCURITÉ 1 : On autorise le scroll vertical si l'écran est trop petit */
+            overflow-x: hidden; 
+            overflow-y: auto; 
             background-color: #020610; 
             margin: 0; padding: 0;
             background-image: none !important; 
@@ -38,88 +40,88 @@
         .nav-link { color: rgba(255,255,255,0.9) !important; }
         .nav-link:hover { color: #D4AF37 !important; }
 
-        /* 2. ZONE VIDÉO */
+        /* 2. ZONE VIDÉO (FIXÉE pour ne pas bouger au scroll) */
         .landing-hero {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; 
+            position: fixed; /* RESTE EN PLACE PENDANT LE SCROLL */
+            top: 0; left: 0; width: 100%; height: 100%; z-index: 0; 
+            /* Image de secours CSS */
             background: url('assets/img/hero-bg.jpg') no-repeat center center;
             background-size: cover;
         }
+        
         .hero-video-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             object-fit: cover; z-index: 0;
+            pointer-events: none; /* Empêche le clic droit sur la vidéo */
         }
-        /* Filtre global léger pour assombrir un peu la vidéo et aider le texte */
+        
+        /* Cache les contrôles natifs */
+        .hero-video-bg::-webkit-media-controls { display: none !important; }
+
         .overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 6, 16, 0.2); /* Très léger, le texte fera le reste */
+            background: rgba(2, 6, 16, 0.2); 
             z-index: 1;
         }
 
-        /* 3. CONTENU CENTRAL */
+        /* 3. CONTENU CENTRAL (AVEC MARGES DE SÉCURITÉ) */
         .landing-content {
             position: relative; z-index: 10;
-            height: 100%;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            text-align: center; padding: 20px;
+            width: 100%;
+            min-height: 100vh; /* Prend au moins tout l'écran */
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+            text-align: center; 
+            padding: 20px;
+            
+            /* SÉCURITÉ 2 : Padding haut pour que le logo ne tape jamais la barre */
+            padding-top: 100px; 
+            padding-bottom: 60px; /* Place pour le footer */
+            box-sizing: border-box;
         }
 
-        /* --- LOGO CENTRAL --- */
+        /* LOGO CENTRAL */
         .landing-brand {
             font-family: 'Playfair Display', serif;
             font-size: 6rem;
             font-weight: 700;
             color: white;
-            margin-bottom: 5px; /* Rapproché du slogan */
+            margin-bottom: 5px;
             letter-spacing: 5px;
             text-transform: uppercase;
-            text-shadow: 0 5px 30px rgba(0,0,0,0.8); /* Grosse ombre */
+            text-shadow: 0 5px 30px rgba(0,0,0,0.8);
             line-height: 1;
             animation: scaleIn 1.5s cubic-bezier(0.2, 1, 0.3, 1);
         }
 
-        /* POINT BLEU */
         .landing-dot {
             color: #4aa3df;
             font-size: 1em;
             text-shadow: 0 0 20px rgba(74, 163, 223, 0.8);
         }
 
-        /* --- SLOGAN AVEC LA MAGIE DU STYLE.CSS --- */
+        /* SLOGAN (Style Gold & Bold validé) */
         .landing-tagline {
-            /* 1. La Police Magique */
             font-family: 'Montserrat', sans-serif; 
-            
-            /* 2. La Couleur OR Lumineux (#FFD700 du CSS) */
             color: #FFD700;   
-            
-            /* 3. La Graisse (700 = Bold, comme dans ton screen) */
-            font-weight: 700; 
-            
-            /* 4. Le Style */
+            font-weight: 800; /* Ultra Gras */
             text-transform: uppercase;
-            
-            /* 5. L'espacement (Un peu plus large ici pour faire cinéma) */
             letter-spacing: 3px; 
-            
             margin-bottom: 60px;
             background: none; border: none;
-            
-            /* 6. L'Ombre (Le secret de la lisibilité sur vidéo) */
             text-shadow: 0 2px 4px rgba(0,0,0,0.9);  
-            
-            /* Taille ajustée pour un slogan (logo-sub était 0.75rem, ici on met plus gros) */
-            font-size: 1.1rem !important;
-            
+            font-size: 1.1rem;
             opacity: 0;
             animation: fadeInUp 1.5s ease-out 0.5s forwards;
         }
 
-        /* Bouton */
+        /* BOUTON */
         .btn-enter {
             padding: 18px 50px;
             border: 1px solid #D4AF37;
-            background: rgba(2, 6, 16, 0.5); /* Semi-transparent */
+            background: rgba(2, 6, 16, 0.5); 
             color: white; text-decoration: none;
             font-family: 'Montserrat', sans-serif;
             font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;
@@ -134,9 +136,11 @@
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.6); transform: translateY(-3px);
         }
 
-        /* Footer */
+        /* FOOTER (Positionné en bas du flux) */
         .landing-footer {
-            position: absolute; bottom: 30px; width: 100%; text-align: center; z-index: 10;
+            position: absolute; 
+            bottom: 20px; 
+            width: 100%; text-align: center; z-index: 10;
             font-size: 0.7rem; color: rgba(255,255,255,0.6);
             opacity: 0; animation: fadeInUp 2s ease-out 1.5s forwards;
         }
@@ -147,16 +151,8 @@
         /* --- MOBILE --- */
         @media (max-width: 768px) {
             .landing-brand { font-size: 3.5rem; letter-spacing: 2px; margin-bottom: 10px; } 
+            .landing-tagline { font-size: 0.85rem; letter-spacing: 2px; line-height: 1.6; padding: 0 20px; }
             
-            /* Ajustement Slogan Mobile */
-            .landing-tagline { 
-                font-size: 0.85rem; /* Un peu plus grand que le logo nav mobile */
-                letter-spacing: 2px; 
-                line-height: 1.6;
-                padding: 0 20px;
-            }
-            
-            /* Menu Mobile Noir & Beau */
             .nav-menu {
                 background-color: rgba(2, 6, 16, 0.95) !important;
                 backdrop-filter: blur(15px) !important;
@@ -171,6 +167,16 @@
             .nav-menu li:nth-child(4) { animation-delay: 0.4s; }
             .nav-menu li:nth-child(5) { animation-delay: 0.5s; }
             .nav-menu li:nth-child(6) { animation-delay: 0.6s; }
+            
+            /* Fix Footer Mobile */
+            .landing-footer { position: relative; margin-top: 40px; bottom: auto; }
+        }
+        
+        /* Fix Hauteur (Landscape) */
+        @media (max-height: 600px) {
+            .landing-content { justify-content: flex-start; }
+            .landing-brand { margin-top: 20px; }
+            .landing-footer { position: relative; margin-top: 30px; bottom: auto; }
         }
     </style>
 </head>
@@ -216,32 +222,42 @@
         <a href="accueil.html" class="btn-enter">
             Explorer le site <i class="fas fa-arrow-right"></i>
         </a>
-    </div>
-
-    <div class="landing-footer">
-        &copy; 2026 ORTUS Immobilier.
+        
+        <div class="landing-footer">
+            &copy; 2026 ORTUS Immobilier.
+        </div>
     </div>
 
     <script src="assets/js/main.js"></script> 
     
     <script type="text/javascript">
-        // Force Play Vidéo
+        // 1. SCRIPT VIDÉO INTELLIGENT (Fixe l'icône Play de Brave/Eco)
         document.addEventListener('DOMContentLoaded', function() {
             var vid = document.getElementById('bgvid');
             if(vid) {
-                vid.play().catch(function(error) {
-                    console.log("Autoplay bloqué, l'image de poster (CSS) prend le relais.");
-                });
+                var playPromise = vid.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        // Lecture auto OK
+                    })
+                    .catch(error => {
+                        // SÉCURITÉ 3 : Si autoplay bloqué, on SUPPRIME la balise vidéo
+                        // L'image de fond définie dans le CSS .landing-hero s'affiche proprement sans bouton Play.
+                        console.log("Autoplay bloqué : Player masqué.");
+                        vid.style.display = 'none';
+                    });
+                }
             }
         });
 
-        // Chat CRISP
+        // 2. Chat CRISP
         window.addEventListener('load', function() {
             window.$crisp=[]; window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";
             (function(){ d=document; s=d.createElement("script"); s.src="https://client.crisp.chat/l.js"; s.async=1; d.getElementsByTagName("head")[0].appendChild(s); })();
         });
 
-        // PWA
+        // 3. PWA
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./sw.js');
         }
