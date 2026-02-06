@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -48,12 +48,14 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             object-fit: cover; z-index: 0;
         }
+        /* Filtre global léger pour assombrir un peu la vidéo et aider le texte */
         .overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 6, 16, 0.3); z-index: 1;
+            background: rgba(2, 6, 16, 0.2); /* Très léger, le texte fera le reste */
+            z-index: 1;
         }
 
-        /* 3. CONTENU CENTRAL (Design Amélioré) */
+        /* 3. CONTENU CENTRAL */
         .landing-content {
             position: relative; z-index: 10;
             height: 100%;
@@ -62,46 +64,44 @@
             text-align: center; padding: 20px;
         }
 
-        /* --- LE GROS LOGO CENTRAL --- */
+        /* --- LOGO CENTRAL --- */
         .landing-brand {
             font-family: 'Playfair Display', serif;
-            font-size: 6rem; /* Très gros */
+            font-size: 6rem;
             font-weight: 700;
             color: white;
-            margin-bottom: 10px;
+            margin-bottom: 5px; /* Rapproché du slogan */
             letter-spacing: 5px;
             text-transform: uppercase;
-            /* Ombre portée puissante pour détacher de la vidéo */
-            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            text-shadow: 0 5px 30px rgba(0,0,0,0.8); /* Grosse ombre */
             line-height: 1;
             animation: scaleIn 1.5s cubic-bezier(0.2, 1, 0.3, 1);
         }
 
-        /* LE POINT BLEU (Customisé) */
+        /* POINT BLEU */
         .landing-dot {
-            color: #4aa3df; /* Le Cyan Ortus */
-            font-size: 1em; /* Même taille que le texte, ou mettre 1.2em pour plus gros */
-            text-shadow: 0 0 20px rgba(74, 163, 223, 0.6); /* Petit effet néon */
+            color: #4aa3df;
+            font-size: 1em;
+            text-shadow: 0 0 20px rgba(74, 163, 223, 0.8);
         }
 
-        /* --- LE SLOGAN VENDEUR --- */
+        /* --- SLOGAN SANS CADRE (Style Navbar) --- */
         .landing-tagline {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 600; /* Plus gras pour la lisibilité */
-            color: #D4AF37; /* Or */
+            font-size: 1.1rem;
+            font-weight: 800; /* ULTRA GRAS comme "IMMOBILIER" */
+            color: #FFD700;   /* Or lumineux */
             text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-bottom: 50px;
+            letter-spacing: 5px; /* Très espacé */
+            margin-bottom: 60px;
             
-            /* Fond flou subtil derrière le texte pour garantir la lecture */
-            background: rgba(0, 0, 0, 0.4);
-            padding: 10px 20px;
-            border-radius: 4px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            /* PAS DE CADRE, MAIS UNE OMBRE TEXTE PUISSANTE */
+            background: none;
+            border: none;
+            text-shadow: 
+                0 2px 4px rgba(0,0,0,1),   /* Ombre nette pour le contour */
+                0 0 20px rgba(0,0,0,0.8);  /* Ombre diffuse pour le contraste */
             
-            text-shadow: 0 2px 5px rgba(0,0,0,1);
             opacity: 0;
             animation: fadeInUp 1.5s ease-out 0.5s forwards;
         }
@@ -110,7 +110,7 @@
         .btn-enter {
             padding: 18px 50px;
             border: 1px solid #D4AF37;
-            background: rgba(2, 6, 16, 0.6);
+            background: rgba(2, 6, 16, 0.5); /* Semi-transparent */
             color: white; text-decoration: none;
             font-family: 'Montserrat', sans-serif;
             font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;
@@ -132,14 +132,20 @@
             opacity: 0; animation: fadeInUp 2s ease-out 1.5s forwards;
         }
 
-        /* Animations */
         @keyframes scaleIn { from { opacity: 0; transform: scale(0.9) translateY(-30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- MOBILE --- */
         @media (max-width: 768px) {
-            .landing-brand { font-size: 3.5rem; letter-spacing: 2px; } /* Ajusté pour mobile */
-            .landing-tagline { font-size: 0.85rem; letter-spacing: 2px; padding: 8px 15px; }
+            .landing-brand { font-size: 3.5rem; letter-spacing: 2px; margin-bottom: 10px; } 
+            
+            /* Ajustement Slogan Mobile */
+            .landing-tagline { 
+                font-size: 0.8rem; 
+                letter-spacing: 3px; 
+                line-height: 1.6;
+                padding: 0 20px; /* Marge de sécurité sur les bords */
+            }
             
             /* Menu Mobile Noir & Beau */
             .nav-menu {
