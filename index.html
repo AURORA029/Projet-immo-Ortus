@@ -7,167 +7,188 @@
     
     <meta name="description" content="Agence immobilière de prestige à Madagascar.">
     <meta name="theme-color" content="#020610">
-    
     <meta property="og:image" content="https://aurora029.github.io/Projet-immo-Ortus/assets/img/hero-bg.jpg">
 
+    <link rel="stylesheet" href="assets/css/style.css">
+    
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- CSS SPÉCIFIQUE LANDING (Isolé pour éviter les bugs) --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { height: 100%; overflow: hidden; font-family: 'Montserrat', sans-serif; background: #020610; }
+        /* --- OVERRIDES SPÉCIFIQUES LANDING PAGE --- */
+        
+        /* 1. On force le plein écran et pas de scroll */
+        body, html { 
+            height: 100%; 
+            overflow: hidden; 
+            background-color: #020610; 
+        }
 
-        /* 1. CONTAINER VIDÉO (AVEC IMAGE DE SECOURS FORCÉE) */
-        .video-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            /* L'image de fond est chargée ICI en CSS pour être immédiate */
+        /* 2. NAVBAR TRANSLUCIDE (Glassmorphism) */
+        /* On surcharge ta classe .navbar existante juste pour cette page */
+        .navbar {
+            background-color: transparent !important; /* On enlève le bleu nuit */
+            background: linear-gradient(to bottom, rgba(2,6,16,0.9) 0%, rgba(2,6,16,0) 100%) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+            position: absolute; /* Elle flotte sur la vidéo */
+            top: 0; width: 100%;
+            box-shadow: none !important;
+        }
+
+        /* 3. WRAPPER FOND (Image + Vidéo) */
+        .background-wrapper {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            /* SÉCURITÉ ABSOLUE : L'image se charge via CSS */
             background: url('assets/img/hero-bg.jpg') no-repeat center center;
             background-size: cover;
         }
-        
-        /* La vidéo par dessus l'image */
-        .video-container video {
-            width: 100%; height: 100%; object-fit: cover;
+
+        .background-wrapper video {
             position: absolute; top: 0; left: 0;
-            opacity: 0; /* On la cache au début pour éviter l'écran noir */
-            transition: opacity 1s ease; /* Elle apparaîtra en fondu quand elle sera prête */
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0; /* Cachée au début */
+            transition: opacity 1.5s ease;
         }
         
-        /* Quand la vidéo est chargée (via JS), on ajoute cette classe */
-        .video-loaded { opacity: 0.6 !important; }
+        /* Classe ajoutée par JS quand la vidéo est prête */
+        .video-ready { opacity: 1 !important; }
 
-        /* OVERLAY SOMBRE (Pour lire le texte) */
         .overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(180deg, rgba(2,6,16,0.3) 0%, rgba(2,6,16,0.8) 100%);
-            z-index: 1;
+            background: rgba(2,6,16,0.4); /* Un filtre léger pour la lisibilité */
+            z-index: 0;
         }
 
-        /* --- 2. NAVBAR TRANSLUCIDE (Style Ortus) --- */
-        .landing-nav {
-            position: absolute; top: 0; left: 0; width: 100%;
-            padding: 20px 40px;
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 100; /* Au-dessus de tout */
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            background: linear-gradient(to bottom, rgba(2,6,16,0.8), transparent);
-        }
-
-        .nav-logo {
-            text-decoration: none; display: flex; flex-direction: column; line-height: 1;
-        }
-        .nav-logo .main { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: white; font-weight: 700; letter-spacing: 1px; }
-        .nav-logo .dot { color: #4aa3df; }
-        .nav-logo .sub { color: #D4AF37; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; margin-left: 2px; font-weight: 700; }
-
-        .nav-links { display: flex; gap: 30px; list-style: none; }
-        .nav-links a { color: #e0e0e0; text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-        .nav-links a:hover { color: #D4AF37; }
-        
-        /* Mobile Nav (Simplifiée pour Landing) */
-        @media (max-width: 768px) {
-            .landing-nav { padding: 20px; }
-            .nav-links { display: none; } /* On cache les liens sur mobile pour garder l'effet épuré */
-        }
-
-        /* --- 3. CONTENU CENTRAL --- */
+        /* 4. CONTENU CENTRAL (Centré parfait) */
         .landing-content {
-            position: relative; z-index: 10; height: 100%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; color: white; padding: 20px;
+            position: relative; z-index: 10;
+            height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
+            padding: 20px;
         }
 
-        h1 {
-            font-family: 'Playfair Display', serif; font-size: 4.5rem; margin-bottom: 5px; letter-spacing: 5px;
-            animation: fadeInDown 1.5s ease-out;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
-        .subtitle {
-            font-size: 1rem; color: #D4AF37; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 50px;
-            animation: fadeInUp 1.5s ease-out 0.3s forwards; opacity: 0;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        /* Titre Géant Landing */
+        .landing-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            color: white;
+            margin-bottom: 10px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: slideDown 1.2s ease-out;
         }
 
-        /* BOUTON D'ENTRÉE */
-        .btn-enter {
+        .landing-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            color: #D4AF37;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 50px;
+            animation: slideUp 1.2s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+
+        /* Bouton Explorer (Style Ortus) */
+        .btn-explore {
             padding: 18px 50px;
-            border: 1px solid rgba(212, 175, 55, 0.6);
-            background: rgba(2, 6, 16, 0.4);
-            color: white; text-decoration: none;
-            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;
-            backdrop-filter: blur(10px); border-radius: 50px;
+            border: 1px solid #D4AF37;
+            background: rgba(2, 6, 16, 0.6);
+            backdrop-filter: blur(5px);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            border-radius: 50px;
             transition: all 0.4s ease;
-            animation: fadeInUp 1.5s ease-out 0.8s forwards; opacity: 0;
-            display: flex; align-items: center; gap: 10px;
-        }
-        .btn-enter:hover {
-            background: #D4AF37; color: #020610; border-color: #D4AF37;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5); transform: translateY(-3px);
+            animation: slideUp 1.2s ease-out 0.6s forwards;
+            opacity: 0;
         }
 
-        /* FOOTER */
-        .landing-footer {
-            position: absolute; bottom: 30px; width: 100%; text-align: center; z-index: 10;
-            font-size: 0.7rem; color: rgba(255,255,255,0.5); animation: fadeInUp 2s ease-out 1.5s forwards; opacity: 0;
+        .btn-explore:hover {
+            background: #D4AF37;
+            color: #020610;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+            transform: translateY(-3px);
         }
 
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @media (max-width: 768px) { h1 { font-size: 3rem; } }
+        /* 5. GESTION MENU MOBILE (Important !) */
+        /* Quand le menu est ouvert sur mobile, il faut un fond opaque */
+        @media (max-width: 768px) {
+            .nav-menu { background-color: #020610 !important; }
+            .landing-title { font-size: 3rem; }
+            .landing-subtitle { font-size: 0.8rem; letter-spacing: 2px; }
+        }
+
+        @keyframes slideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <nav class="landing-nav">
-        <a href="#" class="nav-logo">
-            <span class="main">ORTUS<span class="dot">.</span></span>
-            <span class="sub">IMMOBILIER</span>
-        </a>
-        <ul class="nav-links">
-            <li><a href="accueil.html">Entrer</a></li>
-            <li><a href="accueil.html">Vente</a></li>
-            <li><a href="accueil.html">Location</a></li>
-        </ul>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="accueil.html" class="logo-container">
+                <span class="logo-main">ORTUS<span class="dot">.</span></span>
+                <span class="logo-sub">IMMOBILIER</span>
+            </a>
+            
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="accueil.html" class="nav-link">Accueil</a></li>
+                <li><a href="accueil.html" class="nav-link">Vente</a></li>
+                <li><a href="accueil.html" class="nav-link">Location</a></li>
+                <li><a href="prestige.html" class="nav-link nav-link-prestige"><i class="fas fa-crown"></i> Prestige</a></li>
+                <li><a href="accueil.html#contact" class="btn-contact">Contact</a></li>
+            </ul>
+        </div>
     </nav>
 
-    <div class="video-container">
-        <video id="heroVideo" autoplay muted loop playsinline poster="assets/img/hero-bg.jpg">
+    <div class="background-wrapper">
+        <video id="landingVideo" autoplay muted loop playsinline poster="assets/img/hero-bg.jpg">
             <source src="assets/img/hero-video.mp4" type="video/mp4">
         </video>
+        <div class="overlay"></div>
     </div>
 
-    <div class="overlay"></div>
-
     <div class="landing-content">
-        <h1>ORTUS</h1>
-        <p class="subtitle">L'Art de Vivre à Madagascar</p>
+        <h1 class="landing-title">ORTUS</h1>
+        <p class="landing-subtitle">L'Art de Vivre à Madagascar</p>
         
-        <a href="accueil.html" class="btn-enter">
-            Explorer le site <i class="fas fa-arrow-right"></i>
+        <a href="accueil.html" class="btn-explore">
+            Explorer le site
         </a>
     </div>
 
-    <div class="landing-footer">
-        &copy; 2026 ORTUS Immobilier.
-    </div>
+    <script src="assets/js/main.js"></script>
 
     <script type="text/javascript">
-        // 1. SCRIPT VIDÉO ROBUSTE
+        // 1. Script "Force Play" pour la vidéo
         document.addEventListener('DOMContentLoaded', function() {
-            var video = document.getElementById('heroVideo');
+            var video = document.getElementById('landingVideo');
             
-            // On essaie de lancer la vidéo
-            var playPromise = video.play();
-
-            if (playPromise !== undefined) {
-                playPromise.then(function() {
-                    // Ça marche ! On affiche la vidéo
-                    video.classList.add('video-loaded');
+            // On tente de lancer la vidéo
+            var promise = video.play();
+            
+            if (promise !== undefined) {
+                promise.then(function() {
+                    // Succès : on affiche la vidéo en fondu
+                    video.classList.add('video-ready');
                 }).catch(function(error) {
-                    // Échec (iPhone en mode éco, etc.)
-                    console.log("Lecture auto bloquée, affichage image de fond.");
-                    // On ne fait rien, le CSS background-image est déjà là !
+                    // Échec (iPhone Eco Mode) : on ne fait rien.
+                    // Le CSS .background-wrapper montre déjà l'image de fond !
+                    console.log("Autoplay bloqué, fallback sur image.");
                 });
             }
         });
@@ -177,7 +198,7 @@
             window.$crisp=[]; window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";
             (function(){ d=document; s=d.createElement("script"); s.src="https://client.crisp.chat/l.js"; s.async=1; d.getElementsByTagName("head")[0].appendChild(s); })();
         });
-        
+
         // 3. PWA
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./sw.js');
