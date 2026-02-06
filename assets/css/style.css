@@ -1270,19 +1270,28 @@ p {
 .home-hero {
     position: relative !important;
     width: 100% !important;
-    height: 100vh !important;
-    min-height: 600px !important;
+    
+    /* On garantit que ça prend tout l'écran, mais peut s'étendre si besoin */
+    min-height: 100vh !important;
+    height: auto !important; 
+    
     display: flex !important;
+    flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    background: #020610 !important;
-    /* Fond noir */
-    background-image: none !important;  <--- C'EST CETTE LIGNE QUI TUE TON IMAGE
-    /* On tue l'image JUSTE ici */
+    
+    /* LE FIX : On crée un "coussin" en haut pour que la Navbar ne mange pas le titre */
+    /* Navbar (70px) + Sécurité (20px) = 90px */
+    padding-top: 90px !important;
+    padding-bottom: 30px !important; /* Un peu d'air en bas aussi */
+    
+    /* RESTAURATION DE L'IMAGE DE FOND (Vital !) */
+    background: url('../img/hero-bg.jpg') no-repeat center center !important;
+    background-size: cover !important;
+    
+    overflow: visible !important;
 }
+
 
 /* 2. LA VIDÉO (Reste identique) */
 .hero-video-bg {
