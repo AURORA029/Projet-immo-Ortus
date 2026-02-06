@@ -85,22 +85,31 @@
             text-shadow: 0 0 20px rgba(74, 163, 223, 0.8);
         }
 
-        /* --- SLOGAN SANS CADRE (Style Navbar) --- */
+        /* --- SLOGAN AVEC LA MAGIE DU STYLE.CSS --- */
         .landing-tagline {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 800; /* ULTRA GRAS comme "IMMOBILIER" */
-            color: #FFD700;   /* Or lumineux */
-            text-transform: uppercase;
-            letter-spacing: 5px; /* Très espacé */
-            margin-bottom: 60px;
+            /* 1. La Police Magique */
+            font-family: 'Montserrat', sans-serif; 
             
-            /* PAS DE CADRE, MAIS UNE OMBRE TEXTE PUISSANTE */
-            background: none;
-            border: none;
-            text-shadow: 
-                0 2px 4px rgba(0,0,0,1),   /* Ombre nette pour le contour */
-                0 0 20px rgba(0,0,0,0.8);  /* Ombre diffuse pour le contraste */
+            /* 2. La Couleur OR Lumineux (#FFD700 du CSS) */
+            color: #FFD700;   
+            
+            /* 3. La Graisse (700 = Bold, comme dans ton screen) */
+            font-weight: 700; 
+            
+            /* 4. Le Style */
+            text-transform: uppercase;
+            
+            /* 5. L'espacement (Un peu plus large ici pour faire cinéma) */
+            letter-spacing: 3px; 
+            
+            margin-bottom: 60px;
+            background: none; border: none;
+            
+            /* 6. L'Ombre (Le secret de la lisibilité sur vidéo) */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9);  
+            
+            /* Taille ajustée pour un slogan (logo-sub était 0.75rem, ici on met plus gros) */
+            font-size: 1.1rem;
             
             opacity: 0;
             animation: fadeInUp 1.5s ease-out 0.5s forwards;
@@ -141,10 +150,10 @@
             
             /* Ajustement Slogan Mobile */
             .landing-tagline { 
-                font-size: 0.8rem; 
-                letter-spacing: 3px; 
+                font-size: 0.85rem; /* Un peu plus grand que le logo nav mobile */
+                letter-spacing: 2px; 
                 line-height: 1.6;
-                padding: 0 20px; /* Marge de sécurité sur les bords */
+                padding: 0 20px;
             }
             
             /* Menu Mobile Noir & Beau */
