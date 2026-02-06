@@ -1278,8 +1278,10 @@ p {
     overflow: hidden !important;
     padding: 0 !important;
     margin: 0 !important;
-    background: #020610 !important; /* Fond noir */
-    background-image: none !important; /* On tue l'image JUSTE ici */
+    background: #020610 !important;
+    /* Fond noir */
+    background-image: none !important;  <--- C'EST CETTE LIGNE QUI TUE TON IMAGE
+    /* On tue l'image JUSTE ici */
 }
 
 /* 2. LA VIDÉO (Reste identique) */
@@ -1325,6 +1327,7 @@ p {
         margin-bottom: 10px !important;
     }
 }
+
 /* ==========================================================================
    FORMULAIRE TECH 2026 (CORRECTIF FINAL & ABSOLU)
    ========================================================================== */
