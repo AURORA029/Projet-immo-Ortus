@@ -15,126 +15,106 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- CORRECTION DU CONFLIT CSS --- */
+        /* --- CSS SPÉCIFIQUE LANDING PAGE --- */
         
         body, html { 
             height: 100%; 
             overflow: hidden; 
-            background-color: #020610; /* Fond noir de sécurité */
+            background-color: #020610; 
             margin: 0; padding: 0;
-            
-            /* CRUCIAL : On désactive l'image de fond "Galaxie" de style.css */
+            /* CRUCIAL : On désactive l'image de fond "Galaxie" de style.css pour éviter les conflits */
             background-image: none !important; 
         }
 
-        /* 1. NAVBAR TRANSLUCIDE (Glassmorphism) */
+        /* 1. NAVBAR (Glassmorphism & Position) */
         .navbar {
-            /* On écrase la couleur bleue de style.css */
             background-color: transparent !important; 
-            /* On ajoute le dégradé sombre vers transparent */
+            /* Dégradé subtil pour lisibilité du logo */
             background: linear-gradient(to bottom, rgba(2,6,16,0.9) 0%, rgba(2,6,16,0) 100%) !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-            position: absolute !important; /* Elle flotte sur la vidéo */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+            position: absolute !important;
             top: 0; left: 0; width: 100%;
             box-shadow: none !important;
             z-index: 1000 !important;
         }
 
-        /* Pour que les liens soient bien blancs sur la vidéo */
-        .nav-link {
-            color: rgba(255,255,255,0.9) !important;
-        }
-        .nav-link:hover {
-            color: #D4AF37 !important;
-        }
+        /* Liens du menu Desktop */
+        .nav-link { color: rgba(255,255,255,0.9) !important; }
+        .nav-link:hover { color: #D4AF37 !important; }
 
-        /* 2. ZONE VIDÉO (Z-INDEX CORRIGÉ) */
+        /* 2. ZONE VIDÉO & FOND (CORRECTION SUPERPOSITION) */
         .landing-hero {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            /* On met 0 pour être sûr qu'il est DEVANT le body mais DERRIÈRE le texte */
             z-index: 0; 
-            /* IMAGE DE SECOURS (Fond CSS qui s'affiche si la vidéo plante) */
+            /* IMAGE DE SECOURS (Fond CSS) */
             background: url('assets/img/hero-bg.jpg') no-repeat center center;
             background-size: cover;
         }
 
         .hero-video-bg {
             position: absolute;
-            top: 50%; left: 50%;
-            min-width: 100%; min-height: 100%;
-            width: auto; height: auto;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
+            top: 0; left: 0;
+            width: 100%; height: 100%; /* Prend toute la place du conteneur */
+            object-fit: cover; /* Recouvre parfaitement sans déformation */
             z-index: 0;
+            /* On retire les anciens hacks de centrage qui cassaient l'affichage */
         }
 
-        /* Le filtre sombre pour lire le texte */
+        /* Filtre sombre */
         .overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 6, 16, 0.3); /* Filtre léger */
+            background: rgba(2, 6, 16, 0.3);
             z-index: 1;
         }
 
         /* 3. CONTENU CENTRAL */
         .landing-content {
-            position: relative; 
-            z-index: 10; /* Bien au-dessus de la vidéo (0) */
+            position: relative; z-index: 10;
             height: 100%;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            text-align: center;
-            padding: 20px;
+            text-align: center; padding: 20px;
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
             font-size: 5rem;
-            color: white;
-            margin-bottom: 10px;
-            letter-spacing: 5px;
-            text-transform: uppercase;
+            color: white; margin-bottom: 10px;
+            letter-spacing: 5px; text-transform: uppercase;
             text-shadow: 0 5px 15px rgba(0,0,0,0.5);
             animation: fadeInDown 1.5s ease-out;
         }
 
         .subtitle {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.1rem;
-            color: #D4AF37;
-            text-transform: uppercase;
-            letter-spacing: 4px;
+            font-size: 1.1rem; color: #D4AF37;
+            text-transform: uppercase; letter-spacing: 4px;
             margin-bottom: 50px;
             text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-            opacity: 0;
-            animation: fadeInUp 1.5s ease-out 0.5s forwards;
+            opacity: 0; animation: fadeInUp 1.5s ease-out 0.5s forwards;
         }
 
-        /* Bouton Entrer */
+        /* Bouton */
         .btn-enter {
             padding: 18px 50px;
             border: 1px solid #D4AF37;
             background: rgba(2, 6, 16, 0.4);
-            color: white; 
+            color: white; text-decoration: none;
             font-family: 'Montserrat', sans-serif;
             font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;
-            text-decoration: none;
-            backdrop-filter: blur(5px); 
-            border-radius: 50px;
+            backdrop-filter: blur(5px); border-radius: 50px;
             transition: all 0.4s ease;
-            opacity: 0;
-            animation: fadeInUp 1.5s ease-out 1s forwards;
+            opacity: 0; animation: fadeInUp 1.5s ease-out 1s forwards;
             display: flex; align-items: center; gap: 10px;
         }
-
         .btn-enter:hover {
-            background: #D4AF37; color: #020610; 
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5); 
-            transform: translateY(-3px);
+            background: #D4AF37; color: #020610;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5); transform: translateY(-3px);
         }
 
-        /* Footer discret */
+        /* Footer */
         .landing-footer {
             position: absolute; bottom: 30px; width: 100%; text-align: center; z-index: 10;
             font-size: 0.7rem; color: rgba(255,255,255,0.6);
@@ -144,11 +124,33 @@
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Responsive Mobile */
+        /* --- 4. RESPONSIVE MOBILE --- */
         @media (max-width: 768px) {
             h1 { font-size: 3rem; }
             .subtitle { font-size: 0.8rem; letter-spacing: 2px; }
-            .nav-menu { background-color: #020610 !important; } /* Fond noir pour le menu mobile */
+            
+            /* MENU MOBILE GLASSMORPHISM LUXE */
+            .nav-menu {
+                background-color: rgba(2, 6, 16, 0.85) !important; /* Noir transparent */
+                backdrop-filter: blur(15px) !important; /* Flou intense style iOS */
+                -webkit-backdrop-filter: blur(15px) !important;
+                border-left: 1px solid rgba(212, 175, 55, 0.1); /* Fine ligne Or sur le côté */
+                padding-top: 80px !important; /* Espace pour le header */
+            }
+            
+            /* Ajustement des liens dans le menu mobile */
+            .nav-menu li {
+                margin: 25px 0 !important;
+                opacity: 0; /* Pour l'animation d'entrée */
+                animation: fadeInUp 0.5s ease-out forwards;
+            }
+            /* Petit délai pour chaque lien (effet cascade) */
+            .nav-menu li:nth-child(1) { animation-delay: 0.1s; }
+            .nav-menu li:nth-child(2) { animation-delay: 0.2s; }
+            .nav-menu li:nth-child(3) { animation-delay: 0.3s; }
+            .nav-menu li:nth-child(4) { animation-delay: 0.4s; }
+            .nav-menu li:nth-child(5) { animation-delay: 0.5s; }
+            .nav-menu li:nth-child(6) { animation-delay: 0.6s; }
         }
     </style>
 </head>
@@ -180,7 +182,6 @@
     <div class="landing-hero">
         <video autoplay muted loop playsinline class="hero-video-bg" poster="assets/img/hero-bg.jpg" id="bgvid">
             <source src="assets/img/hero-video.mp4" type="video/mp4">
-            <img src="assets/img/hero-bg.jpg" alt="Fond Immobilier" style="width:100%; height:100%; object-fit:cover;">
         </video>
         
         <div class="overlay"></div>
@@ -207,7 +208,7 @@
             var vid = document.getElementById('bgvid');
             if(vid) {
                 vid.play().catch(function(error) {
-                    console.log("Autoplay bloqué, l'image de poster prend le relais.");
+                    console.log("Autoplay bloqué, l'image de poster (CSS) prend le relais.");
                 });
             }
         });
