@@ -2,6 +2,7 @@ const CACHE_NAME = 'ortus-v8';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
+  './accueil.html',
   './biens.html',
   './prestige.html',
   './services.html',
