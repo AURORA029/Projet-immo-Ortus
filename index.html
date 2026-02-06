@@ -15,33 +15,47 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- CSS SPÉCIFIQUE LANDING PAGE --- */
+        /* --- CORRECTION DU CONFLIT CSS --- */
         
         body, html { 
             height: 100%; 
             overflow: hidden; 
-            background-color: #020610; 
+            background-color: #020610; /* Fond noir de sécurité */
             margin: 0; padding: 0;
+            
+            /* CRUCIAL : On désactive l'image de fond "Galaxie" de style.css */
+            background-image: none !important; 
         }
 
-        /* 1. OVERRIDE NAVBAR (Pour la rendre Transparente/Glass) */
+        /* 1. NAVBAR TRANSLUCIDE (Glassmorphism) */
         .navbar {
-            background-color: transparent !important; /* On annule le fond bleu */
-            background: linear-gradient(to bottom, rgba(2,6,16,0.8) 0%, rgba(2,6,16,0) 100%) !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+            /* On écrase la couleur bleue de style.css */
+            background-color: transparent !important; 
+            /* On ajoute le dégradé sombre vers transparent */
+            background: linear-gradient(to bottom, rgba(2,6,16,0.9) 0%, rgba(2,6,16,0) 100%) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
             position: absolute !important; /* Elle flotte sur la vidéo */
             top: 0; left: 0; width: 100%;
             box-shadow: none !important;
-            backdrop-filter: blur(2px); /* Léger flou */
+            z-index: 1000 !important;
         }
 
-        /* 2. STYLE VIDÉO (Méthode de l'ancien Index) */
+        /* Pour que les liens soient bien blancs sur la vidéo */
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+        }
+        .nav-link:hover {
+            color: #D4AF37 !important;
+        }
+
+        /* 2. ZONE VIDÉO (Z-INDEX CORRIGÉ) */
         .landing-hero {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: -1;
-            /* IMAGE DE SECOURS (Fond CSS) */
+            /* On met 0 pour être sûr qu'il est DEVANT le body mais DERRIÈRE le texte */
+            z-index: 0; 
+            /* IMAGE DE SECOURS (Fond CSS qui s'affiche si la vidéo plante) */
             background: url('assets/img/hero-bg.jpg') no-repeat center center;
             background-size: cover;
         }
@@ -59,13 +73,14 @@
         /* Le filtre sombre pour lire le texte */
         .overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 6, 16, 0.4); /* Filtre léger */
+            background: rgba(2, 6, 16, 0.3); /* Filtre léger */
             z-index: 1;
         }
 
         /* 3. CONTENU CENTRAL */
         .landing-content {
-            position: relative; z-index: 10;
+            position: relative; 
+            z-index: 10; /* Bien au-dessus de la vidéo (0) */
             height: 100%;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
@@ -96,7 +111,7 @@
             animation: fadeInUp 1.5s ease-out 0.5s forwards;
         }
 
-        /* Bouton Entrer (Style Ortus) */
+        /* Bouton Entrer */
         .btn-enter {
             padding: 18px 50px;
             border: 1px solid #D4AF37;
@@ -126,7 +141,6 @@
             opacity: 0; animation: fadeInUp 2s ease-out 1.5s forwards;
         }
 
-        /* Animations */
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -134,8 +148,7 @@
         @media (max-width: 768px) {
             h1 { font-size: 3rem; }
             .subtitle { font-size: 0.8rem; letter-spacing: 2px; }
-            /* Sur mobile, on remet un fond noir au menu déroulant pour qu'il soit lisible */
-            .nav-menu { background-color: #020610 !important; }
+            .nav-menu { background-color: #020610 !important; } /* Fond noir pour le menu mobile */
         }
     </style>
 </head>
@@ -154,7 +167,6 @@
 
             <ul class="nav-menu">
                 <li><a href="accueil.html" class="nav-link">Accueil</a></li>
-                
                 <li><a href="biens.html?filtre=all" class="nav-link">Nos Biens</a></li>
                 <li><a href="services.html" class="nav-link">Services</a></li>
                 <li><a href="vendre.html" class="nav-link">Propriétaires</a></li>
@@ -168,7 +180,7 @@
     <div class="landing-hero">
         <video autoplay muted loop playsinline class="hero-video-bg" poster="assets/img/hero-bg.jpg" id="bgvid">
             <source src="assets/img/hero-video.mp4" type="video/mp4">
-            <img src="assets/img/hero-bg.jpg" alt="Immobilier Luxe Madagascar" style="width:100%; height:100%; object-fit:cover;">
+            <img src="assets/img/hero-bg.jpg" alt="Fond Immobilier" style="width:100%; height:100%; object-fit:cover;">
         </video>
         
         <div class="overlay"></div>
@@ -187,22 +199,26 @@
         &copy; 2026 ORTUS Immobilier.
     </div>
 
-    <script src="assets/js/main.js"></script> <script type="text/javascript">
-        // 1. Script de forçage vidéo (Sécurité supplémentaire)
+    <script src="assets/js/main.js"></script> 
+    
+    <script type="text/javascript">
+        // Force Play Vidéo
         document.addEventListener('DOMContentLoaded', function() {
             var vid = document.getElementById('bgvid');
-            vid.play().catch(function(error) {
-                console.log("Lecture auto bloquée par le navigateur (Mode Eco), l'image prend le relais.");
-            });
+            if(vid) {
+                vid.play().catch(function(error) {
+                    console.log("Autoplay bloqué, l'image de poster prend le relais.");
+                });
+            }
         });
 
-        // 2. Chat CRISP
+        // Chat CRISP
         window.addEventListener('load', function() {
             window.$crisp=[]; window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";
             (function(){ d=document; s=d.createElement("script"); s.src="https://client.crisp.chat/l.js"; s.async=1; d.getElementsByTagName("head")[0].appendChild(s); })();
         });
 
-        // 3. PWA
+        // PWA
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./sw.js');
         }
