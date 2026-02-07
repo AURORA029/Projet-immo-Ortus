@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://aurora029.github.io/Projet-immo-Ortus/sitemap.xml
