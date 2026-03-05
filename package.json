@@ -27,6 +27,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.0",
     "google-spreadsheet": "^5.2.0"
   }
 }
