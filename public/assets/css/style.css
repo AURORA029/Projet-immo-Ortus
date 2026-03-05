@@ -523,7 +523,7 @@ html, body {
     color: var(--accent-gold); 
     font-size: 3.1rem !important; /*taille du point */
 }
-}
+
 
 .footer-col h4 {
     color: var(--text-white);
