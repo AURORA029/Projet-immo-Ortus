@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Récupère l'ID dans l'URL et charge les données correspondantes depuis le Google Sheet.
+ * Récupère l'ID dans l'URL et charge les données correspondantes depuis yes le Google Sheet.
  */
 async function fetchPropertyDetail() {
     const urlParams = new URLSearchParams(window.location.search);
