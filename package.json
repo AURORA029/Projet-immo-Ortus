@@ -1,0 +1,32 @@
+{
+  "name": "projet-immo-ortus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AURORA029/Projet-immo-Ortus.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AURORA029/Projet-immo-Ortus/issues"
+  },
+  "homepage": "https://github.com/AURORA029/Projet-immo-Ortus#readme",
+  "devDependencies": {
+    "@types/node": "^25.3.3",
+    "astro": "^5.18.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "google-spreadsheet": "^5.2.0"
+  }
+}

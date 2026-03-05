@@ -1,0 +1,287 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { getProperties } from '../utils/googleSheets.js';
+
+// Récupération des données au build
+const properties = await getProperties();
+// Sélection des 3 derniers biens ajoutés (ordre chronologique inverse), exactement comme dans home.js
+const featuredProperties = properties.reverse().slice(0, 3);
+---
+
+<MainLayout title="ORTUS Immobilier | Tableau de Bord" description="Agence immobilière de prestige à Madagascar. Villas de luxe, terrains titrés et investissements sécurisés. Découvrez nos opportunités exclusives.">
+    
+    <style>
+        .home-hero {
+            background: url('/assets/img/hero-bg.jpg') no-repeat center center/cover;
+            position: relative;
+        }
+        .nav-link-prestige {
+            color: #D4AF37 !important; display: flex; align-items: center;
+            gap: 6px; font-weight: 600; animation: prestigePulse 3s infinite ease-in-out;
+        }
+        @keyframes prestigePulse {
+            0% { color: #D4AF37; text-shadow: none; }
+            50% { color: #FFF8DC; text-shadow: 0 0 10px rgba(212, 175, 55, 0.8), 0 0 2px #fff; }
+            100% { color: #D4AF37; text-shadow: none; }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(255, 255, 255, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+    </style>
+
+    <header class="hero home-hero">
+        <div class="hero-overlay"></div> 
+        <div class="container hero-content">
+            <h1 class="animate-text" style="font-family:'Playfair Display', serif;">Créateur d'Opportunités</h1>
+            <p class="animate-text delay-1" style="font-family:'Montserrat', sans-serif;">Trouvez le bien immobilier qui correspond à vos rêves.</p>
+
+            <div class="animate-up delay-2">
+                <form action="/biens" method="GET" class="glass-tech-2026" style="padding: 25px; border-radius: 15px; display: flex; flex-direction: column; gap: 20px; max-width: 450px; margin: 0 auto;">
+                    <input type="hidden" name="mode" id="search-mode" value="vente">
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <button type="button" onclick="setSearchMode('vente')" id="btn-vente" style="flex: 1; padding: 10px; border: 1px solid #D4AF37; background: #D4AF37; color: #020610; font-family: 'Montserrat', sans-serif; font-weight: 700; border-radius: 5px; cursor: pointer; transition: 0.3s;">ACHETER</button>
+                        <button type="button" onclick="setSearchMode('location')" id="btn-location" style="flex: 1; padding: 10px; border: 1px solid #ccc; background: transparent; color: #888; font-family: 'Montserrat', sans-serif; font-weight: 600; border-radius: 5px; cursor: pointer; transition: 0.3s;">LOUER</button>
+                    </div>
+
+                    <div class="glass-input-group">
+                       <i class="fas fa-map-marker-alt"></i>
+                       <input type="text" name="filtre" placeholder="Ville, Quartier, Type...">
+                    </div>
+
+                    <div style="padding: 0 5px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #666; margin-bottom: 5px;">
+                            <span>Budget Max :</span>
+                            <span id="home-budget-display" style="color: #D4AF37; font-weight: bold;">Tout afficher</span>
+                        </div>
+                        <input type="range" name="budget" id="budget-slider" min="0" max="5000000000" step="25000000" value="5000000000" oninput="updateHomeBudget(this.value)" style="width: 100%; accent-color: #D4AF37; cursor: pointer;">
+                    </div>
+
+                    <button type="submit" style="background: #020610; color: white; border: none; padding: 15px; border-radius: 5px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <i class="fas fa-search"></i> RECHERCHER
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <section class="section-padding" style="background-color: #020610; color: white; border-top: 1px solid #333;">
+        <div class="container">
+            <h2 class="section-title text-center" style="color: white; margin-bottom: 40px;">
+                Nos biens <span style="color: #D4AF37;">à la une</span>
+            </h2>
+            
+            <div id="featured-container" class="properties-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;">
+                {featuredProperties.map((p, index) => {
+                    const delay = index * 150;
+                    const isPrestige = p.gamme && p.gamme.toLowerCase().includes('prestige');
+                    const categorieBien = (p.categorie || "").toLowerCase();
+                    const typeAction = categorieBien.includes('loc') ? "LOCATION" : "VENTE";
+                    
+                    // Indicateur de popularité (calculé au build)
+                    const viewers = Math.floor(Math.random() * (5 - 2 + 1)) + 2;
+
+                    // Liste des atouts
+                    const features = p.caracteristiques ? p.caracteristiques.replace(/\n/g, ',').split(',').map(f => f.trim()).filter(f => f).slice(0, 3) : [];
+
+                    // Image sécurisée
+                    const imgSrc = p.image && p.image.startsWith('http') ? p.image : `/${p.image || 'assets/img/hero-bg.jpg'}`;
+
+                    return (
+                        <div class="property-card" style={`background-color: #FFFFFF !important; border: 1px solid #ddd !important; border-radius: 12px; overflow: hidden; margin-bottom: 25px; position: relative; opacity: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.05); animation: fadeUp 0.8s ease-out ${delay}ms forwards;`}>
+                            
+                            <div class="property-image" style="height:250px; position:relative; overflow:hidden;">
+                                {isPrestige && (
+                                    <span style="position:absolute; top:15px; left:15px; background:#D4AF37; color:black; padding:6px 12px; font-weight:800; font-size:0.75rem; border-radius:4px; z-index:10; box-shadow: 0 2px 5px rgba(0,0,0,0.3); letter-spacing:1px;">PRESTIGE</span>
+                                )}
+                                
+                                <span class="badge-status" style="position: absolute; top: 15px; right: 15px; background-color: #000; color: #fff !important; border: 1px solid #D4AF37; padding: 5px 10px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; border-radius: 4px; z-index: 10;">
+                                    {typeAction}
+                                </span>
+
+                                {typeAction === 'VENTE' && (
+                                    <div style="position:absolute; bottom:10px; right:10px; background:rgba(220, 20, 60, 0.95); color:white; font-size:0.75rem; padding:6px 12px; border-radius:20px; display:flex; align-items:center; gap:6px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); z-index:10; font-weight:700;">
+                                        <span style="width:8px; height:8px; background:white; border-radius:50%; animation: pulse 1.5s infinite;"></span>
+                                        {viewers} intéressés
+                                    </div>
+                                )}
+                                
+                                <a href={`/biens/${p.id}`}>
+                                    <img src={imgSrc} alt={p.titre} style="width:100%; height:100%; object-fit:cover; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
+                                </a>
+                            </div>
+                            
+                            <div class="property-details" style="padding: 25px;">
+                                <h3 style="margin-top:0; margin-bottom:8px;">
+                                    <a href={`/biens/${p.id}`} style="text-decoration:none; color: #111 !important; font-family:'Playfair Display', serif; font-size:1.4rem; display:block;">{p.titre}</a>
+                                </h3>
+                                
+                                <p style="color: #666 !important; font-size:0.9rem; margin-bottom:15px; display:flex; align-items:center;">
+                                    <i class="fas fa-map-marker-alt" style="color:#D4AF37 !important; margin-right:8px;"></i> 
+                                    {p.ville}
+                                </p>
+                                
+                                <div style="display:flex; gap:20px; margin-bottom:15px; padding-bottom:15px; border-bottom:1px solid #eee; color:#444;">
+                                    <span title="Pièces"><i class="fas fa-door-open" style="color:#D4AF37;"></i> {p.pieces || p.lits || '?'} p.</span>
+                                    <span title="Surface"><i class="fas fa-ruler-combined" style="color:#D4AF37;"></i> {p.surface} m²</span>
+                                </div>
+                                
+                                <div style="color: #D4AF37; font-weight:800; font-size:1.5rem; margin-bottom:15px;" set:html={p.prix}></div>
+
+                                {features.length > 0 && (
+                                    <ul style="list-style:none; padding:0; margin-bottom:20px;">
+                                        {features.map(f => (
+                                            <li style="color: #555; margin-bottom: 6px; display:flex; align-items:center; font-size:0.85rem;">
+                                                <i class="fas fa-check" style="color:#D4AF37; margin-right:8px; font-size:0.7rem;"></i> {f}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                                
+                                <div style="display:flex; gap:10px;">
+                                    <a href={`/biens/${p.id}`} style="flex:1; text-align:center; padding:12px; background:white; border:1px solid #111; color:#111; text-decoration:none; font-weight:bold; font-size:0.9rem; transition:0.3s; border-radius:4px;" onmouseover="this.style.background='#111'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='#111'">
+                                        Voir détails
+                                    </a>
+                                    <a href={`/biens/${p.id}#contact`} style="flex:1; text-align:center; padding:12px; background:#D4AF37; color:black; border:none; font-weight:bold; font-size:0.9rem; border-radius:4px; text-decoration:none;">
+                                        Contact
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="/biens" class="btn-primary" style="background: transparent; border: 1px solid #D4AF37; color: #D4AF37; padding: 15px 30px; text-decoration: none; transition: 0.3s;" onmouseover="this.style.background='#D4AF37'; this.style.color='black'" onmouseout="this.style.background='transparent'; this.style.color='#D4AF37'">
+                    VOIR TOUS LES BIENS
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="promo-section section-padding">
+        <div class="container">
+            <div class="promo-grid">
+                <div class="promo-card card-prestige">
+                    <div class="promo-overlay">
+                        <h3>En quête de l'exceptionnel ?</h3>
+                        <p>Découvrez notre sélection "Ortus Prestige". Des biens rares pour des clients exigeants.</p>
+                        <a href="/prestige" class="btn-promo">Explorer la collection</a>
+                    </div>
+                </div>
+                <div class="promo-card card-career">
+                    <div class="promo-overlay">
+                        <h3>Votre avenir commence ici</h3>
+                        <p>Vous avez la passion de l'immobilier ? Rejoignez la constellation Ortus.</p>
+                        <a href="/recrutement" class="btn-promo">Voir nos offres</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="estimation-section section-padding">
+        <div class="container">
+            <div class="estimation-banner">
+                <div class="estimation-content">
+                    <h2>Vous souhaitez connaître la valeur de votre bien ?</h2>
+                    <p>Une estimation précise est la clé d'une vente réussie.</p>
+                </div>
+                <div class="estimation-action">
+                    <a href="/vendre" class="btn-estimation">
+                        <span>Estimer mon bien</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" style="background-color: #020610;">
+        <div class="container">
+            <div class="section-title">
+                <h2 style="color: #ffffff; letter-spacing: 2px; text-transform: uppercase;">L'Excellence Ortus</h2>
+                <p style="color: #D4AF37; font-style: italic; margin-top: 10px;">La satisfaction de nos clients est notre plus belle signature.</p>
+            </div>
+            <div class="properties-grid">
+                <div class="info-card" style="flex-direction: column; padding: 40px 30px; background: linear-gradient(145deg, #0a1120, #050912); border: 1px solid rgba(212, 175, 55, 0.4); text-align: center;">
+                    <div style="color: #D4AF37; margin-bottom: 20px;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p style="font-family: 'Georgia', serif; font-style: italic; color: #e0e0e0; margin-bottom: 25px;">"Une équipe d'une efficacité redoutable. J'ai vendu ma villa à Amborovy en moins de 3 mois."</p>
+                    <h4 style="color: #D4AF37; font-size: 0.8rem; text-transform: uppercase;">— Marc R.</h4>
+                </div>
+                <div class="info-card" style="flex-direction: column; padding: 40px 30px; background: linear-gradient(145deg, #0a1120, #050912); border: 1px solid rgba(212, 175, 55, 0.4); text-align: center;">
+                    <div style="color: #D4AF37; margin-bottom: 20px;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p style="font-family: 'Georgia', serif; font-style: italic; color: #e0e0e0; margin-bottom: 25px;">"Ortus a su trouver le local commercial parfait. Un suivi juridique impeccable."</p>
+                    <h4 style="color: #D4AF37; font-size: 0.8rem; text-transform: uppercase;">— Sarah L.</h4>
+                </div>
+                <div class="info-card" style="flex-direction: column; padding: 40px 30px; background: linear-gradient(145deg, #0a1120, #050912); border: 1px solid rgba(212, 175, 55, 0.4); text-align: center;">
+                    <div style="color: #D4AF37; margin-bottom: 20px;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                    <p style="font-family: 'Georgia', serif; font-style: italic; color: #e0e0e0; margin-bottom: 25px;">"Service conciergerie au top. Je reçois mes loyers sans m'occuper de rien."</p>
+                    <h4 style="color: #D4AF37; font-size: 0.8rem; text-transform: uppercase;">— Hery A.</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" style="background-color: #f9f9f9; padding: 60px 0; border-top: 1px solid #eee;">
+        <div class="container" style="max-width: 900px; margin: 0 auto; font-family: 'Montserrat', sans-serif;">
+            
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #020610; margin-bottom: 10px;">
+                    ORTUS : Votre Agence Immobilière de Référence à Madagascar
+                </h2>
+                <div style="width: 60px; height: 2px; background: #D4AF37; margin: 0 auto;"></div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; line-height: 1.8; font-size: 0.95rem;">
+                <div>
+                    <h3 style="font-size: 1.1rem; color: #020610; margin-bottom: 10px;">Expertise Locale et Standards Internationaux</h3>
+                    <p style="color: #333;">
+                        Spécialiste de l'immobilier à <strong>Antananarivo</strong> et en province, ORTUS accompagne les propriétaires, investisseurs et expatriés dans leurs projets de vie. Que vous cherchiez une <em>villa de luxe à Ivato</em>, un appartement sécurisé en centre-ville ou un terrain titré et borné à <strong>Mahajanga</strong>, notre équipe vous garantit une transaction transparente et sécurisée.
+                    </p>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.1rem; color: #020610; margin-bottom: 10px;">Gestion, Vente et Investissement</h3>
+                    <p style="color: #333;">
+                        Au-delà de la simple transaction, nous proposons un service complet de <strong>gestion locative</strong> pour sécuriser vos revenus fonciers. Grâce à notre connaissance pointue du marché malgache (quartiers d'Ambatobe, Ankorondrano, By-Pass), nous estimons votre bien à sa juste valeur pour une vente rapide et efficace. Faites le choix de l'excellence avec ORTUS.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script is:inline>
+        const MAX_VENTE = 5000000000; const MAX_LOC = 20000000;     
+        function updateHomeBudget(val) {
+            const display = document.getElementById('home-budget-display');
+            const slider = document.getElementById('budget-slider');
+            if(parseInt(val) >= parseInt(slider.max)) display.innerText = "Tout afficher";
+            else display.innerText = new Intl.NumberFormat('fr-FR').format(val) + " Ar";
+        }
+        function setSearchMode(mode) {
+            document.getElementById('search-mode').value = mode;
+            const btnVente = document.getElementById('btn-vente');
+            const btnLoc = document.getElementById('btn-location');
+            const slider = document.getElementById('budget-slider');
+            if (mode === 'vente') {
+                btnVente.style.background = '#D4AF37'; btnVente.style.borderColor = '#D4AF37'; btnVente.style.color = '#020610';
+                btnLoc.style.background = 'transparent'; btnLoc.style.borderColor = '#ccc'; btnLoc.style.color = '#888';
+                slider.max = MAX_VENTE; slider.step = 25000000; slider.value = MAX_VENTE;
+                updateHomeBudget(MAX_VENTE);
+            } else {
+                btnLoc.style.background = '#D4AF37'; btnLoc.style.borderColor = '#D4AF37'; btnLoc.style.color = '#020610';
+                btnVente.style.background = 'transparent'; btnVente.style.borderColor = '#ccc'; btnVente.style.color = '#888';
+                slider.max = MAX_LOC; slider.step = 100000; slider.value = MAX_LOC;
+                updateHomeBudget(MAX_LOC);
+            }
+        }
+    </script>
+
+</MainLayout>

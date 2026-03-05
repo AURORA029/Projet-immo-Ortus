@@ -1,0 +1,100 @@
+---
+// src/pages/confidentialite.astro
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout 
+    title="Politique de Confidentialité | ORTUS Immobilier" 
+    description="Politique de confidentialité et protection des données ORTUS."
+>
+    <style>
+        .legal-content { 
+            padding: 120px 20px 60px; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            color: #e0e0e0;
+            font-family: 'Montserrat', sans-serif;
+            min-height: 70vh;
+        }
+        .legal-content h1 { 
+            font-family: 'Playfair Display', serif; 
+            color: white; 
+            font-size: 2.5rem; 
+            margin-bottom: 40px; 
+            text-align: center; 
+        }
+        .legal-content h2 { 
+            color: #D4AF37; 
+            font-size: 1.2rem; 
+            margin-top: 30px; 
+            margin-bottom: 15px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+        .legal-content p { 
+            margin-bottom: 15px; 
+            font-size: 0.95rem; 
+            line-height: 1.6; 
+        }
+        .legal-content ul { 
+            margin-bottom: 15px; 
+            padding-left: 20px; 
+        }
+        .legal-content li { 
+            margin-bottom: 5px; 
+            font-size: 0.95rem; 
+            line-height: 1.6; 
+        }
+        .back-link { 
+            display: block; 
+            text-align: center; 
+            margin-top: 50px; 
+            border: 1px solid #D4AF37; 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            width: fit-content; 
+            margin-left: auto; 
+            margin-right: auto; 
+            transition: background 0.3s, color 0.3s; 
+            color: #D4AF37; 
+            text-decoration: none; 
+            font-weight: bold;
+        }
+        .back-link:hover { 
+            background: #D4AF37; 
+            color: #020610; 
+        }
+    </style>
+
+    <div class="legal-content">
+        <h1>Politique de Confidentialité</h1>
+
+        <p>Dernière mise à jour : Février 2026</p>
+
+        <h2>1. Collecte des Données</h2>
+        <p>Nous collectons uniquement les données nécessaires au traitement de votre demande immobilière :</p>
+        <ul>
+            <li>Nom et Prénom</li>
+            <li>Numéro de téléphone (pour contact WhatsApp)</li>
+            <li>Adresse Email</li>
+            <li>Critères de recherche (Budget, Localisation)</li>
+        </ul>
+
+        <h2>2. Utilisation des Données</h2>
+        <p>Vos données sont utilisées exclusivement par l'Agence ORTUS pour :</p>
+        <ul>
+            <li>Vous recontacter suite à une demande d'information.</li>
+            <li>Vous proposer des biens correspondant à votre recherche.</li>
+            <li>Établir des contrats de visite ou de vente.</li>
+        </ul>
+        <p><strong>Nous ne vendons ni ne louons vos données à des tiers.</strong></p>
+
+        <h2>3. Cookies</h2>
+        <p>Ce site utilise des cookies techniques pour améliorer votre expérience de navigation. Vous pouvez configurer votre navigateur pour refuser ces cookies.</p>
+
+        <h2>4. Vos Droits</h2>
+        <p>Conformément aux lois en vigueur, vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles. Pour exercer ce droit, contactez-nous à : <strong>ortusmada@gmail.com</strong>.</p>
+
+        <a href="/accueil" class="back-link">Retour à l'accueil</a>
+    </div>
+</MainLayout>

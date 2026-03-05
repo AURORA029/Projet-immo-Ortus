@@ -1,0 +1,25 @@
+---
+// src/components/Header.astro
+---
+<nav class="navbar">
+    <div class="container nav-container">
+        <a href="/" class="logo-container">
+            <span class="logo-main">ORTUS<span class="dot">.</span></span>
+            <span class="logo-sub">IMMOBILIER</span>
+        </a>
+        
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="/accueil" class="nav-link">Accueil</a></li>
+            <li><a href="/biens?filtre=all" class="nav-link">Nos Biens</a></li>
+            <li><a href="/services" class="nav-link">Services</a></li>
+            <li><a href="/vendre" class="nav-link">Propriétaires</a></li>
+            <li><a href="/prestige" class="nav-link nav-link-prestige"><i class="fas fa-crown"></i> Prestige</a></li>
+            <li><a href="/apropos" class="nav-link">L'Agence</a></li>
+            <li><a href="/accueil#contact" class="btn-contact">Contact</a></li>
+        </ul>
+    </div>
+</nav>

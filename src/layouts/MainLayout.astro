@@ -1,0 +1,40 @@
+---
+// src/layouts/MainLayout.astro
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const props = Astro.props;
+const pageTitle = props.title || "ORTUS | L'Excellence Immobilière";
+const pageDescription = props.description || "Agence immobilière de prestige à Madagascar. Villas de luxe, terrains titrés et investissements sécurisés.";
+---
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta name="theme-color" content="#020610" />
+    <link rel="icon" type="image/png" sizes="180x180" href="/assets/img/icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@1,300;1,500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <link rel="stylesheet" href="/assets/css/style.css" />
+  </head>
+  <body style="background-color: #020610; color: white;">
+    
+    <Header />
+
+    <main>
+      <slot />
+    </main>
+
+    <Footer />
+
+    <script is:inline src="/assets/js/main.js"></script>
+  </body>
+</html>

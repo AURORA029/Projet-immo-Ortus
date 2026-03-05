@@ -1,31 +1,13 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+---
+// src/pages/vendre.astro
+import MainLayout from '../layouts/MainLayout.astro';
+---
 
-    <title>Espace Propriétaires | Vendre ou Estimer - ORTUS Immobilier</title>
-    <meta name="description" content="Confiez votre bien à ORTUS Immobilier. Estimation précise, valorisation visuelle (drone/photo) et accès à notre fichier d'investisseurs qualifiés.">
-    
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://aurora029.github.io/Projet-immo-Ortus/vendre.html">
-    <meta property="og:title" content="Vendre ou Louer avec ORTUS">
-    <meta property="og:description" content="Une stratégie sur mesure pour valoriser votre patrimoine. Demandez une estimation.">
-    <meta property="og:image" content="https://aurora029.github.io/Projet-immo-Ortus/assets/img/hero-bg.jpg">
-
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="icon" type="image/png" href="assets/img/icon.png">
-    <link rel="manifest" href="manifest.json">
-     <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon.png">
-
-    <meta name="theme-color" content="#020610">
-
-
-    <script async src="https://tally.so/widgets/embed.js"></script>
+<MainLayout 
+    title="Espace Propriétaires | Vendre ou Estimer - ORTUS Immobilier" 
+    description="Confiez votre bien à ORTUS Immobilier. Estimation précise, valorisation visuelle (drone/photo) et accès à notre fichier d'investisseurs qualifiés."
+>
+    <script is:inline src="https://tally.so/widgets/embed.js"></script>
 
     <style>
         /* --- LOADER VALEUR (Graphique qui monte) --- */
@@ -93,18 +75,6 @@
             transition: opacity 0.5s ease-in-out;
         }
     </style>
-</head>
-
-<body>
-    <nav class="navbar">
-        <div class="container nav-container">
-            <a href="accueil.html" class="logo-container">
-                <span class="logo-main">ORTUS<span class="dot">.</span></span>
-                <span class="logo-sub">IMMOBILIER</span>
-            </a>
-            <a href="accueil.html" style="color:#D4AF37" class="nav-link">Retour Accueil</a>
-        </div>
-    </nav>
 
     <div class="container section-padding">
         <div class="estimation-banner" style="background: rgba(26, 16, 60, 0.95); margin: 0 auto; max-width: 900px; display:block; padding-bottom: 20px;">
@@ -153,7 +123,7 @@
                 </div>
 
                 <iframe 
-                    data-tally-src="https://tally.so/embed/Xx0NM4?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
+                    src="https://tally.so/embed/Xx0NM4?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
                     loading="lazy" 
                     width="100%" 
                     height="600" 
@@ -161,7 +131,8 @@
                     marginheight="0" 
                     marginwidth="0" 
                     title="Dossier Propriétaire Ortus"
-                    onload="document.getElementById('tally-loader').style.display='none'; this.style.opacity='1';">
+                    onload="document.getElementById('tally-loader').style.display='none'; this.style.opacity='1';"
+                >
                 </iframe>
             </div>
             
@@ -174,56 +145,4 @@
 
         </div>
     </div>
-    
-    <footer class="footer" id="contact">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3>ORTUS<span class="dot">.</span></h3>
-                    <p class="footer-desc">Votre partenaire de confiance pour l'immobilier à Madagascar.</p>
-                    <div class="social-links">
-                        <a href="https://www.facebook.com/share/17ejwgcidf/?mibextid=wwXIfr"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/ortusmada?igsh=MWx6NW15cXpibDNubQ=="><i class="fab fa-instagram"></i></a>
-                        <a href="https://mg.linkedin.com/in/joelrafidisonformateurcoach"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="footer-col">
-                    <h4>Navigation</h4>
-                    <ul class="footer-links">
-                        <li><a href="accueil.html">Accueil</a></li>
-                        <li><a href="biens.html">Tous nos biens</a></li>
-                        <li><a href="services.html">Nos Services</a></li>
-                        <li><a href="apropos.html">L'Agence</a></li>
-                        <li><a href="vendre.html">Vendre</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Contact</h4>
-                    <ul class="footer-contact">
-                        <li><i class="fas fa-map-marker-alt"></i> Antananarivo, Madagascar</li>
-                        <li><i class="fas fa-phone"></i> +261 34 04 945 20</li>
-                        <li><i class="fas fa-envelope"></i> ortusmada@gmail.com</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-    <p>&copy; 2026 ORTUS Immobilier. Tous droits réservés.</p>
-    <p style="font-size: 0.8em; margin-top: 5px;">
-        <a href="mentions-legales.html" style="color: #888; text-decoration: none; margin-right: 15px;">Mentions Légales</a>
-        <a href="confidentialite.html" style="color: #888; text-decoration: none;">Confidentialité</a>
-    </p>
-</div>
-
-        </div>
-    </footer>
-
-    <script type="text/javascript">
-        window.addEventListener('load', function() {
-            window.$crisp=[];window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";
-            (function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
-        });
-        if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js'); }
-    </script>
-
-</body>
-</html>
+</MainLayout>
