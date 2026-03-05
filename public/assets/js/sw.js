@@ -19,7 +19,7 @@ const ASSETS_TO_CACHE = [
   './assets/js/detail.js',
   './manifest.json',
   './assets/img/icon.png'
-  // NOTE: Ne jamais cacher le CSV Google Sheets ici pour garantir les mises à jour en direct.
+  // NOTE: Ne jamais cacher le CSV Google Sheets ici pour garantir les mises à jour en drect.
 ];
 
 // Installation
