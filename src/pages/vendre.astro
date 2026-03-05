@@ -145,4 +145,14 @@ import MainLayout from '../layouts/MainLayout.astro';
 
         </div>
     </div>
+    <script is:inline>
+        // On écoute les messages venant de l'Iframe Tally
+        window.addEventListener('message', (event) => {
+            // Si le message indique que le formulaire est soumis
+            if (event && event.data && typeof event.data === 'string' && event.data.includes('Tally.FormSubmitted')) {
+                // On force la redirection vers la page merci avec le bon chemin
+                window.location.href = '/Projet-immo-Ortus/merci';
+            }
+        });
+    </script>
 </MainLayout>
