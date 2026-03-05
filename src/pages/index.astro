@@ -11,10 +11,11 @@
     
     <meta name="description" content="Agence immobilière de prestige à Madagascar." />
     <meta name="theme-color" content="#020610" />
-    <meta property="og:image" content="/assets/img/hero-bg.jpg" />
-    <link rel="icon" type="image/png" href="/assets/img/icon.png" />
+    
+    <meta property="og:image" content="/Projet-immo-Ortus/assets/img/hero-bg.jpg" />
+    <link rel="icon" type="image/png" href="/Projet-immo-Ortus/assets/img/icon.png" />
 
-    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/Projet-immo-Ortus/assets/css/style.css" />
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -44,7 +45,8 @@
         .landing-hero {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%; z-index: 0; 
-            background: url('/assets/img/hero-bg.jpg') no-repeat center center;
+            /* CORRECTION : PRÉFIXE IMAGE DE FOND */
+            background: url('/Projet-immo-Ortus/assets/img/hero-bg.jpg') no-repeat center center;
             background-size: cover;
         }
         
@@ -58,7 +60,7 @@
 
         .overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 6, 16, 0.4); /* Légèrement assombri pour la lisibilité */
+            background: rgba(2, 6, 16, 0.4); 
             z-index: 1;
         }
 
@@ -91,7 +93,7 @@
         }
 
         .landing-dot {
-            color: #D4AF37; /* Correction en Or pour coller à la charte */
+            color: #D4AF37; 
             font-size: 1em;
             text-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
         }
@@ -156,7 +158,7 @@
 
     <nav class="navbar">
         <div class="container nav-container">
-            <a href="/accueil" class="logo-container" style="text-decoration: none;">
+            <a href="/Projet-immo-Ortus/accueil" class="logo-container" style="text-decoration: none;">
                 <span class="logo-main" style="color: white; font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;">ORTUS<span style="color: #D4AF37;">.</span></span>
                 <span class="logo-sub" style="display: block; color: #aaa; font-size: 0.6rem; letter-spacing: 2px; font-family: 'Montserrat', sans-serif;">IMMOBILIER</span>
             </a>
@@ -168,19 +170,19 @@
             </div>
 
             <ul class="nav-menu">
-                <li><a href="/accueil" class="nav-link">Accueil</a></li>
-                <li><a href="/biens" class="nav-link">Nos Biens</a></li>
-                <li><a href="/services" class="nav-link">Services</a></li>
-                <li><a href="/vendre" class="nav-link">Propriétaires</a></li>
-                <li><a href="/prestige" class="nav-link" style="color: #D4AF37 !important;"><i class="fas fa-crown"></i> Prestige</a></li>
-                <li><a href="/apropos" class="nav-link">L'Agence</a></li>
+                <li><a href="/Projet-immo-Ortus/accueil" class="nav-link">Accueil</a></li>
+                <li><a href="/Projet-immo-Ortus/biens" class="nav-link">Nos Biens</a></li>
+                <li><a href="/Projet-immo-Ortus/services" class="nav-link">Services</a></li>
+                <li><a href="/Projet-immo-Ortus/vendre" class="nav-link">Propriétaires</a></li>
+                <li><a href="/Projet-immo-Ortus/prestige" class="nav-link" style="color: #D4AF37 !important;"><i class="fas fa-crown"></i> Prestige</a></li>
+                <li><a href="/Projet-immo-Ortus/apropos" class="nav-link">L'Agence</a></li>
             </ul>
         </div>
     </nav>
 
     <div class="landing-hero">
-        <video autoplay muted loop playsinline class="hero-video-bg" poster="/assets/img/hero-bg.jpg" id="bgvid">
-            <source src="/assets/img/hero-video.mp4" type="video/mp4">
+        <video autoplay muted loop playsinline class="hero-video-bg" poster="/Projet-immo-Ortus/assets/img/hero-bg.jpg" id="bgvid">
+            <source src="/Projet-immo-Ortus/assets/img/hero-video.mp4" type="video/mp4">
         </video>
         <div class="overlay"></div>
     </div>
@@ -192,20 +194,20 @@
         
         <p class="landing-tagline">Concrétisez vos rêves immobiliers</p>
         
-        <a href="/accueil" class="btn-enter">
+        <a href="/Projet-immo-Ortus/accueil" class="btn-enter">
             Explorer le site <i class="fas fa-arrow-right"></i>
         </a>
         
         <div class="landing-footer">
             &copy; {new Date().getFullYear()} ORTUS Immobilier.
             <p style="font-size: 0.9em; margin-top: 10px;">
-                <a href="/mentions-legales" style="color: #888; text-decoration: none; margin-right: 15px;">Mentions Légales</a>
-                <a href="/confidentialite" style="color: #888; text-decoration: none;">Confidentialité</a>
+                <a href="/Projet-immo-Ortus/mentions-legales" style="color: #888; text-decoration: none; margin-right: 15px;">Mentions Légales</a>
+                <a href="/Projet-immo-Ortus/confidentialite" style="color: #888; text-decoration: none;">Confidentialité</a>
             </p>
         </div>
     </div>
 
-    <script is:inline src="/assets/js/main.js"></script> 
+    <script is:inline src="/Projet-immo-Ortus/assets/js/main.js"></script> 
     
     <script is:inline>
         document.addEventListener('DOMContentLoaded', function() {

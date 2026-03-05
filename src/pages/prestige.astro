@@ -108,7 +108,9 @@ const prestigeProperties = allProperties.filter(p =>
                         const typeAction = categorieBien.includes('loc') ? "LOCATION" : "VENTE";
                         const features = p.caracteristiques ? p.caracteristiques.replace(/\n/g, ',').split(',').map(f => f.trim()).filter(f => f).slice(0, 3) : [];
                         const fakeInteresse = [7, 12, 5, 9][index % 4] || 3;
-                        const imgSrc = p.image && p.image.startsWith('http') ? p.image : `/${p.image || 'assets/img/hero-bg.jpg'}`;
+                        
+                        /* CORRECTION DU CHEMIN D'IMAGE ET ASSET PAR DÉFAUT */
+                        const imgSrc = p.image && p.image.startsWith('http') ? p.image : `/Projet-immo-Ortus/${p.image || 'assets/img/hero-bg.jpg'}`;
 
                         return (
                             <div class="property-card js-property-card" style="display: none;">
@@ -119,7 +121,7 @@ const prestigeProperties = allProperties.filter(p =>
                                     
                                     <span style="position:absolute; top:15px; right:15px; background:#000; color:#fff !important; border:1px solid #D4AF37; padding:6px 15px; z-index:10; font-weight:700; font-size:0.8rem; border-radius:4px;">{typeAction}</span>
                                     
-                                    <a href={`/biens/${p.id}`}>
+                                    <a href={`/Projet-immo-Ortus/biens/${p.id}`}>
                                         <img src={imgSrc} alt={p.titre} style="width:100%; height:100%; object-fit:cover; transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
                                     </a>
 
@@ -132,7 +134,7 @@ const prestigeProperties = allProperties.filter(p =>
                                 
                                 <div class="property-details" style="padding: 30px;">
                                     <h3 style="margin:0 0 10px 0;">
-                                        <a href={`/biens/${p.id}`} style="text-decoration:none; color: #111 !important; font-family:'Playfair Display', serif; font-size:1.8rem; display:block;">{p.titre}</a>
+                                        <a href={`/Projet-immo-Ortus/biens/${p.id}`} style="text-decoration:none; color: #111 !important; font-family:'Playfair Display', serif; font-size:1.8rem; display:block;">{p.titre}</a>
                                     </h3>
                                     
                                     <p style="color:#666 !important; font-size:1rem; margin-bottom:20px; display:flex; align-items:center; font-family: 'Montserrat', sans-serif;">
@@ -157,8 +159,8 @@ const prestigeProperties = allProperties.filter(p =>
                                     )}
                                     
                                     <div style="display:flex; gap:15px;">
-                                        <a href={`/biens/${p.id}`} style="flex:1; text-align:center; padding:15px; background:white; border:1px solid #111; color:#111; text-decoration:none; font-weight:bold; font-size:1rem; border-radius:4px; font-family: 'Montserrat', sans-serif; transition:0.3s;" onmouseover="this.style.background='#111'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='#111'">Voir détails</a>
-                                        <a href={`/biens/${p.id}#contact`} style="flex:1; text-align:center; padding:15px; background:#D4AF37; color:black; border:none; font-weight:bold; font-size:1rem; border-radius:4px; text-decoration:none; font-family: 'Montserrat', sans-serif; transition:0.3s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Contact</a>
+                                        <a href={`/Projet-immo-Ortus/biens/${p.id}`} style="flex:1; text-align:center; padding:15px; background:white; border:1px solid #111; color:#111; text-decoration:none; font-weight:bold; font-size:1rem; border-radius:4px; font-family: 'Montserrat', sans-serif; transition:0.3s;" onmouseover="this.style.background='#111'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='#111'">Voir détails</a>
+                                        <a href={`/Projet-immo-Ortus/biens/${p.id}#contact`} style="flex:1; text-align:center; padding:15px; background:#D4AF37; color:black; border:none; font-weight:bold; font-size:1rem; border-radius:4px; text-decoration:none; font-family: 'Montserrat', sans-serif; transition:0.3s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Contact</a>
                                     </div>
                                 </div>
                             </div>

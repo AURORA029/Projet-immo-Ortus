@@ -12,7 +12,8 @@ const featuredProperties = properties.reverse().slice(0, 3);
     
     <style>
         .home-hero {
-            background: url('/assets/img/hero-bg.jpg') no-repeat center center/cover;
+            /* CORRECTION CHEMIN BACKGROUND HERO */
+            background: url('/Projet-immo-Ortus/assets/img/hero-bg.jpg') no-repeat center center/cover;
             position: relative;
         }
         .nav-link-prestige {
@@ -42,7 +43,7 @@ const featuredProperties = properties.reverse().slice(0, 3);
             <p class="animate-text delay-1" style="font-family:'Montserrat', sans-serif;">Trouvez le bien immobilier qui correspond à vos rêves.</p>
 
             <div class="animate-up delay-2">
-                <form action="/biens" method="GET" class="glass-tech-2026" style="padding: 25px; border-radius: 15px; display: flex; flex-direction: column; gap: 20px; max-width: 450px; margin: 0 auto;">
+                <form action="/Projet-immo-Ortus/biens" method="GET" class="glass-tech-2026" style="padding: 25px; border-radius: 15px; display: flex; flex-direction: column; gap: 20px; max-width: 450px; margin: 0 auto;">
                     <input type="hidden" name="mode" id="search-mode" value="vente">
                     
                     <div style="display: flex; gap: 10px;">
@@ -90,8 +91,8 @@ const featuredProperties = properties.reverse().slice(0, 3);
                     // Liste des atouts
                     const features = p.caracteristiques ? p.caracteristiques.replace(/\n/g, ',').split(',').map(f => f.trim()).filter(f => f).slice(0, 3) : [];
 
-                    // Image sécurisée
-                    const imgSrc = p.image && p.image.startsWith('http') ? p.image : `/${p.image || 'assets/img/hero-bg.jpg'}`;
+                    // CORRECTION CHEMIN IMAGE
+                    const imgSrc = p.image && p.image.startsWith('http') ? p.image : `/Projet-immo-Ortus/${p.image || 'assets/img/hero-bg.jpg'}`;
 
                     return (
                         <div class="property-card" style={`background-color: #FFFFFF !important; border: 1px solid #ddd !important; border-radius: 12px; overflow: hidden; margin-bottom: 25px; position: relative; opacity: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.05); animation: fadeUp 0.8s ease-out ${delay}ms forwards;`}>
@@ -112,14 +113,14 @@ const featuredProperties = properties.reverse().slice(0, 3);
                                     </div>
                                 )}
                                 
-                                <a href={`/biens/${p.id}`}>
+                                <a href={`/Projet-immo-Ortus/biens/${p.id}`}>
                                     <img src={imgSrc} alt={p.titre} style="width:100%; height:100%; object-fit:cover; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
                                 </a>
                             </div>
                             
                             <div class="property-details" style="padding: 25px;">
                                 <h3 style="margin-top:0; margin-bottom:8px;">
-                                    <a href={`/biens/${p.id}`} style="text-decoration:none; color: #111 !important; font-family:'Playfair Display', serif; font-size:1.4rem; display:block;">{p.titre}</a>
+                                    <a href={`/Projet-immo-Ortus/biens/${p.id}`} style="text-decoration:none; color: #111 !important; font-family:'Playfair Display', serif; font-size:1.4rem; display:block;">{p.titre}</a>
                                 </h3>
                                 
                                 <p style="color: #666 !important; font-size:0.9rem; margin-bottom:15px; display:flex; align-items:center;">
@@ -145,10 +146,10 @@ const featuredProperties = properties.reverse().slice(0, 3);
                                 )}
                                 
                                 <div style="display:flex; gap:10px;">
-                                    <a href={`/biens/${p.id}`} style="flex:1; text-align:center; padding:12px; background:white; border:1px solid #111; color:#111; text-decoration:none; font-weight:bold; font-size:0.9rem; transition:0.3s; border-radius:4px;" onmouseover="this.style.background='#111'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='#111'">
+                                    <a href={`/Projet-immo-Ortus/biens/${p.id}`} style="flex:1; text-align:center; padding:12px; background:white; border:1px solid #111; color:#111; text-decoration:none; font-weight:bold; font-size:0.9rem; transition:0.3s; border-radius:4px;" onmouseover="this.style.background='#111'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='#111'">
                                         Voir détails
                                     </a>
-                                    <a href={`/biens/${p.id}#contact`} style="flex:1; text-align:center; padding:12px; background:#D4AF37; color:black; border:none; font-weight:bold; font-size:0.9rem; border-radius:4px; text-decoration:none;">
+                                    <a href={`/Projet-immo-Ortus/biens/${p.id}#contact`} style="flex:1; text-align:center; padding:12px; background:#D4AF37; color:black; border:none; font-weight:bold; font-size:0.9rem; border-radius:4px; text-decoration:none;">
                                         Contact
                                     </a>
                                 </div>
@@ -159,7 +160,7 @@ const featuredProperties = properties.reverse().slice(0, 3);
             </div>
 
             <div style="text-align: center; margin-top: 50px;">
-                <a href="/biens" class="btn-primary" style="background: transparent; border: 1px solid #D4AF37; color: #D4AF37; padding: 15px 30px; text-decoration: none; transition: 0.3s;" onmouseover="this.style.background='#D4AF37'; this.style.color='black'" onmouseout="this.style.background='transparent'; this.style.color='#D4AF37'">
+                <a href="/Projet-immo-Ortus/biens" class="btn-primary" style="background: transparent; border: 1px solid #D4AF37; color: #D4AF37; padding: 15px 30px; text-decoration: none; transition: 0.3s;" onmouseover="this.style.background='#D4AF37'; this.style.color='black'" onmouseout="this.style.background='transparent'; this.style.color='#D4AF37'">
                     VOIR TOUS LES BIENS
                 </a>
             </div>
@@ -173,14 +174,14 @@ const featuredProperties = properties.reverse().slice(0, 3);
                     <div class="promo-overlay">
                         <h3>En quête de l'exceptionnel ?</h3>
                         <p>Découvrez notre sélection "Ortus Prestige". Des biens rares pour des clients exigeants.</p>
-                        <a href="/prestige" class="btn-promo">Explorer la collection</a>
+                        <a href="/Projet-immo-Ortus/prestige" class="btn-promo">Explorer la collection</a>
                     </div>
                 </div>
                 <div class="promo-card card-career">
                     <div class="promo-overlay">
                         <h3>Votre avenir commence ici</h3>
                         <p>Vous avez la passion de l'immobilier ? Rejoignez la constellation Ortus.</p>
-                        <a href="/recrutement" class="btn-promo">Voir nos offres</a>
+                        <a href="/Projet-immo-Ortus/recrutement" class="btn-promo">Voir nos offres</a>
                     </div>
                 </div>
             </div>
@@ -195,7 +196,7 @@ const featuredProperties = properties.reverse().slice(0, 3);
                     <p>Une estimation précise est la clé d'une vente réussie.</p>
                 </div>
                 <div class="estimation-action">
-                    <a href="/vendre" class="btn-estimation">
+                    <a href="/Projet-immo-Ortus/vendre" class="btn-estimation">
                         <span>Estimer mon bien</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
@@ -283,5 +284,4 @@ const featuredProperties = properties.reverse().slice(0, 3);
             }
         }
     </script>
-
-</MainLayout>
+</MainLayout>.     

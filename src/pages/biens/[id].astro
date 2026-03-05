@@ -24,14 +24,14 @@ const galerieArray = bien.galerie
     ? bien.galerie.split(',').map(img => img.trim()).filter(img => img.length > 0)
     : [];
 
-// Endpoint Formspree récupéré de ton listing.js
+// Endpoint Formspree
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mvzzklrl";
 ---
 
 <MainLayout title={`${bien.titre} | ORTUS Immobilier`} description={bien.description}>
     
     <div class="container" style="padding-top: 100px;">
-        <a href="/biens" style="color:#D4AF37; text-decoration:none; font-weight:bold; font-family: 'Montserrat', sans-serif; display: inline-block; margin-bottom: 20px;">
+        <a href="/Projet-immo-Ortus/biens" style="color:#D4AF37; text-decoration:none; font-weight:bold; font-family: 'Montserrat', sans-serif; display: inline-block; margin-bottom: 20px;">
             <i class="fas fa-arrow-left"></i> Retour aux biens
         </a>
     </div>
@@ -44,7 +44,7 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/mvzzklrl";
                 <div style="flex: 1; min-width: 300px;">
                     <div style="width: 100%; height: 400px; background: #050912; border-radius: 10px; overflow: hidden; margin-bottom: 20px; border:1px solid #333;">
                         <img 
-                            src={bien.image && bien.image.startsWith('http') ? bien.image : `/${bien.image}`} 
+                            src={bien.image && bien.image.startsWith('http') ? bien.image : `/Projet-immo-Ortus/${bien.image}`} 
                             alt={bien.titre} 
                             style="width: 100%; height: 100%; object-fit: cover;"
                         />
@@ -52,7 +52,7 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/mvzzklrl";
                     
                     {bien.video && (
                         <div style="margin-top: 15px;">
-                            <a href={bien.video} target="_blank" style="display: block; width: 100%; padding: 15px; background: rgba(212, 175, 55, 0.1); border: 1px solid #D4AF37; color: #D4AF37; text-align: center; text-decoration: none; font-family: 'Montserrat', sans-serif; font-weight: bold; border-radius: 4px; transition: background 0.3s;">
+                            <a href={bien.video.startsWith('http') ? bien.video : `/Projet-immo-Ortus/${bien.video}`} target="_blank" style="display: block; width: 100%; padding: 15px; background: rgba(212, 175, 55, 0.1); border: 1px solid #D4AF37; color: #D4AF37; text-align: center; text-decoration: none; font-family: 'Montserrat', sans-serif; font-weight: bold; border-radius: 4px; transition: background 0.3s;">
                                 <i class="fab fa-youtube" style="font-size: 1.2rem; margin-right: 8px;"></i> Voir la visite vidéo
                             </a>
                         </div>
@@ -68,8 +68,7 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/mvzzklrl";
                         <i class="fas fa-map-marker-alt"></i> {bien.ville}
                     </p>
                     
-                    <div style="font-size: 2rem; color: #fff; font-weight: bold; margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 20px; font-family: 'Montserrat', sans-serif;">
-                        {bien.prix}
+                    <div style="font-size: 2rem; color: #fff; font-weight: bold; margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 20px; font-family: 'Montserrat', sans-serif;" set:html={bien.prix}>
                     </div>
 
                     <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 30px;">
@@ -112,7 +111,7 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/mvzzklrl";
                     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
                         {galerieArray.map(imgSrc => (
                             <img 
-                                src={imgSrc.startsWith('http') ? imgSrc : `/${imgSrc}`} 
+                                src={imgSrc.startsWith('http') ? imgSrc : `/Projet-immo-Ortus/${imgSrc}`} 
                                 alt="Galerie Ortus" 
                                 class="gallery-img"
                                 style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px; cursor: pointer; transition: transform 0.3s; border: 1px solid #222;"
