@@ -1,0 +1,79 @@
+---
+// src/pages/services.astro
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout 
+    title="Nos Services | Gestion, Vente & Chasseur - ORTUS Immobilier" 
+    description="Découvrez les services ORTUS : Estimation immobilière précise, Gestion locative sécurisée et Chasseur immobilier pour trouver votre bien idéal à Madagascar."
+>
+    <header class="hero" style="height: 50vh; background: linear-gradient(rgba(2,6,16,0.6), rgba(2,6,16,0.6)), url('/assets/img/hero-bg.jpg') center/cover no-repeat;"> 
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1 style="color: #D4AF37;">Nos Services Exclusifs</h1>
+            <p>Au-delà de la transaction, une stratégie globale pour votre patrimoine.</p>
+        </div>
+    </header>
+
+    <section class="section-padding">
+        <div class="container">
+            
+            <div class="section-title">
+                <h2 style="color: #D4AF37;">L'EXPERTISE ORTUS Immobilier</h2>
+                <p>Nous accompagnons propriétaires et investisseurs à chaque étape.</p>
+            </div>
+
+            <div class="properties-grid">
+                
+                <article class="property-card" style="text-align: center; padding: 40px 20px;">
+                    <div style="margin-bottom: 20px;">
+                        <i class="fas fa-chart-line" style="font-size: 3rem; color: #D4AF37;"></i>
+                    </div>
+                    <h3 style="margin-bottom: 15px; color: #333 !important;">Valorisation & Vente</h3>
+                    <p style="color: #666 !important; margin-bottom: 25px;">
+                        Ne vendez pas au hasard. Nos experts analysent le marché pour définir le prix juste et maximiser votre plus-value avec une stratégie marketing dédiée.
+                    </p>
+                    <a href="/vendre" class="btn-card">Demander une estimation</a>
+                </article>
+
+                <article class="property-card" style="text-align: center; padding: 40px 20px;">
+                    <div style="margin-bottom: 20px;">
+                        <i class="fas fa-file-signature" style="font-size: 3rem; color: #D4AF37;"></i>
+                    </div>
+                    <h3 style="margin-bottom: 15px; color: #333 !important;">Gestion Locative</h3>
+                    <p style="color: #666 !important; margin-bottom: 25px;">
+                        Sécurisez vos revenus. Recherche de locataires, rédaction de baux, états des lieux et gestion des loyers. Nous prenons tout en charge.
+                    </p>
+                    <a href="/vendre" class="btn-card">Nous confier un bien</a>
+                </article>
+
+                <article class="property-card" style="text-align: center; padding: 40px 20px;">
+                    <div style="margin-bottom: 20px;">
+                        <i class="fas fa-search-location" style="font-size: 3rem; color: #D4AF37;"></i>
+                    </div>
+                    <h3 style="margin-bottom: 15px; color: #333 !important;">Chasseur Immobilier</h3>
+                    <p style="color: #666 !important; margin-bottom: 25px;">
+                        Vous manquez de temps ? Confiez-nous vos critères. Nous scannons le marché (et le "Off-Market") pour trouver la perle rare à votre place.
+                    </p>
+                    <a href="https://wa.me/261340494520?text=Bonjour%20ORTUS,%20je%20souhaite%20confier%20une%20recherche%20immobilière%20(Chasseur)." 
+                       class="btn-card" 
+                       target="_blank"
+                       style="display: inline-flex; align-items: center; gap: 8px;">
+                       <i class="fab fa-whatsapp" style="font-size: 1.1rem;"></i> Déposer ma recherche
+                    </a>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" style="background-color: #020610; color:white; text-align: center;">
+        <div class="container">
+            <h2 style="margin-bottom: 20px; color: white;">Un projet spécifique ?</h2>
+            <p style="margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; color:#ccc;">
+                Nos conseillers en gestion de patrimoine sont disponibles pour un audit gratuit de votre situation immobilière.
+            </p>
+            <a href="tel:+261340494520" class="btn-estimation">Appeler un conseiller <i class="fas fa-phone"></i></a>
+        </div>
+    </section>
+</MainLayout>

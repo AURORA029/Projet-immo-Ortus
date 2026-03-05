@@ -1,0 +1,358 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import { getProperties } from '../../utils/googleSheets.js';
+
+// Récupération des données au moment du build
+const properties = await getProperties();
+
+// Nettoyage et conversion des prix pour le filtrage
+const cleanProperties = properties.map(p => {
+    const rawPrice = p.prix_calcul ? parseInt(String(p.prix_calcul).replace(/\s/g, ''), 10) : 0;
+    return { ...p, rawPrice };
+});
+---
+
+<MainLayout title="Nos Biens | Vente & Location - ORTUS Immobilier" description="Catalogue immobilier ORTUS. Villas de luxe, terrains, appartements à Tana et en province.">
+    
+    <style>
+        .badge.status {
+            left: auto !important; right: 10px !important;
+            background-color: #000 !important; color: #FFFFFF !important;
+            border: 1px solid #D4AF37 !important; z-index: 100 !important;
+        }
+        .seo-hack-section {
+            background-color: #050912;
+            padding: 60px 20px;
+            border-top: 1px solid #333;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .seo-hack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .seo-hack-column h4 {
+            font-size: 1rem;
+            color: #D4AF37;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        .seo-hack-column ul { list-style: none; padding: 0; font-size: 0.9rem; line-height: 1.8; }
+        .seo-hack-column li { margin-bottom: 8px; }
+        .seo-hack-column a { color: #ccc; text-decoration: none; transition: 0.2s; }
+        .seo-hack-column a:hover { color: #D4AF37; padding-left: 5px; }
+        .seo-hack-column strong { color: #fff; font-weight: 600; }
+        
+        .property-card { transition: transform 0.3s ease; }
+        .property-card:hover { transform: translateY(-5px); }
+    </style>
+
+    <header class="hero" style="height: 40vh; min-height: 300px; background: linear-gradient(rgba(2,6,16,0.7), rgba(2,6,16,0.7)), url('/assets/img/hero-bg.jpg') center/cover;">
+        <div class="container hero-content" style="display: flex; height: 100%; align-items: center; justify-content: center;">
+            <h1 style="font-family: 'Playfair Display', serif; font-size: 3.5rem; color: white; text-transform: uppercase; letter-spacing: 2px;">Tous nos biens</h1>
+        </div>
+    </header>
+
+    <section class="section-padding">
+        <div class="container">
+            
+            <div class="search-container" style="text-align: center; margin-bottom: 50px; margin-top: -30px;">
+                <div style="display: inline-flex; background: #020610; border: 1px solid #D4AF37; border-radius: 50px; padding: 5px 20px; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
+                    <input type="text" id="searchInput" placeholder="Rechercher (Ville, Type...)" 
+                           style="background: transparent; border: none; color: white; padding: 12px; width: 280px; outline: none; font-family: 'Montserrat', sans-serif;">
+                    <button id="searchBtn" style="background: transparent; border: none; color: #D4AF37; cursor: pointer; font-size: 1.2rem;">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <div style="max-width: 450px; margin: 25px auto 0 auto; color: white;">
+                    <label style="font-size: 0.9rem; font-family: 'Montserrat', sans-serif;">
+                        Budget Max : <span id="budgetDisplay" style="color: #D4AF37; font-weight: bold;">Tout afficher</span>
+                    </label>
+                    <div style="display: flex; align-items: center; gap: 15px; margin-top: 10px;">
+                        <span style="font-size: 0.8rem; color: #888;">0</span>
+                        <input type="range" id="budgetRange" min="0" max="5000000000" step="25000000" value="5000000000" style="width: 100%; accent-color: #D4AF37; cursor: pointer;">
+                        <span id="maxBudgetLabel" style="font-size: 0.8rem; color: #888;">5Md+</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <select id="categorySelect" style="background: #020610; color: white; border: 1px solid #D4AF37; padding: 12px 20px; border-radius: 5px; font-family: 'Montserrat', sans-serif; cursor: pointer; outline: none;">
+                        <option value="all">Tous les projets</option>
+                        <option value="vente">Acheter</option>
+                        <option value="location">Louer</option>
+                    </select>
+
+                    <select id="sortSelect" style="background: #020610; color: #D4AF37; border: 1px solid #D4AF37; padding: 12px 20px; border-radius: 5px; font-family: 'Montserrat', sans-serif; cursor: pointer; outline: none;">
+                        <option value="default">Trier par...</option>
+                        <option value="asc">Prix Croissant</option>
+                        <option value="desc">Prix Décroissant</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="no-results" style="display: none; text-align: center; padding: 50px;">
+                <h3 style="color: white; font-family: 'Montserrat', sans-serif;">Aucun résultat pour ces critères.</h3>
+                <button onclick="window.resetSearch()" style="margin-top: 20px; padding: 12px 25px; background: #D4AF37; color: black; border: none; font-weight: bold; border-radius: 4px; cursor: pointer;">Réinitialiser</button>
+            </div>
+
+            <div class="properties-grid" id="listing-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px;">
+                {cleanProperties.map((p) => (
+                    <div class="property-card js-property-card" 
+                         data-id={p.id}
+                         data-price={p.rawPrice}
+                         data-category={p.categorie ? p.categorie.toLowerCase() : ''}
+                         data-search={`${p.ville} ${p.titre} ${p.type} ${p.description || ''}`.toLowerCase()}
+                         style="background-color: #FFFFFF; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); display: none;">
+                        
+                        <div style="height: 260px; position: relative; overflow: hidden;">
+                            {p.gamme && p.gamme.toLowerCase().includes('prestige') && (
+                                <span style="position: absolute; top: 15px; left: 15px; background: #D4AF37; color: black; padding: 6px 12px; font-weight: 800; font-size: 0.75rem; border-radius: 4px; z-index: 10; letter-spacing: 1px;">PRESTIGE</span>
+                            )}
+                            <span class="badge status" style="position: absolute; top: 15px; right: 15px; background: #000; color: #fff; border: 1px solid #D4AF37; padding: 5px 10px; z-index: 10; font-weight: 700; font-size: 0.8rem; border-radius: 4px;">
+                                {p.categorie && p.categorie.toLowerCase().includes('loc') ? 'LOCATION' : 'VENTE'}
+                            </span>
+                            <a href={`/biens/${p.id}`}>
+                                <img src={p.image && p.image.startsWith('http') ? p.image : `/${p.image}`} alt={p.titre} style="width: 100%; height: 100%; object-fit: cover;" />
+                            </a>
+                        </div>
+
+                        <div style="padding: 25px;">
+                            <h3 style="margin: 0 0 10px 0;">
+                                <a href={`/biens/${p.id}`} style="text-decoration: none; color: #111; font-family: 'Playfair Display', serif; font-size: 1.4rem;">{p.titre}</a>
+                            </h3>
+                            <p style="color: #666; font-size: 0.95rem; margin-bottom: 20px; display: flex; align-items: center;">
+                                <i class="fas fa-map-marker-alt" style="color: #D4AF37; margin-right: 8px;"></i> {p.ville}
+                            </p>
+                            
+                            <div style="display: flex; gap: 20px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee; color: #444; font-family: 'Montserrat', sans-serif; font-size: 0.9rem;">
+                                <span title="Pièces"><i class="fas fa-door-open" style="color: #D4AF37;"></i> {p.pieces} p.</span>
+                                <span title="Surface"><i class="fas fa-ruler-combined" style="color: #D4AF37;"></i> {p.surface} m²</span>
+                            </div>
+                            
+                            <div style="color: #D4AF37; font-weight: 800; font-size: 1.5rem; margin-bottom: 25px; font-family: 'Montserrat', sans-serif;">{p.prix}</div>
+                            
+                            <div style="display: flex; gap: 12px;">
+                                 <a href={`/biens/${p.id}`} style="flex: 1; text-align: center; padding: 12px; background: white; border: 1px solid #111; color: #111; text-decoration: none; font-weight: bold; font-size: 0.9rem; border-radius: 4px; font-family: 'Montserrat', sans-serif;">Voir détails</a>
+                                <button onclick={`document.getElementById('form-${p.id}').style.display='block'`} style="flex: 1; padding: 12px; background: #D4AF37; color: black; border: none; font-weight: bold; cursor: pointer; font-size: 0.9rem; border-radius: 4px; font-family: 'Montserrat', sans-serif;">Contact</button>
+                            </div>
+
+                            <div id={`form-${p.id}`} style="display: none; margin-top: 20px; background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #eee;">
+                                <div style="text-align: right; margin-bottom: 10px;">
+                                    <span onclick={`document.getElementById('form-${p.id}').style.display='none'`} style="cursor: pointer; color: #888; font-size: 1.2rem;">&times;</span>
+                                </div>
+                                <form class="ajax-form" action="https://formspree.io/f/mvzzklrl" method="POST">
+                                    <input type="hidden" name="bien_ref" value={`${p.id} - ${p.titre}`}>
+                                    <input type="text" name="nom" placeholder="Votre Nom" required style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: 'Montserrat', sans-serif;">
+                                    <input type="tel" name="tel" placeholder="Téléphone" required style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: 'Montserrat', sans-serif;">
+                                    <button type="submit" style="width: 100%; background: #111; color: white; border: none; padding: 10px; font-weight: bold; cursor: pointer; border-radius: 4px; font-family: 'Montserrat', sans-serif;">ENVOYER</button>
+                                    <p class="form-status" style="display: none; color: green; margin-top: 10px; text-align: center; font-size: 0.9rem; font-family: 'Montserrat', sans-serif;"></p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            
+            <div id="pagination-container" style="display: flex; justify-content: center; gap: 10px; margin-top: 50px; flex-wrap: wrap;"></div>
+        </div> 
+    </section>
+
+    <section class="seo-hack-section">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h3 style="color: white; font-family: 'Playfair Display', serif; font-size: 1.8rem;">Explorez l'immobilier par zone</h3>
+                <p style="color: #888; font-size: 0.9rem;">Accès direct aux opportunités les plus recherchées à Madagascar.</p>
+            </div>
+            <div class="seo-hack-grid">
+                <div class="seo-hack-column">
+                    <h4>Antananarivo Centre</h4>
+                    <ul>
+                        <li><a href="/biens?filtre=Antananarivo Centre Ville">Appartements Centre Ville</a></li>
+                        <li><a href="/biens?filtre=Maison Faravohitra">Maisons Faravohitra</a></li>
+                        <li><a href="/biens?filtre=Tana Ambohijatovo">Immobilier Ambohijatovo</a></li>
+                    </ul>
+                </div>
+                <div class="seo-hack-column">
+                    <h4>Quartiers Prisés</h4>
+                    <ul>
+                        <li><a href="/biens?filtre=Villa Ivato"><strong>Villas Aéroport Ivato</strong></a></li>
+                        <li><a href="/biens?filtre=Luxe Ambatobe">Résidences luxe Ambatobe</a></li>
+                        <li><a href="/biens?filtre=Terrain Alasora">Terrains Alasora</a></li>
+                    </ul>
+                </div>
+                <div class="seo-hack-column">
+                    <h4>Province</h4>
+                    <ul>
+                        <li><a href="/biens?filtre=Mahajanga"><strong>Bungalows Mahajanga</strong></a></li>
+                        <li><a href="/biens?filtre=Nosy Be">Villas Nosy Be</a></li>
+                        <li><a href="/biens?filtre=Tamatave">Immobilier Tamatave</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', () => {
+            const MAX_VENTE = 5000000000;
+            const MAX_LOC = 20000000;
+            const ITEMS_PER_PAGE = 9;
+            let currentPage = 1;
+            
+            const cards = Array.from(document.querySelectorAll('.js-property-card'));
+            let filteredCards = [...cards];
+
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+            const budgetRange = document.getElementById('budgetRange');
+            const budgetDisplay = document.getElementById('budgetDisplay');
+            const categorySelect = document.getElementById('categorySelect');
+            const sortSelect = document.getElementById('sortSelect');
+            const noResults = document.getElementById('no-results');
+            const paginationContainer = document.getElementById('pagination-container');
+            const maxLabel = document.getElementById('maxBudgetLabel');
+
+            // 1. Initialisation depuis l'URL (si venant de l'accueil)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('mode')) categorySelect.value = urlParams.get('mode');
+            if (urlParams.get('filtre') && urlParams.get('filtre') !== 'all') searchInput.value = decodeURIComponent(urlParams.get('filtre'));
+            if (urlParams.get('budget')) budgetRange.value = urlParams.get('budget');
+            
+            updateSliderScale();
+            filterProperties();
+
+            // 2. Écouteurs d'événements
+            searchInput.addEventListener('input', filterProperties);
+            budgetRange.addEventListener('input', () => { updateBudgetLabel(); filterProperties(); });
+            categorySelect.addEventListener('change', () => { updateSliderScale(); filterProperties(); });
+            sortSelect.addEventListener('change', filterProperties);
+            
+            // 3. Logique de filtrage
+            function filterProperties() {
+                const textVal = searchInput.value.toLowerCase().trim();
+                const maxBudget = parseInt(budgetRange.value);
+                const categoryVal = categorySelect.value;
+                const sortVal = sortSelect.value;
+
+                filteredCards = cards.filter(card => {
+                    const matchText = card.dataset.search.includes(textVal);
+                    const matchPrice = (maxBudget >= parseInt(budgetRange.max)) || (parseInt(card.dataset.price) <= maxBudget);
+                    const matchCat = (categoryVal === 'all') || card.dataset.category.includes(categoryVal);
+                    return matchText && matchPrice && matchCat;
+                });
+
+                if (sortVal === 'asc') {
+                    filteredCards.sort((a, b) => parseInt(a.dataset.price) - parseInt(b.dataset.price));
+                } else if (sortVal === 'desc') {
+                    filteredCards.sort((a, b) => parseInt(b.dataset.price) - parseInt(a.dataset.price));
+                }
+
+                // Réordonner dans le DOM pour le tri
+                const container = document.getElementById('listing-container');
+                filteredCards.forEach(card => container.appendChild(card));
+
+                currentPage = 1;
+                renderPagination();
+            }
+
+            // 4. Logique de pagination
+            function renderPagination() {
+                cards.forEach(c => c.style.display = 'none'); // Masque tout
+                
+                if (filteredCards.length === 0) {
+                    noResults.style.display = 'block';
+                    paginationContainer.innerHTML = '';
+                    return;
+                }
+                
+                noResults.style.display = 'none';
+                
+                const start = (currentPage - 1) * ITEMS_PER_PAGE;
+                const end = start + ITEMS_PER_PAGE;
+                
+                filteredCards.slice(start, end).forEach(c => {
+                    c.style.display = 'block';
+                });
+
+                buildPaginationButtons();
+            }
+
+            function buildPaginationButtons() {
+                paginationContainer.innerHTML = '';
+                const totalPages = Math.ceil(filteredCards.length / ITEMS_PER_PAGE);
+                if (totalPages <= 1) return;
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = document.createElement('button');
+                    btn.innerText = i;
+                    btn.style.cssText = `padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; margin: 0 5px; font-family: 'Montserrat', sans-serif; font-weight: bold; background: ${i === currentPage ? '#D4AF37' : '#fff'}; color: black;`;
+                    btn.onclick = () => {
+                        currentPage = i;
+                        renderPagination();
+                        window.scrollTo({ top: document.querySelector('.search-container').offsetTop - 100, behavior: 'smooth' });
+                    };
+                    paginationContainer.appendChild(btn);
+                }
+            }
+
+            // 5. Utilitaires
+            function updateSliderScale() {
+                if (categorySelect.value === 'location') {
+                    budgetRange.max = MAX_LOC; budgetRange.step = 100000;
+                    if (parseInt(budgetRange.value) > MAX_LOC) budgetRange.value = MAX_LOC;
+                    maxLabel.innerText = "20M+";
+                } else {
+                    budgetRange.max = MAX_VENTE; budgetRange.step = 25000000;
+                    budgetRange.value = MAX_VENTE;
+                    maxLabel.innerText = "5Md+";
+                }
+                updateBudgetLabel();
+            }
+
+            function updateBudgetLabel() {
+                if (parseInt(budgetRange.value) >= parseInt(budgetRange.max)) {
+                    budgetDisplay.innerText = "Tout afficher";
+                } else {
+                    budgetDisplay.innerText = new Intl.NumberFormat('fr-FR').format(budgetRange.value) + " Ar";
+                }
+            }
+
+            window.resetSearch = function() {
+                searchInput.value = '';
+                categorySelect.value = 'all';
+                updateSliderScale();
+                filterProperties();
+            };
+
+            // 6. Gestion Formspree AJAX
+            document.querySelectorAll('.ajax-form').forEach(form => {
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const btn = form.querySelector('button');
+                    const status = form.querySelector('.form-status');
+                    const originalText = btn.innerText;
+                    btn.innerText = 'Envoi...';
+                    
+                    try {
+                        const response = await fetch(form.action, { method: form.method, body: new FormData(form), headers: { 'Accept': 'application/json' } });
+                        if (response.ok) {
+                            btn.innerText = "ENVOYÉ !"; btn.style.background = "green";
+                            status.innerText = "Message reçu."; status.style.display = 'block';
+                            form.reset();
+                        } else throw new Error("Erreur");
+                    } catch (err) {
+                        status.innerText = "Erreur réseau."; status.style.color = "red"; status.style.display = 'block';
+                        btn.innerText = originalText;
+                    }
+                });
+            });
+        });
+    </script>
+
+</MainLayout>

@@ -1,16 +1,22 @@
-<!DOCTYPE html>
+---
+// src/pages/merci.astro
+// Page autonome : N'utilise pas le MainLayout pour préserver le centrage absolu 100vh.
+---
+
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demande reçue - Ortus Immobilier</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-     <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon.png">
-
+    <title>Demande reçue - ORTUS Immobilier</title>
+    
+    <link rel="icon" type="image/png" href="/assets/img/icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/icon.png">
     <meta name="theme-color" content="#020610">
 
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body style="background-color: #020610; font-family: 'Montserrat', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center;">
 
@@ -28,7 +34,7 @@
             Merci de votre confiance. Nos experts analysent votre demande et vous recontacteront sous 24h.
         </p>
         
-        <a href="accueil.html" class="btn-primary" style="
+        <a href="/accueil" class="btn-primary" style="
             background: transparent; 
             border: 2px solid #D4AF37; 
             color: #D4AF37; 

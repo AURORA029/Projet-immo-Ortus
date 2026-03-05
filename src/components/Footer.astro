@@ -1,0 +1,155 @@
+---
+// src/components/Footer.astro
+---
+<footer class="footer" id="contact" style="background-color: #020610; border-top: 1px solid rgba(212, 175, 55, 0.2); padding-top: 3rem;">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3 style="color: white; font-family: 'Playfair Display', serif;">ORTUS<span style="color: #D4AF37;">.</span></h3>
+                <p class="footer-desc" style="color: #aaa; margin-top: 1rem; line-height: 1.6;">Votre partenaire de confiance pour l'immobilier à Madagascar.</p>
+                <div class="social-links" style="margin-top: 1.5rem; display: flex; gap: 15px;">
+                    <a href="https://www.facebook.com/share/17ejwgcidf/?mibextid=wwXIfr" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/ortusmada?igsh=MWx6NW15cXpibDNubQ==" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://mg.linkedin.com/in/joelrafidisonformateurcoach" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-heading">Navigation</h4>
+                <ul class="footer-links">
+                    <li><a href="/accueil">Accueil</a></li>
+                    <li><a href="/biens">Tous nos biens</a></li>
+                    <li><a href="/services">Nos Services</a></li>
+                    <li><a href="/apropos">L'Agence</a></li>
+                    <li><a href="/vendre">Vendre</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-heading">Contact</h4>
+                <ul class="footer-contact">
+                    <li><i class="fas fa-map-marker-alt" style="color: #D4AF37;"></i> <span style="color: #ccc;">Antananarivo, Madagascar</span></li>
+                    <li><i class="fas fa-phone" style="color: #D4AF37;"></i> <a href="tel:+261340494520" class="contact-link">+261 34 04 945 20</a></li>
+                    <li><i class="fas fa-envelope" style="color: #D4AF37;"></i> <a href="mailto:ortusmada@gmail.com" class="contact-link">ortusmada@gmail.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;">
+            <p style="color: #888; font-size: 0.9rem;">&copy; {new Date().getFullYear()} ORTUS Immobilier. Tous droits réservés.</p>
+            <p style="font-size: 0.8rem; margin-top: 10px;">
+                <a href="/mentions-legales" style="color: #666; text-decoration: none; margin-right: 15px; transition: color 0.3s;">Mentions Légales</a>
+                <a href="/confidentialite" style="color: #666; text-decoration: none; transition: color 0.3s;">Confidentialité</a>
+            </p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .footer-heading {
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem; /* Espacement crucial ici */
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .footer-links, .footer-contact {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-links li, .footer-contact li {
+        margin-bottom: 1rem; /* Aération des lignes */
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .footer-links a, .contact-link {
+        color: #ccc !important; /* Force la couleur pour tuer le bleu */
+        text-decoration: none;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.95rem;
+        transition: color 0.3s ease, transform 0.3s ease;
+        display: inline-block;
+    }
+
+    .footer-links a:hover, .contact-link:hover, .footer-bottom a:hover {
+        color: #D4AF37 !important;
+        transform: translateX(5px); /* Petit effet dynamique premium */
+    }
+
+    .social-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        background-color: rgba(255, 255, 255, 0.05);
+        color: white;
+        border-radius: 50%;
+        text-decoration: none;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .social-icon:hover {
+        background-color: #D4AF37;
+        color: #020610;
+    }
+</style>
+
+<div id="zorg-modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(2, 6, 16, 0.95); z-index:10000; justify-content:center; align-items:center; backdrop-filter:blur(8px);">
+    <div style="background:#0a0a0a; padding:40px; width:90%; max-width:550px; text-align:center; border:1px solid #D4AF37; position:relative; box-shadow:0 0 60px rgba(212,175,55,0.15);">
+        <span onclick="document.getElementById('zorg-modal-overlay').style.display='none'" style="position:absolute; top:10px; right:20px; color:#666; cursor:pointer; font-size:2rem;">&times;</span>
+        <h3 style="font-family:'Playfair Display', serif; color:#D4AF37; font-size:1.8rem; margin-bottom:15px; letter-spacing:1px;">Accès Confidentiel</h3>
+        <p style="color:#e0e0e0; font-size:1rem; line-height:1.6; margin-bottom:15px;">
+            Pour des raisons de discrétion, <strong style="color:white;">30% de nos biens de prestige ne sont pas affichés sur ce site.</strong>
+        </p>
+        <div style="display:flex; flex-direction:column; gap:15px;">
+            <a href="https://wa.me/261340494520?text=Bonjour%20ORTUS,%20je%20souhaite%20connaître%20vos%20dossiers%20confidentiels." target="_blank" style="background:#D4AF37; color:#020610; font-weight:800; text-decoration:none; padding:16px; font-size:0.95rem; cursor:pointer; text-transform:uppercase; display:flex; justify-content:center; align-items:center; gap:10px;">
+               <i class="fab fa-whatsapp" style="font-size:1.3rem;"></i> CONSULTER LES DOSSIERS PRIVÉS
+            </a>
+            <a href="#" onclick="document.getElementById('zorg-modal-overlay').style.display='none'" style="color:#555; font-size:0.8rem; text-decoration:underline;">Je continue ma visite publique</a>
+        </div>
+    </div>
+</div>
+
+<div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: rgba(20, 20, 20, 0.95); border: 1px solid #D4AF37; padding: 20px; border-radius: 8px; z-index: 9998; color: #fff; max-width: 500px; margin: 0 auto;">
+    <div style="display: flex; flex-direction: column; gap: 15px;">
+        <p style="font-size: 0.85rem; margin: 0; line-height: 1.5; color: #ccc;">
+            <span style="color: #D4AF37; font-weight: bold;">Respect de votre vie privée.</span><br>
+            Nous utilisons des cookies pour assurer le bon fonctionnement du site.
+        </p>
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button onclick="acceptCookies()" style="background: #D4AF37; color: #000; border: none; padding: 8px 20px; border-radius: 4px; font-weight: bold; cursor: pointer;">Accepter</button>
+            <button onclick="rejectCookies()" style="background: transparent; border: 1px solid #555; color: #aaa; padding: 8px 15px; border-radius: 4px; cursor: pointer;">Refuser</button>
+        </div>
+    </div>
+</div>
+
+<script is:inline>
+    // Chat CRISP
+    window.addEventListener('load', function() {
+        window.$crisp=[]; window.CRISP_WEBSITE_ID="345303c7-2111-4379-aa50-b09492a6c2c4";
+        (function(){ d=document; s=d.createElement("script"); s.src="https://client.crisp.chat/l.js"; s.async=1; d.getElementsByTagName("head")[0].appendChild(s); })();
+    });
+
+    // Gestion Cookies & Modal
+    function acceptCookies() { localStorage.setItem('cookieConsent', 'accepted'); document.getElementById('cookie-banner').style.display = 'none'; }
+    function rejectCookies() { localStorage.setItem('cookieConsent', 'rejected'); document.getElementById('cookie-banner').style.display = 'none'; }
+
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            if(!sessionStorage.getItem('zorg_modal_seen') && document.getElementById('zorg-modal-overlay')) {
+                document.getElementById('zorg-modal-overlay').style.display = 'flex';
+                sessionStorage.setItem('zorg_modal_seen', 'true');
+            }
+        }, 8000);
+
+        setTimeout(function() {
+            if (!localStorage.getItem('cookieConsent') && document.getElementById('cookie-banner')) { 
+                document.getElementById('cookie-banner').style.display = 'block'; 
+            }
+        }, 5000);
+    });
+</script>

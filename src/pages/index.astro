@@ -1,0 +1,228 @@
+---
+// src/pages/index.astro
+// Page autonome (Landing) : N'utilise pas le MainLayout pour préserver le plein écran.
+---
+
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>ORTUS | L'Excellence Immobilière</title>
+    
+    <meta name="description" content="Agence immobilière de prestige à Madagascar." />
+    <meta name="theme-color" content="#020610" />
+    <meta property="og:image" content="/assets/img/hero-bg.jpg" />
+    <link rel="icon" type="image/png" href="/assets/img/icon.png" />
+
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        body, html { 
+            height: 100%; 
+            overflow-x: hidden; 
+            overflow-y: auto; 
+            background-color: #020610; 
+            margin: 0; padding: 0;
+            background-image: none !important; 
+        }
+
+        .navbar {
+            background-color: transparent !important; 
+            background: linear-gradient(to bottom, rgba(2,6,16,0.9) 0%, rgba(2,6,16,0) 100%) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+            position: absolute !important;
+            top: 0; left: 0; width: 100%;
+            box-shadow: none !important;
+            z-index: 1000 !important;
+        }
+        .nav-link { color: rgba(255,255,255,0.9) !important; text-decoration: none; }
+        .nav-link:hover { color: #D4AF37 !important; }
+
+        .landing-hero {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: 0; 
+            background: url('/assets/img/hero-bg.jpg') no-repeat center center;
+            background-size: cover;
+        }
+        
+        .hero-video-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: 0;
+            pointer-events: none;
+        }
+        
+        .hero-video-bg::-webkit-media-controls { display: none !important; }
+
+        .overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 6, 16, 0.4); /* Légèrement assombri pour la lisibilité */
+            z-index: 1;
+        }
+
+        .landing-content {
+            position: relative; z-index: 10;
+            width: 100%;
+            min-height: 100vh;
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+            text-align: center; 
+            padding: 20px;
+            padding-top: 100px; 
+            padding-bottom: 60px;
+            box-sizing: border-box;
+        }
+
+        .landing-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 6rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 5px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            text-shadow: 0 5px 30px rgba(0,0,0,0.8);
+            line-height: 1;
+            animation: scaleIn 1.5s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .landing-dot {
+            color: #D4AF37; /* Correction en Or pour coller à la charte */
+            font-size: 1em;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+        }
+
+        .landing-tagline {
+            font-family: 'Montserrat', sans-serif; 
+            color: #D4AF37;   
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px; 
+            margin-bottom: 60px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9);  
+            font-size: 1.1rem !important;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out 0.5s forwards;
+        }
+
+        .btn-enter {
+            padding: 18px 50px;
+            border: 1px solid #D4AF37;
+            background: rgba(2, 6, 16, 0.5); 
+            color: white; text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;
+            backdrop-filter: blur(5px); border-radius: 50px;
+            transition: all 0.4s ease;
+            opacity: 0; animation: fadeInUp 1.5s ease-out 1s forwards;
+            display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+        .btn-enter:hover {
+            background: #D4AF37; color: #020610;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.6); transform: translateY(-3px);
+        }
+
+        .landing-footer {
+            position: absolute; 
+            bottom: 20px; 
+            width: 100%; text-align: center; z-index: 10;
+            font-size: 0.8rem; color: rgba(255,255,255,0.6);
+            opacity: 0; animation: fadeInUp 2s ease-out 1.5s forwards;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.9) translateY(-30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .landing-brand { font-size: 3.5rem; letter-spacing: 2px; margin-bottom: 10px; } 
+            .landing-tagline { font-size: 0.85rem; letter-spacing: 2px; line-height: 1.6; padding: 0 20px; }
+            .nav-menu {
+                background-color: rgba(2, 6, 16, 0.95) !important;
+                backdrop-filter: blur(15px) !important;
+                border-left: 1px solid rgba(212, 175, 55, 0.1);
+                padding-top: 80px !important;
+            }
+            .landing-footer { position: relative; margin-top: 40px; bottom: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="/accueil" class="logo-container" style="text-decoration: none;">
+                <span class="logo-main" style="color: white; font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;">ORTUS<span style="color: #D4AF37;">.</span></span>
+                <span class="logo-sub" style="display: block; color: #aaa; font-size: 0.6rem; letter-spacing: 2px; font-family: 'Montserrat', sans-serif;">IMMOBILIER</span>
+            </a>
+            
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar" style="background-color: white;"></span>
+                <span class="bar" style="background-color: white;"></span>
+                <span class="bar" style="background-color: white;"></span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="/accueil" class="nav-link">Accueil</a></li>
+                <li><a href="/biens" class="nav-link">Nos Biens</a></li>
+                <li><a href="/services" class="nav-link">Services</a></li>
+                <li><a href="/vendre" class="nav-link">Propriétaires</a></li>
+                <li><a href="/prestige" class="nav-link" style="color: #D4AF37 !important;"><i class="fas fa-crown"></i> Prestige</a></li>
+                <li><a href="/apropos" class="nav-link">L'Agence</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="landing-hero">
+        <video autoplay muted loop playsinline class="hero-video-bg" poster="/assets/img/hero-bg.jpg" id="bgvid">
+            <source src="/assets/img/hero-video.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"></div>
+    </div>
+
+    <div class="landing-content">
+        <h1 class="landing-brand">
+            ORTUS<span class="landing-dot">.</span>
+        </h1>
+        
+        <p class="landing-tagline">Concrétisez vos rêves immobiliers</p>
+        
+        <a href="/accueil" class="btn-enter">
+            Explorer le site <i class="fas fa-arrow-right"></i>
+        </a>
+        
+        <div class="landing-footer">
+            &copy; {new Date().getFullYear()} ORTUS Immobilier.
+            <p style="font-size: 0.9em; margin-top: 10px;">
+                <a href="/mentions-legales" style="color: #888; text-decoration: none; margin-right: 15px;">Mentions Légales</a>
+                <a href="/confidentialite" style="color: #888; text-decoration: none;">Confidentialité</a>
+            </p>
+        </div>
+    </div>
+
+    <script is:inline src="/assets/js/main.js"></script> 
+    
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', function() {
+            var vid = document.getElementById('bgvid');
+            if(vid) {
+                var playPromise = vid.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        // Lecture OK
+                    }).catch(error => {
+                        console.log("Autoplay bloqué : Player masqué.");
+                        vid.style.display = 'none';
+                    });
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

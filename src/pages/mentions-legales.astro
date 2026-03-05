@@ -1,0 +1,82 @@
+---
+// src/pages/mentions-legales.astro
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout 
+    title="Mentions Légales | ORTUS Immobilier" 
+    description="Mentions légales de l'Agence ORTUS Immobilier."
+>
+    <style>
+        .legal-content { 
+            padding: 120px 20px 60px; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            color: #e0e0e0;
+            font-family: 'Montserrat', sans-serif;
+            min-height: 70vh;
+        }
+        .legal-content h1 { 
+            font-family: 'Playfair Display', serif; 
+            color: white; 
+            font-size: 2.5rem; 
+            margin-bottom: 40px; 
+            text-align: center; 
+        }
+        .legal-content h2 { 
+            color: #D4AF37; 
+            font-size: 1.2rem; 
+            margin-top: 30px; 
+            margin-bottom: 15px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+        .legal-content p { 
+            margin-bottom: 15px; 
+            font-size: 0.95rem; 
+            line-height: 1.6; 
+        }
+        .back-link { 
+            display: block; 
+            text-align: center; 
+            margin-top: 50px; 
+            border: 1px solid #D4AF37; 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            width: fit-content; 
+            margin-left: auto; 
+            margin-right: auto; 
+            transition: background 0.3s, color 0.3s; 
+            color: #D4AF37; 
+            text-decoration: none; 
+            font-weight: bold;
+        }
+        .back-link:hover { 
+            background: #D4AF37; 
+            color: #020610; 
+        }
+    </style>
+
+    <div class="legal-content">
+        <h1>Mentions Légales</h1>
+
+        <h2>1. Éditeur du Site</h2>
+        <p>Le site <strong>ORTUS Immobilier</strong> (ci-après "le Site") est édité par l'Agence ORTUS.</p>
+        <p><strong>Siège social :</strong> LOT II B 69 B AMBOHIBAO BONGATSARA, Antananarivo, Madagascar.<br>
+        <strong>Téléphone :</strong> +261 34 04 945 20<br>
+        <strong>Email :</strong> ortusmada@gmail.com</p>
+        <p><strong>Directeur de la publication :</strong> Joël Rafidison.</p>
+
+        <h2>2. Hébergement</h2>
+        <p>Le Site est hébergé par <strong>GitHub Inc.</strong><br>
+        Adresse : 88 Colin P Kelly Jr St, San Francisco, CA 94107, États-Unis.</p>
+
+        <h2>3. Propriété Intellectuelle</h2>
+        <p>L'ensemble de ce site relève de la législation malgache et internationale sur le droit d'auteur et la propriété intellectuelle. Tous les droits de reproduction sont réservés, y compris pour les documents téléchargeables et les représentations iconographiques et photographiques.</p>
+
+        <h2>4. Responsabilité</h2>
+        <p>Les informations fournies sur le Site le sont à titre informatif. L'Agence ORTUS ne saurait garantir l'exactitude, la complétude ou l'actualité des informations diffusées sur le site.</p>
+
+        <a href="/accueil" class="back-link">Retour à l'accueil</a>
+    </div>
+</MainLayout>

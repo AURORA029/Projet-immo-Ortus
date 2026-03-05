@@ -1,0 +1,231 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import { getProperties } from '../../utils/googleSheets.js';
+
+// 1. GÉNÉRATION DES ROUTES
+export async function getStaticPaths() {
+    const properties = await getProperties();
+    return properties.map((bien) => {
+        return {
+            params: { id: String(bien.id) },
+            props: { bien },
+        };
+    });
+}
+
+const { bien } = Astro.props;
+
+// 2. PRÉPARATION DES DONNÉES (Tableaux)
+const caracteristiquesArray = bien.caracteristiques 
+    ? bien.caracteristiques.replace(/\n/g, ',').split(',').map(c => c.trim()).filter(c => c.length > 0)
+    : [];
+
+const galerieArray = bien.galerie
+    ? bien.galerie.split(',').map(img => img.trim()).filter(img => img.length > 0)
+    : [];
+
+// Endpoint Formspree récupéré de ton listing.js
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mvzzklrl";
+---
+
+<MainLayout title={`${bien.titre} | ORTUS Immobilier`} description={bien.description}>
+    
+    <div class="container" style="padding-top: 100px;">
+        <a href="/biens" style="color:#D4AF37; text-decoration:none; font-weight:bold; font-family: 'Montserrat', sans-serif; display: inline-block; margin-bottom: 20px;">
+            <i class="fas fa-arrow-left"></i> Retour aux biens
+        </a>
+    </div>
+
+    <section style="padding-bottom: 50px;">
+        <div class="container">
+            
+            <div id="detail-container" style="display: flex; flex-wrap: wrap; gap: 40px;">
+                
+                <div style="flex: 1; min-width: 300px;">
+                    <div style="width: 100%; height: 400px; background: #050912; border-radius: 10px; overflow: hidden; margin-bottom: 20px; border:1px solid #333;">
+                        <img 
+                            src={bien.image && bien.image.startsWith('http') ? bien.image : `/${bien.image}`} 
+                            alt={bien.titre} 
+                            style="width: 100%; height: 100%; object-fit: cover;"
+                        />
+                    </div>
+                    
+                    {bien.video && (
+                        <div style="margin-top: 15px;">
+                            <a href={bien.video} target="_blank" style="display: block; width: 100%; padding: 15px; background: rgba(212, 175, 55, 0.1); border: 1px solid #D4AF37; color: #D4AF37; text-align: center; text-decoration: none; font-family: 'Montserrat', sans-serif; font-weight: bold; border-radius: 4px; transition: background 0.3s;">
+                                <i class="fab fa-youtube" style="font-size: 1.2rem; margin-right: 8px;"></i> Voir la visite vidéo
+                            </a>
+                        </div>
+                    )}
+                </div>
+
+                <div style="flex: 1; min-width: 300px;">
+                    <h1 style="font-family:'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 10px; color: white; line-height: 1.2;">
+                        {bien.titre}
+                    </h1>
+                    
+                    <p style="color: #D4AF37; margin-bottom: 20px; font-size: 1.2rem; font-family: 'Montserrat', sans-serif; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-map-marker-alt"></i> {bien.ville}
+                    </p>
+                    
+                    <div style="font-size: 2rem; color: #fff; font-weight: bold; margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 20px; font-family: 'Montserrat', sans-serif;">
+                        {bien.prix}
+                    </div>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 30px;">
+                        <span style="background: rgba(255,255,255,0.05); border: 1px solid #444; padding: 8px 15px; border-radius: 4px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem;">
+                            <i class="fas fa-ruler-combined" style="color: #D4AF37; margin-right: 5px;"></i> {bien.surface} m²
+                        </span>
+                        <span style="background: rgba(255,255,255,0.05); border: 1px solid #444; padding: 8px 15px; border-radius: 4px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem;">
+                            <i class="fas fa-door-open" style="color: #D4AF37; margin-right: 5px;"></i> {bien.pieces} p.
+                        </span>
+                        <span style="background: rgba(255,255,255,0.05); border: 1px solid #444; padding: 8px 15px; border-radius: 4px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem;">
+                            <i class="fas fa-tag" style="color: #D4AF37; margin-right: 5px;"></i> {bien.categorie}
+                        </span>
+                    </div>
+
+                    <h3 style="color: #D4AF37; margin-bottom:10px; font-family: 'Montserrat', sans-serif;">Description</h3>
+                    <div style="line-height: 1.6; color: #ddd; margin-bottom: 30px; white-space: pre-line; font-weight:300; font-family: 'Montserrat', sans-serif;">
+                        {bien.description || "Aucune description renseignée pour ce bien."}
+                    </div>
+
+                    {caracteristiquesArray.length > 0 && (
+                        <>
+                            <h3 style="color: #D4AF37; margin-bottom:10px; font-family: 'Montserrat', sans-serif;">Atouts</h3>
+                            <ul style="list-style: none; padding: 0; color: #ddd; font-family: 'Montserrat', sans-serif;">
+                                {caracteristiquesArray.map(caract => (
+                                    <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                                        <i class="fas fa-check" style="color: #D4AF37;"></i> {caract}
+                                    </li>
+                                ))}
+                            </ul>
+                        </>
+                    )}
+                </div>
+            </div>
+                            
+            {galerieArray.length > 0 && (
+                <div id="gallery-section" style="margin-top: 50px;">
+                    <h3 style="color: #D4AF37; font-size: 1.8rem; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; font-family: 'Playfair Display', serif;">
+                        Galerie Photos
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+                        {galerieArray.map(imgSrc => (
+                            <img 
+                                src={imgSrc.startsWith('http') ? imgSrc : `/${imgSrc}`} 
+                                alt="Galerie Ortus" 
+                                class="gallery-img"
+                                style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px; cursor: pointer; transition: transform 0.3s; border: 1px solid #222;"
+                                onclick="openLightbox(this.src)"
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            <div id="lightbox" onclick="closeLightbox()" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:10000; justify-content:center; align-items:center; cursor:zoom-out;">
+                <img id="lightbox-img" src="" style="max-width:90%; max-height:90%; border: 1px solid #D4AF37; box-shadow: 0 0 30px rgba(0,0,0,0.8);">
+            </div>
+
+        </div> 
+    </section>
+
+    <section style="background: #0b0f19; padding: 50px 0; margin-top: 50px; border-top:1px solid #222;">
+        <div class="container" style="max-width: 600px; text-align: center;">
+            <h2 style="color: white; margin-bottom: 20px; font-family: 'Playfair Display', serif;">Ce bien vous intéresse ?</h2>
+            
+            <div style="background: #020610; padding: 30px; border-radius: 8px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <form id="contact-form" action={FORMSPREE_ENDPOINT} method="POST">
+                    <input type="hidden" name="bien_ref" value={`${bien.id} - ${bien.titre}`}>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <input type="text" name="nom" placeholder="Votre Nom Complet" required style="width: 100%; padding: 12px; background: #111; border: 1px solid #444; color: white; border-radius: 4px; font-family: 'Montserrat', sans-serif;">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <input type="email" name="email" placeholder="Votre Email" required style="width: 100%; padding: 12px; background: #111; border: 1px solid #444; color: white; border-radius: 4px; font-family: 'Montserrat', sans-serif;">
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <input type="tel" name="tel" placeholder="Votre Numéro de Téléphone" required style="width: 100%; padding: 12px; background: #111; border: 1px solid #444; color: white; border-radius: 4px; font-family: 'Montserrat', sans-serif;">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <textarea name="message" rows="4" placeholder="Votre message..." required style="width: 100%; padding: 12px; background: #111; border: 1px solid #444; color: white; border-radius: 4px; font-family: 'Montserrat', sans-serif;"></textarea>
+                    </div>
+
+                    <button type="submit" id="submit-btn" style="width: 100%; background: #D4AF37; color: #020610; font-weight: bold; padding: 15px; border: none; border-radius: 4px; cursor: pointer; font-family: 'Montserrat', sans-serif; text-transform: uppercase; transition: background 0.3s;">
+                        Envoyer la demande
+                    </button>
+                    
+                    <p id="form-status" style="display: none; margin-top: 15px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem;"></p>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <script is:inline>
+        // Logique de la Lightbox
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+        
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.getElementById('lightbox-img').src = '';
+        }
+
+        // Éviter de fermer la lightbox si on clique sur l'image elle-même
+        document.getElementById('lightbox-img')?.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Logique du formulaire (AJAX pour ne pas recharger la page)
+        const form = document.getElementById('contact-form');
+        const status = document.getElementById('form-status');
+        const btn = document.getElementById('submit-btn');
+
+        if (form) {
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const originalText = btn.innerText;
+                btn.innerText = 'Envoi en cours...';
+                
+                const data = new FormData(form);
+                
+                try {
+                    const response = await fetch(form.action, {
+                        method: form.method,
+                        body: data,
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    
+                    if (response.ok) {
+                        status.innerText = "Message envoyé avec succès. Nous vous contacterons rapidement.";
+                        status.style.color = "#4CAF50";
+                        status.style.display = "block";
+                        btn.innerText = "Demande Envoyée";
+                        btn.style.background = "#4CAF50";
+                        form.reset();
+                    } else {
+                        throw new Error("Erreur serveur");
+                    }
+                } catch (error) {
+                    status.innerText = "Une erreur est survenue lors de l'envoi.";
+                    status.style.color = "#f44336";
+                    status.style.display = "block";
+                    btn.innerText = originalText;
+                }
+            });
+        }
+    </script>
+</MainLayout>
+
+<style>
+    .gallery-img:hover {
+        transform: scale(1.02);
+        box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+    }
+</style>
