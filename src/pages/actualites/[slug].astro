@@ -1,0 +1,63 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import { getCollection } from 'astro:content';
+
+// 1. Astro génère une page pour chaque fichier Markdown trouvé
+export async function getStaticPaths() {
+  const articles = await getCollection('actualites');
+  return articles.map(article => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+// 2. On récupère les données de l'article en cours
+const { article } = Astro.props;
+const { Content } = await article.render();
+---
+
+<MainLayout 
+    title={`${article.data.titre} | ORTUS Immobilier`} 
+    description={article.data.extrait}
+>
+    <div class="container section-padding" style="max-width: 800px; margin: 0 auto; padding-top: 150px; padding-bottom: 80px;">
+        
+        <a href="/Projet-immo-Ortus/actualites" style="color: #D4AF37; text-decoration: none; font-weight: bold; margin-bottom: 20px; display: inline-block;">
+            <i class="fas fa-arrow-left"></i> Retour aux actualités
+        </a>
+
+        <h1 style="color: #D4AF37; font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 15px; line-height: 1.2;">
+            {article.data.titre}
+        </h1>
+        
+        <p style="color: #666; font-size: 0.9rem; margin-bottom: 30px; border-bottom: 1px solid #222; padding-bottom: 15px;">
+            Publié le {article.data.date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </p>
+
+        {article.data.image && (
+            <div style="margin-bottom: 40px; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <img src={article.data.image} alt={article.data.titre} style="width: 100%; height: auto; display: block;" />
+            </div>
+        )}
+
+        <div class="blog-content" style="color: #e0e0e0; line-height: 1.8; font-family: 'Montserrat', sans-serif; font-size: 1.1rem;">
+            <Content />
+        </div>
+        
+    </div>
+</MainLayout>
+
+<style is:global>
+    /* Styles pour formater le texte écrit en Markdown */
+    .blog-content h2 {
+        color: #D4AF37;
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        margin-top: 40px;
+        margin-bottom: 15px;
+    }
+    .blog-content p { margin-bottom: 20px; }
+    .blog-content ul { margin-bottom: 20px; padding-left: 20px; }
+    .blog-content li { margin-bottom: 10px; }
+    .blog-content strong { color: white; font-weight: 700; }
+</style>

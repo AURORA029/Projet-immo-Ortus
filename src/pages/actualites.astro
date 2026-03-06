@@ -1,0 +1,54 @@
+---
+// src/pages/actualites.astro
+import MainLayout from '../layouts/MainLayout.astro';
+import { getCollection } from 'astro:content';
+
+// On récupère tous les articles et on les trie du plus récent au plus ancien
+const articles = await getCollection('actualites');
+const articlesTries = articles.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<MainLayout 
+    title="Actualités & Conseils Immobiliers | ORTUS Immobilier" 
+    description="Restez informé des dernières tendances de l'immobilier à Madagascar et découvrez nos conseils pour investir intelligemment."
+>
+    <header class="hero" style="height: 40vh; background: linear-gradient(rgba(2,6,16,0.8), rgba(2,6,16,0.8)), url('/Projet-immo-Ortus/assets/img/hero-bg.jpg') center/cover no-repeat;"> 
+        <div class="hero-overlay"></div>
+        <div class="container hero-content" style="text-align: center; padding-top: 80px;">
+            <h1 style="color: #D4AF37; font-family: 'Playfair Display', serif; font-size: 3rem;">Nos Conseils & Actualités</h1>
+            <p style="color: white; font-family: 'Montserrat', sans-serif;">L'expertise ORTUS pour sécuriser vos investissements.</p>
+        </div>
+    </header>
+
+    <section class="section-padding" style="background-color: #f9f9f9;">
+        <div class="container">
+            <div class="properties-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                
+                {articlesTries.map(article => (
+                    <article class="property-card" style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        {article.data.image && (
+                            <div style="height: 200px; overflow: hidden;">
+                                <img src={article.data.image} alt={article.data.titre} style="width: 100%; height: 100%; object-fit: cover;" />
+                            </div>
+                        )}
+                        <div style="padding: 25px;">
+                            <div style="font-size: 0.8rem; color: #D4AF37; font-weight: bold; margin-bottom: 10px; text-transform: uppercase;">
+                                {article.data.date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
+                            </div>
+                            <h2 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 15px; line-height: 1.3;">
+                                <a href={`/Projet-immo-Ortus/actualites/${article.slug}`} style="color: #020610; text-decoration: none;">{article.data.titre}</a>
+                            </h2>
+                            <p style="color: #666; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
+                                {article.data.extrait}
+                            </p>
+                            <a href={`/Projet-immo-Ortus/actualites/${article.slug}`} style="color: #D4AF37; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+                                Lire l'article <i class="fas fa-arrow-right" style="font-size: 0.8rem;"></i>
+                            </a>
+                        </div>
+                    </article>
+                ))}
+
+            </div>
+        </div>
+    </section>
+</MainLayout>
