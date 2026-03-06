@@ -2,9 +2,9 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import { getProperties } from '../utils/googleSheets.js';
 import { getCollection } from 'astro:content';
-// Récupération des 2 derniers articles
+// On récupère tous les articles récents (jusqu'à 10)
 const articles = await getCollection('actualites');
-const derniersArticles = articles.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 2);
+const tousLesArticles = articles.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 10);
 
 // Récupération des données au build
 const properties = await getProperties();
@@ -38,6 +38,9 @@ const featuredProperties = properties.reverse().slice(0, 3);
             70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(255, 255, 255, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
         }
+        /* Hack Master Dev : Cacher la scrollbar mais garder le scroll */
+        .premium-scroller::-webkit-scrollbar { display: none; }
+        .premium-scroller { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 
     <header class="hero home-hero">
@@ -234,7 +237,10 @@ const featuredProperties = properties.reverse().slice(0, 3);
             </div>
         </div>
     </section>
-    <section class="section-padding" style="background-color: #050912; border-top: 1px solid #1a1a1a;">
+    <section class="section-padding" style="background-color: #050912; position: relative;">
+        
+        <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 70%; max-width: 800px; height: 1px; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.6), transparent);"></div>
+
         <div class="container">
             <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; flex-wrap: wrap; gap: 20px;">
                 <div>
@@ -248,9 +254,9 @@ const featuredProperties = properties.reverse().slice(0, 3);
                 </a>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                {derniersArticles.map(article => (
-                    <a href={`/Projet-immo-Ortus/actualites/${article.slug}`} style="display: flex; gap: 20px; align-items: center; background: #020610; padding: 20px; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.15); text-decoration: none; transition: transform 0.3s, border-color 0.3s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='#D4AF37'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(212, 175, 55, 0.15)'">
+            <div class="premium-scroller" style="display: flex; gap: 30px; overflow-x: auto; padding-bottom: 20px; scroll-snap-type: x mandatory;">
+                {tousLesArticles.map(article => (
+                    <a href={`/Projet-immo-Ortus/actualites/${article.slug}`} style="flex: 0 0 calc(50% - 15px); min-width: 320px; max-width: 450px; scroll-snap-align: start; display: flex; gap: 20px; align-items: center; background: #020610; padding: 20px; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.15); text-decoration: none; transition: transform 0.3s, border-color 0.3s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='#D4AF37'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(212, 175, 55, 0.15)'">
                         {article.data.image && (
                             <div style="width: 100px; height: 100px; flex-shrink: 0; border-radius: 4px; overflow: hidden;">
                                 <img src={article.data.image} alt={article.data.titre} style="width: 100%; height: 100%; object-fit: cover;" />
