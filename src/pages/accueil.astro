@@ -1,6 +1,10 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import { getProperties } from '../utils/googleSheets.js';
+import { getCollection } from 'astro:content';
+// Récupération des 2 derniers articles
+const articles = await getCollection('actualites');
+const derniersArticles = articles.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 2);
 
 // Récupération des données au build
 const properties = await getProperties();
@@ -227,6 +231,41 @@ const featuredProperties = properties.reverse().slice(0, 3);
                     <p style="font-family: 'Georgia', serif; font-style: italic; color: #e0e0e0; margin-bottom: 25px;">"Service conciergerie au top. Je reçois mes loyers sans m'occuper de rien."</p>
                     <h4 style="color: #D4AF37; font-size: 0.8rem; text-transform: uppercase;">— Hery A.</h4>
                 </div>
+            </div>
+        </div>
+    </section>
+    <section class="section-padding" style="background-color: #050912; border-top: 1px solid #1a1a1a;">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; flex-wrap: wrap; gap: 20px;">
+                <div>
+                    <h2 style="color: white; font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 10px;">
+                        Insights <span style="color: #D4AF37;">& Expertise</span>
+                    </h2>
+                    <p style="color: #888; font-family: 'Montserrat', sans-serif; font-size: 0.95rem;">Le marché immobilier malgache décrypté par nos experts.</p>
+                </div>
+                <a href="/Projet-immo-Ortus/actualites" style="color: #D4AF37; text-decoration: none; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #D4AF37; padding-bottom: 3px; transition: 0.3s;">
+                    Voir toutes les analyses <i class="fas fa-arrow-right" style="margin-left: 5px;"></i>
+                </a>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                {derniersArticles.map(article => (
+                    <a href={`/Projet-immo-Ortus/actualites/${article.slug}`} style="display: flex; gap: 20px; align-items: center; background: #020610; padding: 20px; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.15); text-decoration: none; transition: transform 0.3s, border-color 0.3s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='#D4AF37'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(212, 175, 55, 0.15)'">
+                        {article.data.image && (
+                            <div style="width: 100px; height: 100px; flex-shrink: 0; border-radius: 4px; overflow: hidden;">
+                                <img src={article.data.image} alt={article.data.titre} style="width: 100%; height: 100%; object-fit: cover;" />
+                            </div>
+                        )}
+                        <div>
+                            <span style="display: block; color: #D4AF37; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px;">
+                                {article.data.date.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
+                            </span>
+                            <h3 style="color: white; font-family: 'Playfair Display', serif; font-size: 1.1rem; line-height: 1.3; margin: 0;">
+                                {article.data.titre}
+                            </h3>
+                        </div>
+                    </a>
+                ))}
             </div>
         </div>
     </section>
