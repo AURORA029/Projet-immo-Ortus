@@ -1,54 +1,75 @@
 ---
-// src/pages/actualites.astro
 import MainLayout from '../layouts/MainLayout.astro';
 import { getCollection } from 'astro:content';
 
-// On récupère tous les articles et on les trie du plus récent au plus ancien
 const articles = await getCollection('actualites');
 const articlesTries = articles.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Le Hack "Éditorial" : On isole le tout dernier article publié
+const featuredArticle = articlesTries[0];
+const regularArticles = articlesTries.slice(1);
 ---
 
 <MainLayout 
-    title="Actualités & Conseils Immobiliers | ORTUS Immobilier" 
-    description="Restez informé des dernières tendances de l'immobilier à Madagascar et découvrez nos conseils pour investir intelligemment."
+    title="Insights & Expertise | ORTUS Immobilier" 
+    description="Analyses de marché, tendances et conseils stratégiques pour sécuriser votre patrimoine d'exception à Madagascar."
 >
-    <header class="hero" style="height: 40vh; background: linear-gradient(rgba(2,6,16,0.8), rgba(2,6,16,0.8)), url('/Projet-immo-Ortus/assets/img/hero-bg.jpg') center/cover no-repeat;"> 
-        <div class="hero-overlay"></div>
-        <div class="container hero-content" style="text-align: center; padding-top: 80px;">
-            <h1 style="color: #D4AF37; font-family: 'Playfair Display', serif; font-size: 3rem;">Nos Conseils & Actualités</h1>
-            <p style="color: white; font-family: 'Montserrat', sans-serif;">L'expertise ORTUS pour sécuriser vos investissements.</p>
+    <header class="hero" style="height: 50vh; background: linear-gradient(to bottom, rgba(2,6,16,0.3), rgba(2,6,16,1)), url('/Projet-immo-Ortus/assets/img/hero-bg.jpg') center/cover no-repeat;">
+        <div class="container hero-content" style="text-align: center; padding-top: 120px;">
+            <h1 style="color: #D4AF37; font-family: 'Playfair Display', serif; font-size: 3.5rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px;">Insights & Expertise</h1>
+            <p style="color: #ccc; font-family: 'Montserrat', sans-serif; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Décrypter le marché malgache pour sécuriser vos investissements.</p>
         </div>
     </header>
 
-    <section class="section-padding" style="background-color: #f9f9f9;">
+    <section class="section-padding" style="background-color: #020610; color: white;">
         <div class="container">
-            <div class="properties-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                
-                {articlesTries.map(article => (
-                    <article class="property-card" style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
-                        {article.data.image && (
-                            <div style="height: 200px; overflow: hidden;">
-                                <img src={article.data.image} alt={article.data.titre} style="width: 100%; height: 100%; object-fit: cover;" />
-                            </div>
-                        )}
-                        <div style="padding: 25px;">
-                            <div style="font-size: 0.8rem; color: #D4AF37; font-weight: bold; margin-bottom: 10px; text-transform: uppercase;">
-                                {article.data.date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
-                            </div>
-                            <h2 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 15px; line-height: 1.3;">
-                                <a href={`/Projet-immo-Ortus/actualites/${article.slug}`} style="color: #020610; text-decoration: none;">{article.data.titre}</a>
-                            </h2>
-                            <p style="color: #666; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
-                                {article.data.extrait}
-                            </p>
-                            <a href={`/Projet-immo-Ortus/actualites/${article.slug}`} style="color: #D4AF37; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
-                                Lire l'article <i class="fas fa-arrow-right" style="font-size: 0.8rem;"></i>
-                            </a>
+
+            {featuredArticle && (
+                <div style="margin-bottom: 80px;">
+                    <div style="display: flex; flex-wrap: wrap; background: #050912; border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 4px; overflow: hidden; align-items: stretch;">
+                        <div style="flex: 1; min-width: 300px; min-height: 400px; background: url({featuredArticle.data.image}) center/cover;">
                         </div>
+                        <div style="flex: 1; padding: 50px; min-width: 300px; display: flex; flex-direction: column; justify-content: center;">
+                            <span style="color: #D4AF37; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 3px;">À la Une • {featuredArticle.data.date.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}</span>
+                            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; margin: 20px 0; line-height: 1.2;">
+                                <a href={`/Projet-immo-Ortus/actualites/${featuredArticle.slug}`} style="color: white; text-decoration: none;">{featuredArticle.data.titre}</a>
+                            </h2>
+                            <p style="color: #999; font-size: 1rem; line-height: 1.7; margin-bottom: 40px;">
+                                {featuredArticle.data.extrait}
+                            </p>
+                            <div>
+                                <a href={`/Projet-immo-Ortus/actualites/${featuredArticle.slug}`} style="display: inline-block; border-bottom: 1px solid #D4AF37; color: #D4AF37; padding-bottom: 5px; text-decoration: none; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: 0.3s;">
+                                    Lire l'analyse <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 50px;">
+                {regularArticles.map(article => (
+                    <article style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 30px;">
+                        {article.data.image && (
+                            <a href={`/Projet-immo-Ortus/actualites/${article.slug}`} style="display: block; height: 220px; border-radius: 4px; overflow: hidden; margin-bottom: 20px;">
+                                <img src={article.data.image} alt={article.data.titre} style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
+                            </a>
+                        )}
+                        <div style="font-size: 0.75rem; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px;">
+                            {article.data.date.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
+                        </div>
+                        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 15px; line-height: 1.3;">
+                            <a href={`/Projet-immo-Ortus/actualites/${article.slug}`} style="color: #ccc; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#ccc'">
+                                {article.data.titre}
+                            </a>
+                        </h3>
+                        <p style="color: #888; font-size: 0.9rem; line-height: 1.6;">
+                            {article.data.extrait}
+                        </p>
                     </article>
                 ))}
-
             </div>
+
         </div>
     </section>
 </MainLayout>
