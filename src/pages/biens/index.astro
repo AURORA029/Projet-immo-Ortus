@@ -233,15 +233,20 @@ const cleanProperties = properties.map(p => {
             categorySelect.addEventListener('change', () => { updateSliderScale(); filterProperties(); });
             sortSelect.addEventListener('change', filterProperties);
             
-            // 3. Logique de filtrage
+               // 3. Logique de filtrage
             function filterProperties() {
                 const textVal = searchInput.value.toLowerCase().trim();
+                // LE HACK : On découpe la phrase en une liste de mots individuels
+                const searchWords = textVal.split(/\s+/).filter(w => w.length > 0); 
+                
                 const maxBudget = parseInt(budgetRange.value);
                 const categoryVal = categorySelect.value;
                 const sortVal = sortSelect.value;
 
                 filteredCards = cards.filter(card => {
-                    const matchText = card.dataset.search.includes(textVal);
+                    // L'I.A. : On valide la carte uniquement si TOUS les mots tapés s'y trouvent
+                    const matchText = searchWords.length === 0 || searchWords.every(word => card.dataset.search.includes(word));
+                    
                     const matchPrice = (maxBudget >= parseInt(budgetRange.max)) || (parseInt(card.dataset.price) <= maxBudget);
                     const matchCat = (categoryVal === 'all') || card.dataset.category.includes(categoryVal);
                     return matchText && matchPrice && matchCat;
